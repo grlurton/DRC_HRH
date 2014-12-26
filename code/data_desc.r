@@ -30,39 +30,24 @@ output.table(indiv_by_prov , 'interviews_by_Province_FacilType')
 
 ## Entretiens Individuels
 
-TabInterviews <- function(Role , Type , data){
-  as.data.frame(table(data[data$FacilTypeEntry == Type , Role],
-  data$GroupDemographics.IndivSex[data$FacilTypeEntry == Type])  )
+TabInterviews <- function(Role , Type , data ){
+  out <- as.data.frame(table(data[data$FacilTypeEntry == Type , Role],
+                             data$GroupDemographics.IndivSex[data$FacilTypeEntry == Type])  )
+  print(head(out))
+  colnames(out) <- c('Role' , 'Sexe' , 'Nombre')
+  out
 }
 
+TabInterviews_forStruct <- function(Role, Type, data){
+  ddply(data , .(structuremystructure_province) , 
+        function(x){
+          TabInterviews(Role, Type , x)
+        } )
+}
 
-
-
-```{r}
-aa <- ddply(indiv , .(structuremystructure_province) , 
-function(x){
-TabInterviews('GroupECZQuests.IndivECZRole' , 'ecz' , x)
-} )
-write.csv(aa , '../output/tables/ecz_interviews.csv')
-```
-
-```{r}
-aa <- ddply(indiv , .(structuremystructure_province) , 
-function(x){
-TabInterviews('GroupCS.IndivCSPost' , 'cs' , x)
-} )
-write.csv(aa , '../output/tables/cs_interviews.csv')
-```
-
-```{r}
-aa <- ddply(indiv , .(structuremystructure_province) , 
-function(x){
-TabInterviews('GroupHGR.IndivHGRPost' , 'hgr' , x)
-} )
-write.csv(aa , '../output/tables/hgr_interviews.csv')
-
-
-```
+TabInterviews_forStruct('GroupCS.IndivCSPost' , 'cs' , indiv)
+TabInterviews_forStruct('GroupCS.IndivCSPost' , 'ecz' , indiv)
+TabInterviews_forStruct('GroupCS.IndivCSPost' , 'hgr' , indiv)
 
 
 ## Description des centres de santé
