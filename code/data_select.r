@@ -12,15 +12,6 @@ source('code/useful_functions.r')
 
 ### Taking data training data out
 
-# Load sampling data
-
-sample_final <- read.csv('method/sampling/samplefinal.csv' , strip.white=TRUE)
-
-# Standardize the names
-
-sample_final$Province <- UnifyNames(sample_final$Province)
-sample_final$Zone <- UnifyNames(sample_final$Zone)
-
 # Set data collection dates
 
 start_dates <- data.frame(province = c( 'bandundu' , 'sud_kivu' , 'equateur' , 'katanga') ,

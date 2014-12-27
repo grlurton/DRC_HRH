@@ -63,6 +63,14 @@ output.table <- function(tab , name){
   write.csv(tab , adress)
 }
 
+# Load sampling data
+
+sample_final <- read.csv('data/samplefinal.csv' , strip.white=TRUE)
+
+# Standardize the names
+
+sample_final$Province <- UnifyNames(sample_final$Province)
+sample_final$Zone <- UnifyNames(sample_final$Zone)
 
 
 
