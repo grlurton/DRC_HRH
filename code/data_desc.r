@@ -9,20 +9,19 @@ source('code/useful_functions.r')
 
 NStructures <- nrow(facilities)
 
-NInterviews <- length(unique(indiv$meta.instanceID))
-
+NInterviews <- length(unique(indiv$instanceID))
 
 DistFacilities <- table(facilities$FacLevel)
 output.table(DistFacilities , 'facilities_by_FacilType')
 
-DistInterViews <- ddply(indiv , .(FacilTypeEntry) , function(x) nrow(x))
+DistInterViews <- ddply(indiv , .(FacilityType) , function(x) nrow(x))
 output.table(DistInterViews , 'interviews_by_FacilType')
 
 
-fac_by_prov <- table(facilities$structuremystructure_province , facilities$FacLevel)
+fac_by_prov <- table(facilities$Province , facilities$FacLevel)
 output.table(fac_by_prov , 'facilities_by_Province_FacilType')
 
-indiv_by_prov <- table(indiv$structuremystructure_province , indiv$FacilTypeEntry)
+indiv_by_prov <- table(indiv$Province , indiv$FacilityType)
 output.table(indiv_by_prov , 'interviews_by_Province_FacilType')
 
 
@@ -31,81 +30,32 @@ output.table(indiv_by_prov , 'interviews_by_Province_FacilType')
 ## Entretiens Individuels
 
 TabInterviews <- function(Role , Type , data ){
-  out <- as.data.frame(table(data[data$FacilTypeEntry == Type , Role],
-                             data$GroupDemographics.IndivSex[data$FacilTypeEntry == Type])  )
+  out <- as.data.frame(table(data[data$FacilityType == Type , Role],
+                             data$Sex[data$FacilityType == Type])  )
   print(head(out))
   colnames(out) <- c('Role' , 'Sexe' , 'Nombre')
   out
 }
 
 TabInterviews_forStruct <- function(Role, Type, data){
-  ddply(data , .(structuremystructure_province) , 
+  ddply(data , .(Province) , 
         function(x){
           TabInterviews(Role, Type , x)
         } )
 }
 
-TabInterviews_forStruct('GroupCS.IndivCSPost' , 'cs' , indiv)
-TabInterviews_forStruct('GroupCS.IndivCSPost' , 'ecz' , indiv)
-TabInterviews_forStruct('GroupCS.IndivCSPost' , 'hgr' , indiv)
 
+cs_role_by_province <- TabInterviews_forStruct('CSRole' , 'cs' , indiv)
+output.table(cs_role_by_province , 'cs_role_by_province')
 
-## Description des centres de santé
+ecz_role_by_province <- TabInterviews_forStruct('ECZRole' , 'ecz' , indiv)
+output.table(ecz_role_by_province , 'ecz_role_by_province')
 
-Quelques cartes
-
-__Les données SIS ont été transmises par le SNIS. Citer / remercier__
-
-```{r}
-zones_shapefile <- readShapePoly('../data/Shapefiles/Zones/znrdcII.shp')
-
-zones_shapefile$NOM_ZS <- UnifyNames(as.character(zones_shapefile$NOM_ZS))
-zones_shapefile$PROVINCE <- UnifyNames(as.character(zones_shapefile$PROVINCE ))
-
-zones_shapefile$NOM_ZS[zones_shapefile$NOM_ZS == 'kisanji'] <- 'kisandji'
-
-
-sampled_zones <- zones_shapefile$NOM_ZS %in%  sample_final$Zone
-
-plot(zones_shapefile )
-plot(zones_shapefile[sampled_zones , ] , col = 'darkred'  , add = TRUE)
-title("Zones échantillonées pour l'enquête")
-```
-
-
-La projection de la carte fournie par le SNIS est bizarre, mais je trouve pas commment convertir les coordonnées dans un shapefile. Solution quick and dirty : convertir les coordonnées des sites plutôt...
-
-__ATTENTION : devra être réglé si analyses spatiales, sinon on va avoir des distances bizarres__
-
-
-```{r}
-facilities$FacLocalisation.FacLocation.Latitude2 <- facilities$FacLocalisation.FacLocation.Latitude * 100000
-facilities$FacLocalisation.FacLocation.Longitude2 <- facilities$FacLocalisation.FacLocation.Longitude * 100000
-
-for (i in 1:length(unique(sample_final$Province))){ 
-Province <- unique(sample_final$Province)[i]
-sub_fac <- subset(facilities , 
-structuremystructure_province == Province)  
-
-shapefile <- zones_shapefile[zones_shapefile$PROVINCE  == Province, ]
-
-sampled_zones <- shapefile$NOM_ZS %in%  as.character(sample_final$Zone)
+hgr_role_by_province <- TabInterviews_forStruct('HGRRole' , 'hgr' , indiv)
+output.table(hgr_role_by_province , 'hgr_role_by_province')
 
 
 
-sub_fac <- subset(sub_fac , !is.na(FacLocalisation.FacLocation.Latitude))
-coordinates(sub_fac) <- ~FacLocalisation.FacLocation.Longitude2+FacLocalisation.FacLocation.Latitude2
-
-
-plot(shapefile )
-plot(shapefile[sampled_zones , ] , col = 'darkred'  , add = TRUE)
-plot(sub_fac , add = TRUE , col = as.factor(sub_fac$FacLevel))
-legend("right" , col = c(1:5) , legend =  sort(unique(sub_fac$FacLevel)) , pch = 3)
-}
-
-```
-
-Hmm... les données géograpiques du SNIS sont vraiment un peu funky...
 
 Milieu des centres de santé
 
