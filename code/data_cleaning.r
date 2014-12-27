@@ -95,7 +95,7 @@ indiv$FacilTypeEntry[indiv$FacilTypeEntry == 'ecz' &
 
 ### Recode Posts in facilities
 
-### Recode health resource categories
+### Recode health resource categories => HAVE THAT IN EXCEL INPUT 
 
 RecodePost <- function(PostInit){
   PostInit[PostInit %in% c('administrateur' , 'administrateur_gestionnaire')] <- 'administrateur'
@@ -148,6 +148,33 @@ for(zone in facilities$structuremystructure_zone){
     zonezs$V1[zonezs$structuremystructure_zone == zone]  
 }
 
+
+## Rename  
+
+varnames <- read.csv('data/variable_names.csv' , as.is = TRUE)
+
+simplifNames <- function(data , varnames , set){
+  for(i in 1:ncol(data)){
+    varnames <- subset(varnames , df == set)
+    nameInit <- colnames(data)[i]
+    if(nameInit %in% varnames$colnam){
+      nameNew <- varnames[varnames$colnam == nameInit , 'newName']
+      colnames(data)[i] <- nameNew
+    }
+  }
+  data <- subset(data , select = varnames$newName)
+  data
+}
+
+loop_activ_non_sante <- simplifNames(loop_activ_non_sante , varnames , 'loop_activ_non_sante')
+loop_activ_privee <- simplifNames(loop_activ_privee , varnames , 'loop_activ_prive')
+loop_appui_fac <- simplifNames(loop_appui_fac , varnames , 'loop_appui_fac')
+loop_appui_zs <- simplifNames(loop_appui_zs , varnames , 'loop_appui_zs')
+loop_autre_revenu <- simplifNames(loop_autre_revenu , varnames , 'loop_autre_rev')
+loop_perdiem <- simplifNames(loop_perdiem , varnames , 'loop_perdiem')
+loop_prime_partenaire <- simplifNames(loop_prime_partenaire , varnames , 'loop_prim_part')
+indiv <- simplifNames(indiv , varnames , 'individuals')
+facilities <- simplifNames(facilities , varnames , 'facilities')
 
 ## Export selected data
 
