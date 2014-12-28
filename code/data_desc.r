@@ -8,26 +8,29 @@ source('code/useful_functions.r')
 
 
 NStructures <- nrow(facilities)
-
 NInterviews <- length(unique(indiv$instanceID))
+
+######Description de l'echantillon######
+
+
+## Interviews for facilities
 
 DistFacilities <- table(facilities$FacLevel)
 output.table(DistFacilities , 'facilities_by_FacilType')
 
-DistInterViews <- ddply(indiv , .(FacilityType) , function(x) nrow(x))
-output.table(DistInterViews , 'interviews_by_FacilType')
-
-
 fac_by_prov <- table(facilities$Province , facilities$FacLevel)
 output.table(fac_by_prov , 'facilities_by_Province_FacilType')
 
-indiv_by_prov <- table(indiv$Province , indiv$FacilityType)
-output.table(indiv_by_prov , 'interviews_by_Province_FacilType')
-
-
-
+fac_comp_explose <- ddply(facilities , .(Province , FacLevel , FacRurban , FacOwnership ) , nrow)
+output.table(fac_comp_explose , 'facilities_complete_table')
 
 ## Entretiens Individuels
+
+DistInterViews <- ddply(indiv , .(FacilityType) , function(x) nrow(x))
+output.table(DistInterViews , 'interviews_by_FacilType')
+
+indiv_by_prov <- table(indiv$Province , indiv$FacilityType)
+output.table(indiv_by_prov , 'interviews_by_Province_FacilType')
 
 TabInterviews <- function(Role , Type , data ){
   out <- as.data.frame(table(data[data$FacilityType == Type , Role],
@@ -55,93 +58,27 @@ hgr_role_by_province <- TabInterviews_forStruct('HGRRole' , 'hgr' , indiv)
 output.table(hgr_role_by_province , 'hgr_role_by_province')
 
 
-
-
-Milieu des centres de santé
-
-```{r}
-table(facilities$FacLevel , facilities$FacRurban ,
-facilities$structuremystructure_province)
-```
-
-Quel type de structures ?
-
-```{r}
-table(facilities$FacLevel , facilities$FacOwnership ,
-facilities$structuremystructure_province)
-```
+###### Staffing Centre de Sante ######
 
 ### Support reçu par les strctures de santé
 
-```{r}
-centre_sante <- subset(facilities , FacLevel %in% c('cs' , 'csr' , 'hgr'))
-ecz <- subset(facilities , FacLevel %in% c('ecz'))
-```
+tabAppui <- ddply(loop_appui_fac , .(PARENT_KEY) , function(x) data.frame(NAppui = nrow(x)))
 
-Combien d'équipes cadre de district ont reçu un appui ?
+tabAppuiFull <- MergeLoop(facilities , tabAppui)
 
-```{r}
-table(ecz$EczAppui , ecz$structuremystructure_province)
-```
+tabAppuiFull$NAppui[is.na(tabAppuiFull$NAppui)] <- 0
 
-Combien de centres de sante / hgr ont reçu un appui ?
+tab_appui_full <- ddply(tabAppuiFull , .(Province , FacLevel , FacRurban , FacOwnership ) , nrow)
+output.table(tab_appui_full , 'fac_number_appui')
 
-```{r}
-table(centre_sante$FacAppui, centre_sante$structuremystructure_province)
-```
 
-Qui recoit un appui ?
+table(tabAppuiFull$Province , tabAppuiFull$NAppui)
 
-__faire plutot du Poisson__
-
-```{r}
-FacAppuiYN <- centre_sante$FacAppui == 'oui'
-
-summary(glm(FacAppuiYN ~ structuremystructure_province + FacLevel + FacOwnership +
-FacRurban , data = centre_sante , family = binomial))
-```
-
-Nombres d'appuis différents reçus dans les sites qui recoivent cet appui
-
-__rajouter la catégorie 0 pour plus de clarté__
-
-```{r}
-facComp <- merge(centre_sante , loop_appui_fac , 
-by.x = 'meta.instanceID' , by.y = 'PARENT_KEY' , 
-all.x = TRUE)
-
-facAppui <- subset(facComp , FacAppui == 'oui')
-
-##Fatigue, passage en loop => revoir ca en ddply ?
-
-NAppui <- data.frame(Province = character() , Nappui = numeric() , Nsite = numeric())
-for (i in 1:length(unique(facAppui$structuremystructure_province))){
-prov <- unique(facAppui$structuremystructure_province)[i]
-x <- subset(facAppui , structuremystructure_province == prov)
-N <- as.data.frame(table(table(x$meta.instanceID)))
-out <- data.frame(Province = prov , Nappui = N[,1] , Nsite = N[,2])
-NAppui <- rbind(NAppui , out)
-}
-```
-
-Description des types d'appui
-
-Duree 
-```{r}
-table(facAppui$FacSupportDuree , facAppui$structuremystructure_province)
-```
-
-Motivation financiere
-
-```{r}
-table(facAppui$FacSupportMotivation , facAppui$structuremystructure_province)
-```
 
 ### Staffing 
 
 #### ECZ
 
-```{r}
 staff_ecz <- function(facilities){
 ecz <- subset(facilities , FacLevel == 'ecz')
 N <- nrow(ecz)
@@ -174,7 +111,7 @@ out$Staff <- Noms
 out
 }
 
-ecz_staffing <- ddply(facilities , .(structuremystructure_province) ,
+ecz_staffing <- ddply(facilities , .(Province) ,
 staff_ecz)
 print(ecz_staffing)
 
@@ -242,15 +179,15 @@ out$Staff <- Noms
 out  
 }
 
-hgr_staffing <- ddply(facilities , .(structuremystructure_province) ,
+hgr_staffing <- ddply(facilities , .(Province) ,
 function(x) staff_fac(x , 'hgr'))
 write.csv(hgr_staffing , '../output//tables/hgr_staffing.csv')
 
-cs_staffing <- ddply(facilities , .(structuremystructure_province) ,
+cs_staffing <- ddply(facilities , .(Province) ,
 function(x) staff_fac(x , 'cs'))
 write.csv(cs_staffing , '../output//tables/cs_staffing.csv')
 
-#csr_staffing <- ddply(facilities , .(structuremystructure_province) ,
+#csr_staffing <- ddply(facilities , .(Province) ,
 #                      function(x) staff_fac(x , 'csr'))
 #write.csv(csr_staffing , '../output//tables/csr_staffing.csv')
 ```
@@ -305,11 +242,11 @@ merge(collapsed_data  , recode_input , by.x = 'Staff' , by.y = 'staff_init' , al
 
 
 staff_collapse_recode <- function(data , recode){
-collapsed <- ddply(data , .(structuremystructure_province , structuremystructure , FacLevel , FacRurban) ,
+collapsed <- ddply(data , .(Province , structuremystructure , FacLevel , FacRurban) ,
 function(x) staff_collapse(x ))
 out <- ddply(collapsed , .(structuremystructure) , 
 function(x) staff_recode(x , recode))
-out <- subset(out , select = c("structuremystructure_province" ,
+out <- subset(out , select = c("Province" ,
 "structuremystructure" , "FacLevel", "Nombre" ,
 "Immatriculés" , "Mecanise" ,"Reguliers" , 
 "Presents" , "staff_recode" , "FacRurban"))
@@ -318,12 +255,12 @@ out
 
 
 flat_staffing <- ddply(facilities , 
-.(structuremystructure_province , structuremystructure , FacLevel , FacRurban) ,
+.(Province , structuremystructure , FacLevel , FacRurban) ,
 function(x) staff_collapse_recode(x  ,  recode_staff_input))
 
 
 melted_staffing <- melt(data = flat_staffing , 
-id = c("structuremystructure_province" ,
+id = c("Province" ,
 "structuremystructure" , "FacLevel",
 "staff_recode" , "FacRurban") , 
 value = c("Nombre" , "Immatriculés"  
@@ -351,7 +288,7 @@ data_plot$value <= 20, ] ,
 x = value , y = FacLevel , 
 col = FacRurban , shape = FacLevel  ,
 geom = 'jitter' ) +
-facet_grid(staff_recode ~ structuremystructure_province ) +
+facet_grid(staff_recode ~ Province ) +
 theme_bw()+
 geom_vline(data = data_plot[data_plot$variable == "Nombre" & 
 data_plot$FacLevel == "cs",], 
@@ -366,7 +303,7 @@ data_plot$value <= 60, ] ,
 x = value , y = FacLevel , 
 col = FacRurban ,
 geom = 'jitter' ) +
-facet_grid(staff_recode ~ structuremystructure_province , scales = "free") +
+facet_grid(staff_recode ~ Province , scales = "free") +
 theme_bw()+
 geom_vline(data = data_plot[data_plot$variable == "Nombre" & 
 data_plot$FacLevel == "hgr",], 
@@ -392,14 +329,14 @@ ordered_staff <- c("autre" ,
 "administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
 "administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
 
-create_split <- expand.grid(unique(data_plot$structuremystructure_province) , 
+create_split <- expand.grid(unique(data_plot$Province) , 
 ordered_staff , unique(data_plot$FacLevel) , 
 unique(data_plot$FacRurban) )
 colnames(create_split) <- c("province" , "staff" , "level" , "rurbain")
 
 
 data_heat_map <- ddply(data_plot , 
-.(staff_recode , structuremystructure_province ,
+.(staff_recode , Province ,
 FacLevel , FacRurban) ,
 percentage_norm)
 
@@ -412,7 +349,7 @@ ordered = TRUE)
 qplot(x =FacRurban ,y = staff_recode , data = data_heat_map, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacLevel~structuremystructure_province) +
+facet_grid(FacLevel~Province) +
 theme_bw()+ 
 geom_text()
 
@@ -454,13 +391,13 @@ taux_immatricule(flat_staffing)
 flat_staffing <- subset(flat_staffing , FacRurban != '')
 
 data_heat_map <- ddply(flat_staffing , 
-.(staff_recode , structuremystructure_province ,
+.(staff_recode , Province ,
 FacLevel , FacRurban) ,
 taux_meca)
 
 taux_meca(flat_staffing)
 
-ddply(flat_staffing , .(structuremystructure_province) ,
+ddply(flat_staffing , .(Province) ,
 taux_meca)
 
 data_heat_map <- subset(data_heat_map , !is.na(V1))
@@ -472,7 +409,7 @@ ordered = TRUE)
 qplot(x =FacRurban ,y = staff_recode , data = data_heat_map, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacLevel~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacLevel~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -487,7 +424,7 @@ Dans les HGR
 
 ```{r}
 hgr <- subset(indiv , FacilTypeEntry == 'hgr')
-table(hgr$GroupHGR.IndivHGRPost ,  hgr$structuremystructure_province)
+table(hgr$GroupHGR.IndivHGRPost ,  hgr$Province)
 
 ```
 
@@ -495,7 +432,7 @@ Dans les CS
 
 ```{r}
 cs <- subset(indiv , FacilTypeEntry == 'cs' )
-table(cs$GroupCS.IndivCSPost  ,  cs$structuremystructure_province)
+table(cs$GroupCS.IndivCSPost  ,  cs$Province)
 ```
 
 
@@ -528,7 +465,7 @@ indiv$GroupDemographics.IndivAge < 18] <- NA
 
 
 qplot(data = indiv , x = GroupDemographics.IndivAge , binwidth = 1) +
-facet_grid(~structuremystructure_province)
+facet_grid(~Province)
 
 over65 <- function(dd){
 table(dd$GroupDemographics.IndivAge > 65)
@@ -558,19 +495,19 @@ out
 
 MultipTables <- function(indiv , var){
 revenu_table <- ddply(indiv , 
-.(structuremystructure_province , FacilTypeEntry , ResumePost) , 
+.(Province , FacilTypeEntry , ResumePost) , 
 function(x ) Table_Revenu( x , var))
 factors_lev <- unique(indiv$FacilTypeEntry)
 out_tab <- list()
 for(j in 1:length(factors_lev)){
 level <- factors_lev[j]
 dd <- revenu_table[revenu_table[,'FacilTypeEntry'] == level , ]
-casted <- recast(dd , ResumePost ~ structuremystructure_province , 
+casted <- recast(dd , ResumePost ~ Province , 
 fun = function(x) mean(x , na.rm = TRUE) ,
 measure.var = 4)
 suf <- c('NIndiv' , 'Prop')
 for(i in 5:6){
-xx <- recast(dd , ResumePost ~ structuremystructure_province , mean ,
+xx <- recast(dd , ResumePost ~ Province , mean ,
 measure.var = i)
 casted <- merge(casted , xx , by = 'ResumePost' ,suffixes = c( '' , suf[i-4])) 
 }
@@ -611,7 +548,7 @@ ordered = TRUE)
 heat_data
 }
 
-heat_wage <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_wage <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'WageYN')
 
 heat_wage <- subset(heat_wage ,  ResumePost != '')
@@ -619,7 +556,7 @@ heat_wage <- subset(heat_wage ,  ResumePost != '')
 qplot(y = ResumePost , data = heat_wage, fill = V1, x = rep("" , nrow(heat_wage)) ,
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -636,7 +573,7 @@ data_wage <- c("WageYN" , "GroupWage.WageLastDate" , "GroupWage.WageLastAmount" 
 "GroupWage.WageMode" , "GroupWage.WagePayer"  ,
 "WageDollar" , "WageFC")
 
-data_structure <- c("structuremystructure_province" , "structuremystructure" , 
+data_structure <- c("Province" , "structuremystructure" , 
 "FacilTypeEntry")
 
 data_indiv <- c("ID" , "GroupDemographics.IndivSex" , "GroupDemographics.IndivAge" ,
@@ -676,7 +613,7 @@ melt_wage_facil <- subset(melt_keep , (PrimeDollar < 4000 | is.na(PrimeDollar) &
 )
 
 qplot(data = melt_wage_facil , y = value , x = WageDollar , geom = 'jitter' , col = FacOwnership) + 
-facet_grid(structuremystructure_province ~ FacilTypeEntry) +
+facet_grid(Province ~ FacilTypeEntry) +
 theme_bw()
 
 ```
@@ -688,7 +625,7 @@ __Gosh data for Katanga is bad__
 ```{r PrimeDeRisqueHeatMap}
 #MultipTables(indiv , 'PrimeRisqueYN')
 
-heat_prime <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_prime <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' ,'ResumePost') , 'PrimeRisqueYN')
 
 heat_prime <- subset(heat_prime , ResumePost != '' )
@@ -696,7 +633,7 @@ heat_prime <- subset(heat_prime , ResumePost != '' )
 qplot(x = rep("" , nrow(heat_prime)) ,y = ResumePost , data = heat_prime, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -705,7 +642,7 @@ heat_prime$Source <- 'Prime de Risque'
 
 ```{r}
 qplot(data = melt_wage_facil , y = value , x = PrimeDollar , geom = 'jitter', col = FacOwnership) + 
-facet_grid(structuremystructure_province ~ FacilTypeEntry) +
+facet_grid(Province ~ FacilTypeEntry) +
 theme_bw()
 
 
@@ -716,7 +653,7 @@ theme_bw()
 ```{r PrimePartenaireHeatMap}
 #MultipTables(indiv , 'PrimesPartenairesYN')
 
-heat_prime_part <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_prime_part <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'PrimesPartenairesYN')
 
 heat_prime_part <- subset(heat_prime_part , ResumePost != '')
@@ -725,7 +662,7 @@ qplot(x = rep("" , nrow(heat_prime_part)) ,y = ResumePost ,
 data = heat_prime_part, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -793,7 +730,7 @@ qplot(primIndiv$V1)
 ### Partage de recettes
 
 ```{r PartageRecetteHeatMap}
-heat_honoraire <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_honoraire <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'HonoraireYN')
 
 heat_honoraire <- subset(heat_honoraire , ResumePost != '')
@@ -801,7 +738,7 @@ heat_honoraire <- subset(heat_honoraire , ResumePost != '')
 qplot(x = rep("" , nrow(heat_honoraire)) ,y = ResumePost , data = heat_honoraire, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -828,7 +765,7 @@ indiv$HonoraireNorm <- NormalizeIncome(indiv$HonoraireDollar , indiv$GroupHonora
 ### Heures supplémentaires
 
 ```{r HeurSupHeatMap}
-heat_heuresup <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_heuresup <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'HeureSupYN')
 
 heat_heuresup <- subset(heat_heuresup , ResumePost != '')
@@ -836,7 +773,7 @@ heat_heuresup <- subset(heat_heuresup , ResumePost != '')
 qplot(x = rep("" , nrow(heat_heuresup)) ,y = ResumePost , data = heat_heuresup, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 #MultipTables(indiv , 'HeureSupYN')
@@ -845,7 +782,7 @@ heat_heuresup$Source <- 'Heures Supplementaires'
 
 ```{r HeurSupDistrib}
 qplot(data = indiv , x =HeureSupDollar) + 
-facet_wrap(~structuremystructure_province)
+facet_wrap(~Province)
 
 ```
 
@@ -853,7 +790,7 @@ facet_wrap(~structuremystructure_province)
 ### Per Diems
 
 ```{r PerDiemHeatMap}
-heat_PerDiems <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_PerDiems <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'PerDiemYN')
 
 heat_PerDiems <- subset(heat_PerDiems , ResumePost != '')
@@ -861,7 +798,7 @@ heat_PerDiems <- subset(heat_PerDiems , ResumePost != '')
 qplot(x = rep("" , nrow(heat_PerDiems)) ,y = ResumePost , data = heat_PerDiems, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -938,7 +875,7 @@ table(indiv$IndivCadeauMontantExact == 0)
 ### Activité privé
 
 ```{r ActPriveeHeatMap}
-heat_Prive <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_Prive <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'ActPriveeYN')
 
 heat_Prive <- subset(heat_Prive , ResumePost != '')
@@ -946,7 +883,7 @@ heat_Prive <- subset(heat_Prive , ResumePost != '')
 qplot(x = rep("" , nrow(heat_Prive)) ,y = ResumePost , data = heat_Prive, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -986,7 +923,7 @@ qplot(flat_act_privee$V1)
 mean(indiv_full$ActNonSanteYN == 'oui')
 
 
-heat_NonSante <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_NonSante <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'ActNonSanteYN')
 
 heat_NonSante <- subset(heat_NonSante , ResumePost != '')
@@ -994,7 +931,7 @@ heat_NonSante <- subset(heat_NonSante , ResumePost != '')
 qplot(x =rep("" , nrow(heat_NonSante)) ,y = ResumePost , data = heat_NonSante, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province  , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province  , scales = 'free_y') +
 theme_bw()+ 
 geom_text()
 
@@ -1026,7 +963,7 @@ qplot(flat_ans$V1)
 ### Autre revenus
 
 ```{r AutreRevenusHeatMap}
-heat_AutreRevenu <- CreateHeatMapData(indiv_full , c('structuremystructure_province'  , 
+heat_AutreRevenu <- CreateHeatMapData(indiv_full , c('Province'  , 
 'FacilTypeEntry' , 'ResumePost') , 'AutreRevenuYN')
 
 heat_AutreRevenu <- subset(heat_AutreRevenu , ResumePost != '')
@@ -1035,7 +972,7 @@ qplot(x = rep("" , nrow(heat_AutreRevenu)), y = ResumePost ,
 data = heat_AutreRevenu, fill = V1, 
 geom = "raster" , label = round(V1 , 2))+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~structuremystructure_province , scales = 'free_y') +
+facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
 theme_bw()+  
 geom_text() 
 
@@ -1067,7 +1004,7 @@ heat_by_province <- rbind(heat_AutreRevenu , heat_NonSante , heat_PerDiems ,
 heat_Prive , heat_heuresup , heat_honoraire , 
 heat_prime , heat_prime_part , heat_wage )
 
-provs <- unique(heat_by_province$structuremystructure_province)
+provs <- unique(heat_by_province$Province)
 
 revenu <- c("Salaire"  , "Prime de Risque" , "Partage des Recettes" ,
 "Heures Supplementaires"  , "Prime Partenaire" , "Per Diem" , 
@@ -1079,7 +1016,7 @@ ordered = TRUE
 )
 
 
-qplot(x =structuremystructure_province ,y = ResumePost , data = heat_by_province, 
+qplot(x =Province ,y = ResumePost , data = heat_by_province, 
 fill = V1, geom = "raster")+
 scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
 facet_grid(FacilTypeEntry~Source , scales = 'free_y' ) +
@@ -1090,7 +1027,7 @@ xlab('') + ylab('')
 #for(i in 1:length(provs)){
 #  prov <- provs[i]
 #  dat <- subset(heat_by_province , 
-#                structuremystructure_province == prov )
+#                Province == prov )
 #  p <- qplot(x =rep("" , nrow(dat)) ,y = ResumePost , data = dat, fill = V1, 
 #        geom = "raster" , label = round(V1 , 2))+
 #    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
@@ -1407,7 +1344,7 @@ as.formula(formula)
 covs_indiv <- "GroupDemographics.IndivSex + GroupDemographics.IndivAge + LastEducation" 
 covs_hgrcs <-  "administrateur + autre + infirmier +  labo + medecin + pharmacien+ FacAppui"
 covs_ecz <- "administrateur_gestionnaire  + autre  + infirmier_superviseur + mcz + EczAppui"
-covs_hfsgen <- "FacRurban + FacLevel + Power  + (1|structuremystructure_province)"
+covs_hfsgen <- "FacRurban + FacLevel + Power  + (1|Province)"
 
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , covs_hfsgen, sept = "+")
 covs_ecz <- paste(covs_indiv , covs_ecz , covs_hfsgen, sept = "+")
@@ -1472,10 +1409,10 @@ fix[,12]*hgrcs.administrateur + fix[,13]*hgrcs.autre + fix[,14]*infirmier.hgrcs 
 fix[,15]*hgrcs.labo + fix[,16]*hgrcs.medecin + fix[,17]*hgrcs.pharmacien
 fix[,18]*adm.ecz + fix[,19]*ecz.autre + 
 fix[,20]*infirmier_sup.ecz + fix[,21]*ecz.mcz + 
-rand[,2]*(data$structuremystructure_province == 'bandundu') +
-rand[,3]*(data$structuremystructure_province == 'equateur') +
-rand[,4]*(data$structuremystructure_province == 'katanga') +
-rand[,5]*(data$structuremystructure_province == 'sud_kivu')
+rand[,2]*(data$Province == 'bandundu') +
+rand[,3]*(data$Province == 'equateur') +
+rand[,4]*(data$Province == 'katanga') +
+rand[,5]*(data$Province == 'sud_kivu')
 out
 }
 
@@ -1517,10 +1454,10 @@ quantile(outputs , probs = c(0.025 , 0.5 , 0.975))
 }
 
 counterfac_by_province <- function(counterfac){
-list(bandundu = data.frame(counterfac , structuremystructure_province = 'bandundu') ,
-equateur = data.frame(counterfac , structuremystructure_province = 'equateur') ,
-katanga = data.frame(counterfac , structuremystructure_province = 'katanga') ,
-sud_kivu = data.frame(counterfac , structuremystructure_province = 'sud_kivu')
+list(bandundu = data.frame(counterfac , Province = 'bandundu') ,
+equateur = data.frame(counterfac , Province = 'equateur') ,
+katanga = data.frame(counterfac , Province = 'katanga') ,
+sud_kivu = data.frame(counterfac , Province = 'sud_kivu')
 )
 }
 

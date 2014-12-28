@@ -63,6 +63,22 @@ output.table <- function(tab , name){
   write.csv(tab , adress)
 }
 
+
+##Merge loops with main data frames
+
+MergeLoop  <- function(mainDF , loopDF){
+  merge(mainDF , loopDF , 
+                 by.x = 'instanceID' , by.y = 'PARENT_KEY' , 
+                 all.x = TRUE)
+}
+
+
+
+
+
+
+
+
 # Load sampling data
 
 sample_final <- read.csv('data/samplefinal.csv' , strip.white=TRUE)
