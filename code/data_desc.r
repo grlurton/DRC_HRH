@@ -58,8 +58,6 @@ hgr_role_by_province <- TabInterviews_forStruct('HGRRole' , 'hgr' , indiv)
 output.table(hgr_role_by_province , 'hgr_role_by_province')
 
 
-###### Staffing Centre de Sante ######
-
 ### Support reçu par les strctures de santé
 
 tabAppui <- ddply(loop_appui_fac , .(PARENT_KEY) , function(x) data.frame(NAppui = nrow(x)))
@@ -71,127 +69,59 @@ tabAppuiFull$NAppui[is.na(tabAppuiFull$NAppui)] <- 0
 tab_appui_full <- ddply(tabAppuiFull , .(Province , FacLevel , FacRurban , FacOwnership ) , nrow)
 output.table(tab_appui_full , 'fac_number_appui')
 
-
-table(tabAppuiFull$Province , tabAppuiFull$NAppui)
-
-
 ### Staffing 
 
 #### ECZ
 
 staff_ecz <- function(facilities){
-ecz <- subset(facilities , FacLevel == 'ecz')
-N <- nrow(ecz)
-MCZ <- c(sum(ecz$ECZMCZ.MCZNbre == 'oui') ,
-sum(ecz$ECZMCZ.MCZImmatricule == 'oui') ,
-sum(ecz$ECZMCZ.MCZMecanise == 'oui') ,
-sum(ecz$ECZMCZ.MCZPresent == 'oui') )
-MDH <- c(sum(ecz$ECZMDH.ECZMDHNbre == 'oui') ,
-sum(ecz$ECZMDH.ECZMDHImmatricule == 'oui') ,
-sum(ecz$ECZMDH.ECZMDHMecanise == 'oui') ,
-sum(ecz$ECZMDH.ECZMDHPresent == 'oui') )
-DN <- c(sum(ecz$ECZDN.ECZDNNbre == 'oui') ,
-sum(ecz$ECZDN.ECZDNImmatricule == 'oui') ,
-sum(ecz$ECZDN.ECZDNMecanise == 'oui') ,
-sum(ecz$ECZDN.ECZDNPresent == 'oui') )
-AG <- c(sum(ecz$ECZAG.ECZAGNbre == 'oui') ,
-sum(ecz$ECZAG.ECZAGImmatricule == 'oui') ,
-sum(ecz$ECZAG.ECZAGMecanise == 'oui') ,
-sum(ecz$ECZAG.ECZAGPresent == 'oui') )
-IS <- c(mean(ecz$ECZIS.ECZISNbre , na.rm = TRUE) , 
-mean(ecz$ECZIS.ECZISImmatricule , na.rm = TRUE) , 
-mean(ecz$ECZIS.ECZISMecanise , na.rm = TRUE) , 
-mean(ecz$ECZIS.ECZISPresent , na.rm = TRUE))
-Noms <- c('MCZ' , 'MDH' , 'DN' , 'AG' , 'IS (Nombre moyen)') 
-out <- matrix(c(MCZ , MDH , DN , AG , IS) , byrow = TRUE , nrow = 5 ,
-dimnames = list(Noms ,
-c('Nombre' , 'Immatriculés' , 'Mecanise' , 'Presents')))
-out <- as.data.frame(out)
-out$Staff <- Noms
-out
+  ecz <- subset(facilities , FacLevel == 'ecz')
+  N <- nrow(ecz)
+  MCZ <- c(sum(ecz$ECZMCZNbre == 'oui') ,
+           sum(ecz$ECZMCZImmatricule == 'oui') ,
+           sum(ecz$ECZMCZMecanise == 'oui') ,
+           sum(ecz$ECZMCZPresent == 'oui') )
+  MDH <- c(sum(ecz$ECZMDHNbre == 'oui') ,
+           sum(ecz$ECZMDHImmatricule == 'oui') ,
+           sum(ecz$ECZMDHMecanise == 'oui') ,
+           sum(ecz$ECZMDHPresent == 'oui') )
+  DN <- c(sum(ecz$ECZDNNbre == 'oui') ,
+          sum(ecz$ECZDNImmatricule == 'oui') ,
+          sum(ecz$ECZDNMecanise == 'oui') ,
+          sum(ecz$ECZDNPresent == 'oui') )
+  AG <- c(sum(ecz$ECZAGNbre == 'oui') ,
+          sum(ecz$ECZAGImmatricule == 'oui') ,
+          sum(ecz$ECZAGMecanise == 'oui') ,
+          sum(ecz$ECZAGPresent == 'oui') )
+  IS <- c(mean(ecz$ECZISNbre , na.rm = TRUE) ,
+          mean(ecz$ECZISImmatricule , na.rm = TRUE) ,
+          mean(ecz$ECZISMecanise , na.rm = TRUE) ,
+          mean(ecz$ECZISPresent , na.rm = TRUE))
+  Noms <- c('MCZ' , 'MDH' , 'DN' , 'AG' , 'IS (Nombre moyen)')
+  out <- matrix(c(MCZ , MDH , DN , AG , IS) , byrow = TRUE , nrow = 5 ,
+                dimnames = list(Noms ,
+                                c('Nombre' , 'Immatriculés' , 'Mecanise' , 'Presents')))
+  out <- as.data.frame(out)
+  out$Staff <- Noms
+  out
 }
 
 ecz_staffing <- ddply(facilities , .(Province) ,
-staff_ecz)
-print(ecz_staffing)
-
-write.csv(ecz_staffing , '../output//tables/ecz_staffing.csv')
-```
+                      staff_ecz)
+output.table(ecz_staffing , 'ecz_staffing')
 
 #### Centres de santé
 
-Vérifier les données 
+melted_fac <- melt(data = facilities , id = c("instanceID", "Province" , "FacLevel" ) )
 
-```{r}
-check_staff <- function(facilities , type){
-test <- matrix(ncol = 14*4 , nrow = nrow(facilities))
-for(i in 1:14){
-num <- 47 + i
-tab <- facilities[, c(num ,(62 + (num - 48)*4):(62 +(num - 48)*4+3)) ]
-if(sum(tab[,1] == 0 | is.na(tab[,1])) > 0){
-tab[tab[,1] == 0 | is.na(tab[,1]) , c(2:4)] <- tab[tab[,1] == 0 | is.na(tab[,1]) , 1]
-}
-for(j in 2:5){
-test[ , (i-1)*4 + j -1] <- tab[,1] < tab[,j]
-}
-}
-test
-}
+effectif_variables <- read.csv('data/variables_effectif.csv' , as.is = TRUE)
 
-aa <- check_staff(facilities , 'hgr')
+effectif_data <- subset(melted_fac , variable %in% effectif_variables$VarName)
+effectif_data <- merge(effectif_data , effectif_variables , by.x ='variable' , by.y = 'VarName')
+effectif_data$value[effectif_data$value == 'oui'] <- 1
+effectif_data$value[effectif_data$value == 'non'] <- 0
+effectif_data$value <- as.numeric(effectif_data$value)
 
-facilities2 <- apply(aa , 1 , 
-function(x){
-sum(x , na.rm = TRUE)
-}
-)
-
-fffac <- facilities[facilities2 > 0,]
-```
-
-```{r}
-staff_fac <- function(facilities , type){
-fac <- subset(facilities , FacLevel == type)
-Noms <- c('Medecins Specialistes' , 'Medecins Generalistes' ,
-'Infirmiere A0' , 'Infirmiere A1', 'Infirmiere A2' , 'Infirmiere A3' ,
-'Pharmaciens' , 'Preparateurs Pharmacie' , 'Techniciens Labo' ,
-'Preposes Labos' , 'AG' , 'Huissiers' , 'Autres Techniciens'  ,
-'Autres')
-Effectifs <- c()
-for(i in 1:14){
-num <- 47 + i
-tab <- fac[, c(num ,(62 + (num - 48)*4):(62 +(num - 48)*4+3)) ]
-if(sum(tab[,1] == 0 | is.na(tab[,1])) > 0){
-tab[tab[,1] == 0 | is.na(tab[,1]) , c(2:4)] <- tab[tab[,1] == 0 | is.na(tab[,1]) , 1]
-}
-for(j in 1:5){
-tab[is.na(tab[,j]) , j] <- 0
-var <- c(mean(tab[,j]))
-Effectifs <- c(Effectifs , var)
-}
-}
-out <- matrix(Effectifs , byrow = TRUE , ncol = 5,
-dimnames = list(Noms ,
-c('Nombre' , 'Immatriculés' , 
-'Mecanise' , 'Reguliers' , 'Presents')))
-out <- as.data.frame(out)
-out$Staff <- Noms
-out  
-}
-
-hgr_staffing <- ddply(facilities , .(Province) ,
-function(x) staff_fac(x , 'hgr'))
-write.csv(hgr_staffing , '../output//tables/hgr_staffing.csv')
-
-cs_staffing <- ddply(facilities , .(Province) ,
-function(x) staff_fac(x , 'cs'))
-write.csv(cs_staffing , '../output//tables/cs_staffing.csv')
-
-#csr_staffing <- ddply(facilities , .(Province) ,
-#                      function(x) staff_fac(x , 'csr'))
-#write.csv(csr_staffing , '../output//tables/csr_staffing.csv')
-```
-
+ddply(effectif_data , .(Province , Statut , Role) , function(x)  mean(x$value , na.rm = TRUE))
 
 Comparing to norm
 

@@ -73,12 +73,6 @@ MergeLoop  <- function(mainDF , loopDF){
 }
 
 
-
-
-
-
-
-
 # Load sampling data
 
 sample_final <- read.csv('data/samplefinal.csv' , strip.white=TRUE)
