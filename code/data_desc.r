@@ -121,68 +121,27 @@ effectif_data$value[effectif_data$value == 'oui'] <- 1
 effectif_data$value[effectif_data$value == 'non'] <- 0
 effectif_data$value <- as.numeric(effectif_data$value)
 
-ddply(effectif_data , .(Province , Statut , Role) , function(x)  mean(x$value , na.rm = TRUE))
+meanNumHW <- ddply(effectif_data , .(Province , Statut , FacLevel , Role) , 
+                   function(x)  mean(x$value , na.rm = TRUE))
 
-Comparing to norm
+meanNumHW <- subset(meanNumHW , !is.na(V1))
 
-```{r}
-##Declaring what the norm is
+output.table(meanNumHW , 'hw_by_faclevel_role_prov')
 
-norms <- read.csv('../data/input_norms.csv' , as.is = TRUE)
+#Comparing to norm
 
-facilities$FacLevel_group <- facilities$FacLevel
-facilities$FacLevel_group[facilities$FacLevel_group == 'csr'] <- 'cs'
+##Loading the norm is
 
-##Recoding categories in facilities data
+norms <- read.csv('data/input_norms.csv' , as.is = TRUE)
 
-staff_collapse <- function(facilities){
-fac <- subset(facilities)
-Noms <- c('Medecins Specialistes' , 'Medecins Generalistes' ,
-'Infirmiere A0' , 'Infirmiere A1', 'Infirmiere A2' , 'Infirmiere A3' ,
-'Pharmaciens' , 'Preparateurs Pharmacie' , 'Techniciens Labo' ,
-'Preposes Labos' , 'AG' , 'Huissiers' , 'Autres Techniciens'  ,
-'Autres')
-Effectifs <- c()
-for(i in 1:14){
-num <- 47 + i
-tab <- fac[, c(num ,(62 + (num - 48)*4):(62 +(num - 48)*4+3)) ]
-if(sum(tab[,1] == 0 | is.na(tab[,1])) > 0){
-tab[tab[,1] == 0 | is.na(tab[,1]) , c(2:4)] <- tab[tab[,1] == 0 | is.na(tab[,1]) , 1]
-}
-for(j in 1:5){
-tab[is.na(tab[,j]) , j] <- 0
-var <- c(mean(tab[,j]))
-Effectifs <- c(Effectifs , var)
-}
-}
-out <- matrix(Effectifs , byrow = TRUE , ncol = 5,
-dimnames = list(Noms ,
-c('Nombre' , 'Immatriculés' , 
-'Mecanise' , 'Reguliers' , 'Presents')))
-out <- as.data.frame(out)
-out$Staff <- Noms
-out  
+##Recoding categories in melted facilities data
+recode_staff_input <-  read.csv('data/input_recode_staff.csv' , as.is = TRUE)
+
+staff_recode <- function(melted_data , recode_input){
+  merge(melted_data  , recode_input , by.x = 'variable' , by.y = 'staff_init' , all.x = TRUE)
 }
 
-recode_staff_input <-  read.csv('../data/input_recode_staff.csv' , as.is = TRUE)
-
-staff_recode <- function(collapsed_data , recode_input){
-merge(collapsed_data  , recode_input , by.x = 'Staff' , by.y = 'staff_init' , all.x = TRUE)
-}
-
-
-staff_collapse_recode <- function(data , recode){
-collapsed <- ddply(data , .(Province , structuremystructure , FacLevel , FacRurban) ,
-function(x) staff_collapse(x ))
-out <- ddply(collapsed , .(structuremystructure) , 
-function(x) staff_recode(x , recode))
-out <- subset(out , select = c("Province" ,
-"structuremystructure" , "FacLevel", "Nombre" ,
-"Immatriculés" , "Mecanise" ,"Reguliers" , 
-"Presents" , "staff_recode" , "FacRurban"))
-out
-}
-
+melted_fac <- staff_recode(melted_fac , recode_staff_input)
 
 flat_staffing <- ddply(facilities , 
 .(Province , structuremystructure , FacLevel , FacRurban) ,
