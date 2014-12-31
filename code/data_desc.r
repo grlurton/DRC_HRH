@@ -111,7 +111,7 @@ output.table(ecz_staffing , 'ecz_staffing')
 
 #### Centres de santé
 
-melted_fac <- melt(data = facilities , id = c("instanceID", "Province" , "FacLevel" ) )
+melted_fac <- melt(data = facilities , id = c("instanceID", "Province" , "FacLevel" , "FacRurban") )
 
 effectif_variables <- read.csv('data/variables_effectif.csv' , as.is = TRUE)
 
@@ -126,8 +126,6 @@ meanNumHW <- ddply(effectif_data , .(Province , Statut , FacLevel , Role) ,
 
 meanNumHW <- subset(meanNumHW , !is.na(V1))
 
-output.table(meanNumHW , 'hw_by_faclevel_role_prov')
-
 #Comparing to norm
 
 ##Loading the norm is
@@ -138,52 +136,34 @@ norms <- read.csv('data/input_norms.csv' , as.is = TRUE)
 recode_staff_input <-  read.csv('data/input_recode_staff.csv' , as.is = TRUE)
 
 staff_recode <- function(melted_data , recode_input){
-  merge(melted_data  , recode_input , by.x = 'variable' , by.y = 'staff_init' , all.x = TRUE)
+  merge(melted_data  , recode_input , by.x = 'Role' , by.y = 'staff_init' , all.x = TRUE)
 }
 
-melted_fac <- staff_recode(melted_fac , recode_staff_input)
+effectif_data <- staff_recode(effectif_data , recode_staff_input)
 
-flat_staffing <- ddply(facilities , 
-.(Province , structuremystructure , FacLevel , FacRurban) ,
-function(x) staff_collapse_recode(x  ,  recode_staff_input))
+output.table(meanNumHW , 'hw_by_faclevel_role_prov')
 
-
-melted_staffing <- melt(data = flat_staffing , 
-id = c("Province" ,
-"structuremystructure" , "FacLevel",
-"staff_recode" , "FacRurban") , 
-value = c("Nombre" , "Immatriculés"  
-, "Mecanise" ,"Reguliers" , "Presents")
-)
-```
-
-Now Looking at some plots
-
-```{r}
 ## Taking out two outliers
 
 ## Semiurbain == Urbain
 
+data_plot <- merge(effectif_data , norms , 
+                   by.x = c('FacLevel' , 'staff_recode') ,
+                   by.y = c('facility_type' , 'categorie'))
 
 
-data_plot <- merge(melted_staffing , norms , 
-by.x = c('FacLevel' , 'staff_recode') ,
-by.y = c('facility_type' , 'categorie'))
-
-
-qplot(data = data_plot[data_plot$variable == "Nombre"  & 
-data_plot$FacLevel == "cs"&
-data_plot$value <= 20, ] , 
-x = value , y = FacLevel , 
-col = FacRurban , shape = FacLevel  ,
-geom = 'jitter' ) +
-facet_grid(staff_recode ~ Province ) +
-theme_bw()+
-geom_vline(data = data_plot[data_plot$variable == "Nombre" & 
-data_plot$FacLevel == "cs",], 
-mapping = aes(xintercept = nombre) , color = 'green' , size = 1.2)+ 
-scale_x_continuous(breaks=seq(0,20 , 5)) + scale_colour_brewer(palette="Set1") +
-xlab('Number of health workers') + ylab('')
+qplot(data = data_plot[data_plot$Statut == "Total"  & 
+                         data_plot$FacLevel == "cs"&
+                         data_plot$value <= 20, ] , 
+      x = value , y = FacLevel , 
+      col = FacRurban , shape = FacLevel , geom = 'jitter' ) +
+  facet_grid(staff_recode ~ Province ) +
+  theme_bw()+
+  geom_vline(data = data_plot[data_plot$Statut == "Total" & 
+                                data_plot$FacLevel == "cs",], 
+             mapping = aes(xintercept = nombre) , color = 'green' , size = 1.2) +
+  scale_x_continuous(breaks=seq(0,20 , 5)) + scale_colour_brewer(palette="Set1") +
+  xlab('Number of health workers') + ylab('')
 
 
 qplot(data = data_plot[data_plot$variable == "Nombre" & 
