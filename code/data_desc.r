@@ -256,76 +256,49 @@ heat_map_status(status_dist , 'Present_prop' , 'Proportion de personnel présent
 dev.off()
 
 
+sum(status_dist$Immatricule_N) / sum(status_dist$Total)
+sum(status_dist$Mecanise_N) / sum(status_dist$Total)
+
 mean(indiv$HWImmatriculation == 'oui')
 mean(indiv$HWMecanise == 'oui')
 
+
+####Donnees inidividuelles
+
 ### Echantillon
 
-Dans les HGR
-
-```{r}
-hgr <- subset(indiv , FacilTypeEntry == 'hgr')
-table(hgr$GroupHGR.IndivHGRPost ,  hgr$Province)
-
-```
-
-Dans les CS
-
-```{r}
-cs <- subset(indiv , FacilTypeEntry == 'cs' )
-table(cs$GroupCS.IndivCSPost  ,  cs$Province)
-```
-
-
+table(indiv$HGRRole ,  indiv$Province)
+table(indiv$CSRole ,  indiv$Province)
+table(indiv$ECZRole ,  indiv$Province)
 
 ## Information démographique
 
-Distribution par genre
+# Distribution par genre
 
-```{r}
-table(indiv$GroupDemographics.IndivSex)
-```
+table(indiv$Sex)
 
-Genre et niveau d'éducation
+# Genre et niveau d'éducation
 
-```{r}
-table(indiv$GroupDemographics.IndivLastEduc ,
-indiv$GroupDemographics.IndivSex)
-```
+table(indiv$LastEduc , indiv$Sex)
 
-Genre et rôle dans les centres de santé
+indiv$Age[indiv$Age > 100 | indiv$Age < 18] <- NA
 
-```{r}
-table(cs$GroupCS.IndivCSPost ,
-cs$GroupDemographics.IndivSex)
-```
+table(indiv$Age[indiv$CSRole != 'medecin' & indiv$FacilityType == 'cs'] > 62)
+table(indiv$Age[indiv$CSRole == 'medecin' & indiv$FacilityType == 'cs'] > 65)
 
-```{r}
-indiv$GroupDemographics.IndivAge[indiv$GroupDemographics.IndivAge > 100 |
-indiv$GroupDemographics.IndivAge < 18] <- NA
+table(indiv$Age[indiv$HGRRole != 'medecin' & indiv$FacilityType == 'hgr'] > 62)
+table(indiv$Age[indiv$HGRRole == 'medecin' & indiv$FacilityType == 'hgr'] > 65)
 
-
-qplot(data = indiv , x = GroupDemographics.IndivAge , binwidth = 1) +
-facet_grid(~Province)
-
-over65 <- function(dd){
-table(dd$GroupDemographics.IndivAge > 65)
-}
-
-```
-
-
+table(indiv$Age[indiv$ECZRole != 'medecin' & indiv$FacilityType == 'ecz'] > 62)
+table(indiv$Age[indiv$ECZRole == 'medecin' & indiv$FacilityType == 'ecz'] > 65)
 
 ## Description de la distribution des revenus
 
 ### Salaires
 
-```{r}
 indiv$ResumePost <- indiv$GroupCS.IndivCSPost
-indiv$ResumePost[indiv$FacilTypeEntry == 'hgr'] <- 
-indiv$GroupHGR.IndivHGRPost[indiv$FacilTypeEntry == 'hgr']
-indiv$ResumePost[indiv$FacilTypeEntry == 'ecz'] <- 
-indiv$GroupECZQuests.IndivECZRole[indiv$FacilTypeEntry == 'ecz']
+indiv$ResumePost[indiv$FacilTypeEntry == 'hgr'] <- indiv$GroupHGR.IndivHGRPost[indiv$FacilTypeEntry == 'hgr']
+indiv$ResumePost[indiv$FacilTypeEntry == 'ecz'] <- indiv$GroupECZQuests.IndivECZRole[indiv$FacilTypeEntry == 'ecz']
 
 Table_Revenu <- function(indiv , var){
 out <- data.frame(NSalaire = sum(indiv[ , var] == 'oui') ,
@@ -358,18 +331,14 @@ out_tab
 }
 
 #MultipTables(indiv , "WageYN") Remplace par heatmap
-```
 
-```{r}
 FacRelevant <- subset(facilities , 
 select = c("structuremystructure"  , "FacLevel" ,
 "FacOwnership" , "FacAppui" , "HGRVolume.HGRNbreLits" ,
 "FacRurban" , "EczAppui"))
 
 indiv_full <- merge(FacRelevant , indiv , by = 'structuremystructure')
-```
 
-```{r SalaireHeatMap}
 perc_revenu <- function(data , var){
 perc <- mean(data[ , var] == 'oui')
 perc
@@ -403,11 +372,6 @@ geom_text()
 
 heat_wage$Source <- 'Salaire'
 
-```
-
-
-
-```{r}
 indiv$ID <- seq(1 , nrow(indiv))
 data_wage <- c("WageYN" , "GroupWage.WageLastDate" , "GroupWage.WageLastAmount" ,
 "GroupWage.WageLastUnit" , "GroupWage.WageLast6Month" , 
