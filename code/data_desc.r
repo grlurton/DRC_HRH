@@ -151,37 +151,25 @@ data_plot <- merge(effectif_data , norms ,
                    by.x = c('FacLevel' , 'staff_recode') ,
                    by.y = c('facility_type' , 'categorie'))
 
+data_plot <- subset(data_plot , !is.na(value))
 
-qplot(data = data_plot[data_plot$Statut == "Total"  & 
-                         data_plot$FacLevel == "cs"&
-                         data_plot$value <= 20, ] , 
-      x = value , y = FacLevel , 
-      col = FacRurban , shape = FacLevel , geom = 'jitter' ) +
-  facet_grid(staff_recode ~ Province ) +
-  theme_bw()+
-  geom_vline(data = data_plot[data_plot$Statut == "Total" & 
-                                data_plot$FacLevel == "cs",], 
-             mapping = aes(xintercept = nombre) , color = 'green' , size = 1.2) +
-  scale_x_continuous(breaks=seq(0,20 , 5)) + scale_colour_brewer(palette="Set1") +
-  xlab('Number of health workers') + ylab('')
+plot_norm <- function(data , FacLevel , maxValue , xlab){
+  qplot(data = data_plot[data_plot$Statut == "Total"  & 
+                           data_plot$FacLevel == FacLevel &
+                           data_plot$value <= maxValue, ] ,
+        x = value , y = FacLevel , col = FacRurban , shape = FacLevel , geom = 'jitter' ) +
+    facet_grid(staff_recode ~ Province ) + theme_bw()+
+    geom_vline(data = data_plot[data_plot$Statut == "Total" & 
+                                  data_plot$FacLevel == FacLevel,], 
+               mapping = aes(xintercept = nombre) , color = 'green' , size = 1.2) +
+    scale_x_continuous(breaks=seq(0,maxValue , 5)) + scale_colour_brewer(palette="Set1") +
+    xlab(xlab) + ylab('')
+}
 
-
-qplot(data = data_plot[data_plot$variable == "Nombre" & 
-data_plot$FacLevel == "hgr" &
-data_plot$value <= 60, ] , 
-x = value , y = FacLevel , 
-col = FacRurban ,
-geom = 'jitter' ) +
-facet_grid(staff_recode ~ Province , scales = "free") +
-theme_bw()+
-geom_vline(data = data_plot[data_plot$variable == "Nombre" & 
-data_plot$FacLevel == "hgr",], 
-mapping = aes(xintercept = nombre) , color = 'green' , size = 1.2)+ 
-scale_x_continuous(breaks=seq(0,60 , 10)) + scale_colour_brewer(palette="Set1")+
-xlab('Number of health workers') + ylab('')
-
-
-```
+pdf(file = "output/graphs/staffing_comparison_to_norm.pdf" , width = 14)
+plot_norm(data_plot , 'cs' , 20 , 'Distribution du nombre de travailleurs dans les centres de santé')
+plot_norm(data_plot , 'hgr' , 10 , 'Distribution du nombre de travailleurs dans les HGR')
+dev.off()
 
 Heat Map
 
