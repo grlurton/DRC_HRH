@@ -136,7 +136,9 @@ norms <- read.csv('data/input_norms.csv' , as.is = TRUE)
 recode_staff_input <-  read.csv('data/input_recode_staff.csv' , as.is = TRUE)
 
 staff_recode <- function(melted_data , recode_input){
-  merge(melted_data  , recode_input , by.x = 'Role' , by.y = 'staff_init' , all.x = TRUE)
+  out <- merge(melted_data  , recode_input , by.x = 'Role' , by.y = 'staff_init' , all.x = TRUE)
+  out <- subset(out , !is.na(value))
+  out
 }
 
 effectif_data <- staff_recode(effectif_data , recode_staff_input)
@@ -150,8 +152,6 @@ output.table(meanNumHW , 'hw_by_faclevel_role_prov')
 data_plot <- merge(effectif_data , norms , 
                    by.x = c('FacLevel' , 'staff_recode') ,
                    by.y = c('facility_type' , 'categorie'))
-
-data_plot <- subset(data_plot , !is.na(value))
 
 plot_norm <- function(data , FacLevel , maxValue , xlab){
   qplot(data = data_plot[data_plot$Statut == "Total"  & 
@@ -171,78 +171,68 @@ plot_norm(data_plot , 'cs' , 20 , 'Distribution du nombre de travailleurs dans l
 plot_norm(data_plot , 'hgr' , 10 , 'Distribution du nombre de travailleurs dans les HGR')
 dev.off()
 
-Heat Map
 
-```{r}
+## HeatMaps code
+
 percentage_norm <- function(melted_facilities){
-perc <- mean(melted_facilities$value >= melted_facilities$nombre )
-if(max(melted_facilities$nombre) == 0){
-perc <- NA 
-}
-perc
+  perc <- mean(melted_facilities$value >= melted_facilities$nombre )
+  if(max(melted_facilities$nombre) == 0){
+    perc <- NA 
+  }
+  perc
 }
 
 ordered_staff <- c("autre" ,
 "administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
 "administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
 
-create_split <- expand.grid(unique(data_plot$Province) , 
-ordered_staff , unique(data_plot$FacLevel) , 
-unique(data_plot$FacRurban) )
+create_split <- expand.grid(unique(data_plot$Province) ,
+                            ordered_staff , unique(data_plot$FacLevel) , 
+                            unique(data_plot$FacRurban) )
 colnames(create_split) <- c("province" , "staff" , "level" , "rurbain")
 
 
 data_heat_map <- ddply(data_plot , 
-.(staff_recode , Province ,
-FacLevel , FacRurban) ,
-percentage_norm)
+                       .(staff_recode , Province , FacLevel , FacRurban) ,
+                       percentage_norm)
 
 data_heat_map <- subset(data_heat_map , !is.na(V1))
 
 data_heat_map$staff <- factor(x = data_heat_map$staff , 
-levels =  ordered_staff ,
-ordered = TRUE)
+                              levels =  ordered_staff ,
+                              ordered = TRUE)
 
 qplot(x =FacRurban ,y = staff_recode , data = data_heat_map, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacLevel~Province) +
-theme_bw()+ 
-geom_text()
-
-```
-
+      geom = "raster" , label = round(V1 , 2))+
+  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+  facet_grid(FacLevel~Province) + theme_bw()+ 
+  geom_text()
 
 ### Taux de mecanisation
 
-```{r}
-taux_meca <- function(data_melt){
-data_melt <- subset(data_melt , Nombre >= Mecanise)
-if (nrow(data_melt) > 0){
-a<-  sum(data_melt$Mecanise) / sum(data_melt$Nombre)
-b <- sum(data_melt$Mecanise)
-c <- sum(data_melt$Nombre)
-}
-if (nrow(data_melt) == 0){
-a<- NA
-}  
-data.frame(taux  = a , Meca = b , total = c)
-}
-
-taux_immatricule <- function(data_melt){
-data_melt <- subset(data_melt , Nombre >= Immatriculés)
-if (nrow(data_melt) > 0){
-a<-  sum(data_melt$Immatriculés) / sum(data_melt$Nombre)
-b <- sum(data_melt$Immatriculés)
-c <- sum(data_melt$Nombre)
-}
-if (nrow(data_melt) == 0){
-a<- NA
-}  
-data.frame(taux  = a , Immat = b , total = c)
+taux_status <- function(staff_data){
+  data_use <- dcast(staff_data , instanceID ~ Statut , value.var = 'value' , fun.aggregate = sum)
+  head(data_use)
+  data_use <- subset(data_use , Total >= Mecanise) #adhoc fixing here...
+  if (nrow(data_use) > 0){
+    Mecanise_prop <-  sum(data_use$Mecanise) / sum(data_use$Total)
+    Mecanise_N <- sum(data_use$Mecanise)
+    Present_prop <-  sum(data_use$Present) / sum(data_use$Total)
+    Present_N <- sum(data_use$Present)
+    Immatricule_prop <-  sum(data_use$Immatricule) / sum(data_use$Total)
+    Immatricule_N <- sum(data_use$Immatricule)
+    Total <- sum(data_use$Total)
+  }
+  if (nrow(data_use) == 0){
+    Total <- Immatricule_prop <- Immatricule_N <- Mecanise_prop <- 
+      Mecanise_N <- Present_prop <- Present_N<- NA
+  }
+  data.frame(Total , Immatricule_prop , Immatricule_N , Mecanise_prop , Mecanise_N , 
+             Present_prop , Present_N)
 }
 
-taux_immatricule(flat_staffing)
+status_dist <- ddply(effectif_data , .(staff_recode , FacLevel , Province) , taux_status)
+output.table(status_dist , 'status_distribution')
 
 
 flat_staffing <- subset(flat_staffing , FacRurban != '')
