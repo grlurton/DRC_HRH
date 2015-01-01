@@ -294,81 +294,48 @@ table(indiv$Age[indiv$ECZRole == 'medecin' & indiv$FacilityType == 'ecz'] > 65)
 
 ## Description de la distribution des revenus
 
+indiv$Role <- indiv$CSRole
+indiv$Role[indiv$FacilityType == 'hgr'] <-indiv$HGRRole[indiv$FacilityType == 'hgr']
+indiv$Role[indiv$FacilityType == 'ecz'] <- indiv$DataPostInitECZ[indiv$FacilityType == 'ecz']
+
+melted_indiv <- melt(indiv , id = c("Province" , "Sex" , "Age" , "Matrimonial" , "NumberFinancialDependants" , 
+                                    "LastEduc" , "FacilityType" , "Structure" , "Role"))
+
 ### Salaires
 
-indiv$ResumePost <- indiv$GroupCS.IndivCSPost
-indiv$ResumePost[indiv$FacilTypeEntry == 'hgr'] <- indiv$GroupHGR.IndivHGRPost[indiv$FacilTypeEntry == 'hgr']
-indiv$ResumePost[indiv$FacilTypeEntry == 'ecz'] <- indiv$GroupECZQuests.IndivECZRole[indiv$FacilTypeEntry == 'ecz']
+FacRelevant <- subset(facilities ,  select = c("Structure"  , "FacLevel" , "FacOwnership" , 
+                                               "FacAppui" , "FacRurban" , "EczAppui"))
 
-Table_Revenu <- function(indiv , var){
-out <- data.frame(NSalaire = sum(indiv[ , var] == 'oui') ,
-NIndiv = nrow(indiv))
-out$Prop  <- out$NSalaire / out$NIndiv
-out
-}
+melted_indiv_full <- merge(FacRelevant , melted_indiv , by = 'Structure')
 
-MultipTables <- function(indiv , var){
-revenu_table <- ddply(indiv , 
-.(Province , FacilTypeEntry , ResumePost) , 
-function(x ) Table_Revenu( x , var))
-factors_lev <- unique(indiv$FacilTypeEntry)
-out_tab <- list()
-for(j in 1:length(factors_lev)){
-level <- factors_lev[j]
-dd <- revenu_table[revenu_table[,'FacilTypeEntry'] == level , ]
-casted <- recast(dd , ResumePost ~ Province , 
-fun = function(x) mean(x , na.rm = TRUE) ,
-measure.var = 4)
-suf <- c('NIndiv' , 'Prop')
-for(i in 5:6){
-xx <- recast(dd , ResumePost ~ Province , mean ,
-measure.var = i)
-casted <- merge(casted , xx , by = 'ResumePost' ,suffixes = c( '' , suf[i-4])) 
-}
-out_tab[[level]] <- casted
-}
-out_tab
-}
-
-#MultipTables(indiv , "WageYN") Remplace par heatmap
-
-FacRelevant <- subset(facilities , 
-select = c("structuremystructure"  , "FacLevel" ,
-"FacOwnership" , "FacAppui" , "HGRVolume.HGRNbreLits" ,
-"FacRurban" , "EczAppui"))
-
-indiv_full <- merge(FacRelevant , indiv , by = 'structuremystructure')
-
-perc_revenu <- function(data , var){
-perc <- mean(data[ , var] == 'oui')
-perc
+percentage_revenu <- function(data , var){
+  perc <- mean(data$value[data$variable == var] == 'oui')
+  perc
 }
 
 CreateHeatMapData <- function(data , dimensions , revenu_type){
-heat_data <- ddply(data , as.quoted(dimensions) ,
-function(x) perc_revenu(x , revenu_type))
-heat_data$FacilTypeEntry <- factor(heat_data$FacilTypeEntry , levels = c('cs' , 'hgr' , 'ecz') , 
-ordered = TRUE)
-order_cadre <- c("autre" ,
-"administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
-"administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
-heat_data$ResumePost <- factor(heat_data$ResumePost , levels = order_cadre , 
-ordered = TRUE)
-
-heat_data
+  heat_data <- ddply(data , as.quoted(dimensions) ,
+                     function(x) percentage_revenu(x , revenu_type))
+  print(heat_data)
+  heat_data$FacilityType <- factor(heat_data$FacilityType , levels = c('cs' , 'hgr' , 'ecz') , 
+                                     ordered = TRUE)
+  order_cadre <- c("autre" ,
+                   "administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
+                   "administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
+  heat_data$Role <- factor(heat_data$Role , levels = order_cadre , ordered = TRUE)
+  heat_data
 }
 
-heat_wage <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'WageYN')
+heat_wage <- CreateHeatMapData(melted_indiv_full , c('Province','FacilityType','Role') , 'WageYN')
 
-heat_wage <- subset(heat_wage ,  ResumePost != '')
+heat_wage <- subset(heat_wage ,  Role != '')
 
-qplot(y = ResumePost , data = heat_wage, fill = V1, x = rep("" , nrow(heat_wage)) ,
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
+qplot(y = Role , data = heat_wage, fill = V1, x = rep("" , nrow(heat_wage)) ,
+      geom = "raster" , label = round(V1 , 2))+
+  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+  facet_grid(FacilityType~Province , scales = 'free_y') +
+  theme_bw()+
+  geom_text()
 
 heat_wage$Source <- 'Salaire'
 
