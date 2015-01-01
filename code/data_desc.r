@@ -231,39 +231,33 @@ taux_status <- function(staff_data){
              Present_prop , Present_N)
 }
 
-status_dist <- ddply(effectif_data , .(staff_recode , FacLevel , Province) , taux_status)
+status_dist <- ddply(effectif_data , .(staff_recode , FacLevel , Province , FacRurban) , taux_status)
 output.table(status_dist , 'status_distribution')
 
+status_dist <- subset(status_dist , !is.na(FacRurban))
+status_dist$staff_recode <- factor(x = status_dist$staff_recode , 
+                              levels =  ordered_staff ,
+                              ordered = TRUE)
 
-flat_staffing <- subset(flat_staffing , FacRurban != '')
+heat_map_status <- function(data , var , titre){
+  data$varToPlot <- data[,var]
+  qplot(x =FacRurban ,y = staff_recode , data = data, fill = varToPlot ,
+        geom = "raster" , label = round(varToPlot , 2) , main = titre)+
+    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+    facet_grid(FacLevel~Province , scales = 'free_y') +
+    theme_bw()+
+    geom_text() + xlab('') + ylab('')
+}
 
-data_heat_map <- ddply(flat_staffing , 
-.(staff_recode , Province ,
-FacLevel , FacRurban) ,
-taux_meca)
-
-taux_meca(flat_staffing)
-
-ddply(flat_staffing , .(Province) ,
-taux_meca)
-
-data_heat_map <- subset(data_heat_map , !is.na(V1))
-
-data_heat_map$staff <- factor(x = data_heat_map$staff , 
-levels =  ordered_staff ,
-ordered = TRUE)
-
-qplot(x =FacRurban ,y = staff_recode , data = data_heat_map, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacLevel~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
+pdf('output/graphs/heat_maps_status.pdf' , width = 14)
+heat_map_status(status_dist , 'Mecanise_prop' , 'Proportion de personnel mécanisé')
+heat_map_status(status_dist , 'Immatricule_prop' , 'Proportion de personnel immatriculé')
+heat_map_status(status_dist , 'Present_prop' , 'Proportion de personnel présent')
+dev.off()
 
 
-mean(indiv$GroupStatut.IndivImmatricule == 'oui')
-mean(indiv$GroupStatut.IndivMecanise == 'oui')
-```
+mean(indiv$HWImmatriculation == 'oui')
+mean(indiv$HWMecanise == 'oui')
 
 ### Echantillon
 
