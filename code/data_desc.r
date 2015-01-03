@@ -294,10 +294,6 @@ table(indiv$Age[indiv$ECZRole == 'medecin' & indiv$FacilityType == 'ecz'] > 65)
 
 ## Description de la distribution des revenus
 
-indiv$Role <- indiv$CSRole
-indiv$Role[indiv$FacilityType == 'hgr'] <-indiv$HGRRole[indiv$FacilityType == 'hgr']
-indiv$Role[indiv$FacilityType == 'ecz'] <- indiv$DataPostInitECZ[indiv$FacilityType == 'ecz']
-
 melted_indiv <- melt(indiv , id = c("Province" , "Sex" , "Age" , "Matrimonial" , "NumberFinancialDependants" , 
                                     "LastEduc" , "FacilityType" , "Structure" , "Role"))
 

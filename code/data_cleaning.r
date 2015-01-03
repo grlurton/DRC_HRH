@@ -166,6 +166,7 @@ simplifNames <- function(data , varnames , set){
   data
 }
 
+
 loop_activ_non_sante <- simplifNames(loop_activ_non_sante , varnames , 'loop_activ_non_sante')
 loop_activ_privee <- simplifNames(loop_activ_privee , varnames , 'loop_activ_prive')
 loop_appui_fac <- simplifNames(loop_appui_fac , varnames , 'loop_appui_fac')
@@ -175,6 +176,15 @@ loop_perdiem <- simplifNames(loop_perdiem , varnames , 'loop_perdiem')
 loop_prime_partenaire <- simplifNames(loop_prime_partenaire , varnames , 'loop_prim_part')
 indiv <- simplifNames(indiv , varnames , 'individuals')
 facilities <- simplifNames(facilities , varnames , 'facilities')
+
+
+## Creating Unique Role Variable
+
+indiv$Role <- indiv$CSRole
+indiv$Role[indiv$FacilityType == 'hgr'] <-indiv$HGRRole[indiv$FacilityType == 'hgr']
+indiv$Role[indiv$FacilityType == 'ecz'] <- indiv$DataPostInitECZ[indiv$FacilityType == 'ecz']
+
+
 
 ## Export selected data
 
