@@ -4,20 +4,11 @@ stage <- 'analysis'
 
 source('code/useful_functions.r')
 
-###Reconstituer tous les revenus
-
-
-
-
-
-
-
-
 ## Extract revenues from loops
 
 melted_indiv <- melt(indiv , id = c("instanceID" , "Province" , "Sex" , "Age" , "Matrimonial" , 
                                   "NumberFinancialDependants" , "LastEduc" , 
-                                  "FacilityType" , "Structure" , "Role"))
+                                  "FacilityType" , "Structure" , "Role" , "HonorairePeriod" , "HeureSupPeriod"))
 
 indiv_list <- subset(melted_indiv , select = -c(value , variable))
 
@@ -34,34 +25,96 @@ nonIndivRev <- revenue_entry[revenue_entry$RevenueTable != 'indiv' ,]
 tot_rev <- melted_indiv[melted_indiv$variable %in% revenue_entry$RevenueAmount ,]
 tot_rev$variable <- as.character(tot_rev$variable)
 
+tot_rev$period <- ''
+tot_rev$period[tot_rev$variable == 'HeureSupDollar'] <- tot_rev$HeureSupPeriod[tot_rev$variable == 'HeureSupDollar']
+tot_rev$period[tot_rev$variable == 'HonoraireDollar'] <- tot_rev$HonorairePeriod[tot_rev$variable == 'HonoraireDollar']
+
+
+
 for(i in 1:nrow(nonIndivRev)){
   tab <- eval(parse(text=nonIndivRev$RevenueTable[i]))
   var <- nonIndivRev$RevenueAmount[i]
   lab <- nonIndivRev$RevenueLabel[i]
+  period <- nonIndivRev$Periodicity[i]
   print(lab)
   out <- extract_from_loop(tab , lab , var)
+  if (period %in% c('mois_precedent' , 'bimestre_precedent' , 'trimestre_precedent')){
+    out$period <- period
+  }
+  if (!(period %in% c('mois_precedent' , 'bimestre_precedent' , 'trimestre_precedent'))){
+    out$period <- tab[,period]
+  }
   tot_rev <- rbind(tot_rev , out)
 }
-  
-tot_rev <- subset(tot_rev , !is.na(value))
 
+
+IndivRev <- revenue_entry[revenue_entry$RevenueTable == 'indiv' ,]
+
+for(i in 1:nrow(IndivRev)){
+  rev <- IndivRev$RevenueAmount[i]
+  revlab <- IndivRev$RevenueLabel[i]
+  tot_rev$variable[tot_rev$variable == rev] <- revlab
+  period <- IndivRev$Periodicity[i]
+  if (period %in% c('mois_precedent' , 'bimestre_precedent' , 'trimestre_precedent')){
+    tot_rev$period[tot_rev$variable == revlab] <- period
+  }
+}
+
+tot_rev <- subset(tot_rev , !is.na(value) & !(period %in% c('','autre')))
+  
+### Getting Monthly values
+
+NormalizeIncome <- function(Amount , Period){
+  AmountNorm <- Amount
+  AmountNorm[Period == 'bimestre_precedent'] <- Amount[Period == 'bimestre_precedent']/2
+  AmountNorm[Period == 'trimestre_precedent'] <- Amount[Period == 'trimestre_precedent']/3
+  AmountNorm
+}
+
+tot_rev$value <- as.numeric(tot_rev$value)
+
+tot_rev$MonthlyDollar <- NormalizeIncome(tot_rev$value , tot_rev$period)
+
+### Drop Unlikely values
+
+qplot(data = tot_rev , x = value) +
+  facet_wrap(~variable , scales = 'free')
+
+outliers <- unique(tot_rev$instanceID[
+  (tot_rev$variable == 'Activité  Privée' & tot_rev$value > 7000) |
+  (tot_rev$variable == 'Activité non santé' & tot_rev$value > 2000) |
+  (tot_rev$variable == 'Honoraires' & tot_rev$value > 1000) |
+  (tot_rev$variable == 'Per Diem' & tot_rev$value > 500) |
+  (tot_rev$variable == 'Prime de Partenaire' & tot_rev$value > 750) |
+  (tot_rev$variable == 'Prime de Risque' & tot_rev$value > 750) |  
+  (tot_rev$variable == 'Wage' & tot_rev$value > 1000) ]
+  )
+
+tot_rev <- subset(tot_rev , !(instanceID %in% outliers))
+
+qplot(data = tot_rev , x = value) +
+  facet_wrap(~variable , scales = 'free')
+
+### Resume Income
+
+rev_resumed <- ddply(tot_rev , .(instanceID , variable) , function(x) sum(x$MonthlyDollar))
+qplot(rev_resumed$V1)
+
+##
 
 FacRelevant <- subset(facilities ,  select = c("Structure"  , "FacLevel" , "FacOwnership" , 
                                                "FacAppui" , "FacRurban" , "EczAppui"))
 tot_rev_full <- merge(FacRelevant , tot_rev , by = 'Structure' , all.x = FALSE)
 
+### Vente Médicament
 
+table(indiv$IndivVendeMedicUB1)
+table(indiv$IndivVendeMedicMontantExact == 0)
 
+### Cadeaux
 
-
-
-
-####Dropper valeurs aberrantes
-melt_wage_facil <- subset(melt_indiv , !( (variable == 'WageDollar' & value > 4000) | 
-                                            variable == 'PrimeDollar' & value > 1500))
-
-loop_prime_partenaire <- subset(loop_prime_partenaire , 
-                                CompSalaireDollar < 100000)
+table(indiv$IndivCadeauUB1)
+table(indiv$IndivCadeauMontantExact == 0)
 
 
 ####Plot and Model
@@ -78,137 +131,24 @@ qplot(data = melt_wage_facil , y = value , x = PrimeDollar , geom = 'jitter', co
 
 ### Prime Partenaire
 
-
 qplot(data = loop_prime_partenaire , x = CompSalaireDollar ,
       binwidth = 5 , fill = PrimePartenaireFrequence) +
   facet_grid(PrimePartenaireVar~CompSalairePeriod , scales = 'free')
 
-
-flat_prim <- ddply(loop_prime_partenaire , 
-                   .(PARENT_KEY , PrimePartenaireVar , CompSalairePeriod) ,
-                   function(x){
-                     n <- nrow(x)
-                     d <- sum(x$CompSalaireDollar)
-                     data.frame(NInc = n ,
-                                Amount = d)
-                   })
-
-flat_prim <- subset(flat_prim , PrimePartenaireVar != '')
-
 qplot(data = flat_prim , x = Amount) +
   facet_grid(CompSalairePeriod~PrimePartenaireVar , scales = 'free')
 
-flat_prim <- subset(flat_prim , Amount < 500 & 
-                      !(CompSalairePeriod %in% c('autre' , '') ) )
-
-NormalizeIncome <- function(Amount , Period){
-  AmountNorm <- Amount
-  AmountNorm[Period == 'bimestre_precedent'] <- Amount[Period == 'bimestre_precedent']/2
-  AmountNorm[Period == 'trimestre_precedent'] <- Amount[Period == 'trimestre_precedent']/3
-  AmountNorm
-}
-
-flat_prim$NormalDollar <- NormalizeIncome(flat_prim$Amount , flat_prim$CompSalairePeriod)
-
-qplot(flat_prim$NormalDollar)
-
-primIndiv <- ddply(flat_prim , .(PARENT_KEY)  ,
-                   function(x) sum(x$NormalDollar))
-
-qplot(primIndiv$V1)
-
 
 ### Partage de recettes
-ii <- subset(indiv , HonoraireDollar < 750)
 
 qplot(ii$HonoraireDollar)
 
-indiv$HonoraireNorm <- NormalizeIncome(indiv$HonoraireDollar , indiv$GroupHonoraire.HonorairePeriod)
 
 ### Heures supplémentaires
 
 qplot(data = indiv , x =HeureSupDollar) + 
   facet_wrap(~Province)
 
-### Per Diems
-
-NPerDiemed <- length(unique(loop_perdiem$PARENT_KEY))
-
-table(loop_perdiem$PerDiemRaison)
-
-count_perdiem <- as.data.frame(table(loop_perdiem$PARENT_KEY))
-table(count_perdiem$Freq)
-
-loop_perdiem <- subset(loop_perdiem , PerDiemDollar < 500)
-
-qplot(data = loop_perdiem , x = PerDiemDollar) +
-  facet_wrap(~PerDiemRaison , scales = 'free')
-
-Flatten PerDiems
-
-loop_perdiem <- subset(loop_perdiem , 
-                       !(PerDiemDollar > 100 & PerDiemRaison == 'jnv') &
-                         !(PerDiemDollar > 400 & PerDiemRaison == 'atelier'))
-
-flat_perdiem <- ddply(loop_perdiem , .(PARENT_KEY) , 
-                      function(x) sum(x$PerDiemDollar) / 3)
-
-qplot(flat_perdiem$V1)
-
-
-### Vente Médicament
-
-table(indiv$IndivVendeMedicUB1)
-table(indiv$IndivVendeMedicMontantExact == 0)
-
-### Cadeaux
-
-table(indiv$IndivCadeauUB1)
-table(indiv$IndivCadeauMontantExact == 0)
-
-
-### Activité privé
-
-loop_activ_privee <- subset(loop_activ_privee , 
-                            ActivPriveeDollar < 10000)
-
-qplot(data = loop_activ_privee , x = ActivPriveeDollar) +
-  facet_wrap(~ActPriveeLieu , scales = 'free')
-
-table(loop_activ_privee$ActPriveeLieu)
-
-
-loop_activ_privee <- subset(loop_activ_privee , 
-                            ActivPriveeDollar < 800)
-
-flat_act_privee <- ddply(loop_activ_privee , .(PARENT_KEY) , 
-                         function(x) sum(x$ActivPriveeDollar))
-
-qplot(flat_act_privee$V1)
-
-### Activité non santé
-
-Quelles sont ces activites ?
-
-loop_activ_non_sante <- subset(loop_activ_non_sante , ActivNonSanteDollar < 5000)
-
-qplot(data = loop_activ_non_sante , x = ActivNonSanteDollar) +
-  facet_wrap(~ActNonSanteType , scales = 'free')
-
-
-flat_ans <- ddply(loop_activ_non_sante , .(PARENT_KEY) ,
-                  function(x) sum(x$ActivNonSanteDollar))
-
-qplot(flat_ans$V1)
-
-
-### Autre revenus
-
-Quels sont ces revenus ?
-
-qplot(loop_autre_revenu$AutreRevenuDollar)
-
-__Recoder et reaffecter dans revenus prives plus haut si besoin__
 
 ### Reconstruction Revenu Mensuel
 
