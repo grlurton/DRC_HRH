@@ -316,7 +316,6 @@ percentage_revenu <- function(data , var){
 CreateHeatMapData <- function(data , dimensions , revenu_type){
   heat_data <- ddply(data , as.quoted(dimensions) ,
                      function(x) percentage_revenu(x , revenu_type))
-  print(heat_data)
   heat_data$FacilityType <- factor(heat_data$FacilityType , levels = c('cs' , 'hgr' , 'ecz') , 
                                      ordered = TRUE)
   order_cadre <- c("autre" ,
@@ -326,61 +325,54 @@ CreateHeatMapData <- function(data , dimensions , revenu_type){
   heat_data
 }
 
-heat_wage <- CreateHeatMapData(melted_indiv_full , c('Province','FacilityType','Role') , 'WageYN')
 
-heat_wage <- subset(heat_wage ,  Role != '')
+make_heat_revenue <- function(data , revenu_data , revenu_name){
+  heat_data <- CreateHeatMapData(data , c('Province','FacilityType','Role') , revenu_data)
+  heat_data <- subset(heat_data ,  Role != '')
+  title <- paste('Heatmap for' , revenu_name , sep = ' ')
+  plot <- qplot(y = Role , data = heat_data, fill = V1, x = rep("" , nrow(heat_data)) ,
+        geom = "raster" , label = round(V1 , 2) , main = title)+
+    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+    facet_grid(FacilityType~Province , scales = 'free_y') +
+    theme_bw()+
+    geom_text() + xlab('') + ylab('')
+  heat_data$Source <- revenu_name
+  list(heat_data , plot)
+}
 
-qplot(y = Role , data = heat_wage, fill = V1, x = rep("" , nrow(heat_wage)) ,
-      geom = "raster" , label = round(V1 , 2))+
+revenue_entry <- read.csv('data/revenues_entry.csv' , as.is = TRUE)
+
+
+
+heat_complete <- data.frame(Province = character() , FacilityType = character() , Role = character() , 
+                            V1 = numeric() , Source = character())
+pdf('output/graphs/revenue_heatmap.pdf', width = 14)
+for(i in 1:nrow(revenue_entry)){
+  heat <- make_heat_revenue(melted_indiv_full , revenue_entry[i,1], revenue_entry[i,2])
+  print(heat[[2]])
+  heat_complete <- rbind(heat_complete , heat[[1]])
+  provs <- unique(heat_complete$Province)
+}
+
+revenu <- revenue_entry$RevenueLabel
+heat_complete$Source <- factor(heat_complete$Source , 
+                               levels = revenu , 
+                               ordered = TRUE)
+
+
+p <- qplot(x =Province ,y = Role , data = heat_complete, 
+      fill = V1, geom = "raster"  , main = 'Prevalence of each source of revenue')+
   scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-  facet_grid(FacilityType~Province , scales = 'free_y') +
-  theme_bw()+
-  geom_text()
-
-heat_wage$Source <- 'Salaire'
-
-indiv$ID <- seq(1 , nrow(indiv))
-data_wage <- c("WageYN" , "GroupWage.WageLastDate" , "GroupWage.WageLastAmount" ,
-"GroupWage.WageLastUnit" , "GroupWage.WageLast6Month" , 
-"GroupWage.WageMode" , "GroupWage.WagePayer"  ,
-"WageDollar" , "WageFC")
-
-data_structure <- c("Province" , "structuremystructure" , 
-"FacilTypeEntry")
-
-data_indiv <- c("ID" , "GroupDemographics.IndivSex" , "GroupDemographics.IndivAge" ,
-"GroupDemographics.IndivMatrim" , "GroupDemographics.IndivNFinancDep"  ,
-"GroupDemographics.IndivOrigProvince" , "GroupDemographics.IndivLastEduc")
-
-data_prime <- c("PrimeRisqueYN" , "GroupPrimeRisque.PrimeRisqueLastDate" ,
-"GroupPrimeRisque.PrimeRisqueLastAmount" , "GroupPrimeRisque.PrimeRisqueLastUnit" ,
-"GroupPrimeRisque.PrimeRisqueLast6Month" , 
-"PrimeDollar" ,  "PrimeFC" )
+  facet_grid(FacilityType~Source , scales = 'free_y' ) +
+  theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  xlab('') + ylab('')
+print(p)
+dev.off()
 
 
-melt_wage <- melt(data = indiv ,
-id.vars = c( data_indiv ,  data_wage , data_structure , data_prime)  ,
-measure.var = c("GroupCS.IndivCSPost" , "GroupHGR.IndivHGRPost" ,
-"GroupECZQuests.IndivECZRole") , 
-na.rm = TRUE
-)
-
-melt_keep <- subset(melt_wage , (variable == "GroupCS.IndivCSPost" & FacilTypeEntry == 'cs') |
-(variable == "GroupHGR.IndivHGRPost" & FacilTypeEntry == 'hgr') |
-(variable == "GroupECZQuests.IndivECZRole" & FacilTypeEntry == 'ecz')
-)
 
 
-```
-
-```{r}
-
-melt_keep <- merge(melt_keep , FacRelevant ,
-by = 'structuremystructure')
-
-````
-
-```{r}
+######
 melt_wage_facil <- subset(melt_keep , (PrimeDollar < 4000 | is.na(PrimeDollar) & WageDollar < 1500)
 )
 
@@ -388,70 +380,14 @@ qplot(data = melt_wage_facil , y = value , x = WageDollar , geom = 'jitter' , co
 facet_grid(Province ~ FacilTypeEntry) +
 theme_bw()
 
-```
-
-__Gosh data for Katanga is bad__
-
 ### Prime de Risque
 
-```{r PrimeDeRisqueHeatMap}
-#MultipTables(indiv , 'PrimeRisqueYN')
-
-heat_prime <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' ,'ResumePost') , 'PrimeRisqueYN')
-
-heat_prime <- subset(heat_prime , ResumePost != '' )
-
-qplot(x = rep("" , nrow(heat_prime)) ,y = ResumePost , data = heat_prime, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
-
-heat_prime$Source <- 'Prime de Risque'
-```
-
-```{r}
 qplot(data = melt_wage_facil , y = value , x = PrimeDollar , geom = 'jitter', col = FacOwnership) + 
 facet_grid(Province ~ FacilTypeEntry) +
 theme_bw()
 
-
-```
-
 ### Prime Partenaire
 
-```{r PrimePartenaireHeatMap}
-#MultipTables(indiv , 'PrimesPartenairesYN')
-
-heat_prime_part <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'PrimesPartenairesYN')
-
-heat_prime_part <- subset(heat_prime_part , ResumePost != '')
-
-qplot(x = rep("" , nrow(heat_prime_part)) ,y = ResumePost , 
-data = heat_prime_part, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
-
-heat_prime_part$Source <- 'Prime Partenaire'
-```
-
-Qui paye les primes de partenaire ?
-```{r SourcePrimes}
-#table(loop_prime_partenaire$PrimesPartenairesSource)
-
-#out <- unique(loop_prime_partenaire$PrimesPartenairesSource)
-
-#write.csv(out, '../output//tables/partenaires_sources.csv')
-
-```
-
-```{r FlattenLoop}
 loop_prime_partenaire <- subset(loop_prime_partenaire , 
 CompSalaireDollar < 100000)
 
@@ -474,9 +410,6 @@ flat_prim <- subset(flat_prim , PrimePartenaireVar != '')
 qplot(data = flat_prim , x = Amount) +
 facet_grid(CompSalairePeriod~PrimePartenaireVar , scales = 'free')
 
-```
-
-```{r}
 flat_prim <- subset(flat_prim , Amount < 500 & 
 !(CompSalairePeriod %in% c('autre' , '') ) )
 
@@ -495,123 +428,36 @@ primIndiv <- ddply(flat_prim , .(PARENT_KEY)  ,
 function(x) sum(x$NormalDollar))
 
 qplot(primIndiv$V1)
-```
-
 
 
 ### Partage de recettes
-
-```{r PartageRecetteHeatMap}
-heat_honoraire <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'HonoraireYN')
-
-heat_honoraire <- subset(heat_honoraire , ResumePost != '')
-
-qplot(x = rep("" , nrow(heat_honoraire)) ,y = ResumePost , data = heat_honoraire, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
-
-#MultipTables(indiv ,  'HonoraireYN')
-
-heat_honoraire$Source <- 'Partage des Recettes'
-```
-
-
-
-```{r HonoraireDistrib}
 ii <- subset(indiv , HonoraireDollar < 750)
 
 qplot(ii$HonoraireDollar)
-```
-
-```{r HonoraireNormalize}
+ 
 indiv$HonoraireNorm <- NormalizeIncome(indiv$HonoraireDollar , indiv$GroupHonoraire.HonorairePeriod)
-```
-
-
-
 
 ### Heures supplémentaires
 
-```{r HeurSupHeatMap}
-heat_heuresup <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'HeureSupYN')
-
-heat_heuresup <- subset(heat_heuresup , ResumePost != '')
-
-qplot(x = rep("" , nrow(heat_heuresup)) ,y = ResumePost , data = heat_heuresup, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
-#MultipTables(indiv , 'HeureSupYN')
-heat_heuresup$Source <- 'Heures Supplementaires'
-```
-
-```{r HeurSupDistrib}
 qplot(data = indiv , x =HeureSupDollar) + 
 facet_wrap(~Province)
 
-```
-
-
 ### Per Diems
 
-```{r PerDiemHeatMap}
-heat_PerDiems <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'PerDiemYN')
-
-heat_PerDiems <- subset(heat_PerDiems , ResumePost != '')
-
-qplot(x = rep("" , nrow(heat_PerDiems)) ,y = ResumePost , data = heat_PerDiems, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
-
-heat_PerDiems$Source <- 'Per Diem'
-#MultipTables(indiv ,  'PerDiemYN')
-```
-
-Combien de personnes ont eu des *per diems* ?
-
-```{r}
 NPerDiemed <- length(unique(loop_perdiem$PARENT_KEY))
-```
 
-`r NPerDiemed` personnes (`r round(NPerDiemed / NInterviews , 3) * 100` %) ont reçu un per diem
-
-Visiblement, les per diems sont surtout obtenus pendant les campagnes vacciales (JNV)... Sera-ce un problème ?
-
-```{r}
 table(loop_perdiem$PerDiemRaison)
-```
 
-Combien de per diems différents ont-ils reçu ?
-
-```{r}
 count_perdiem <- as.data.frame(table(loop_perdiem$PARENT_KEY))
 table(count_perdiem$Freq)
-```
 
-Distribution of Perdiems
-
-```{r PerDiemDistrib}
 loop_perdiem <- subset(loop_perdiem , PerDiemDollar < 500)
 
 qplot(data = loop_perdiem , x = PerDiemDollar) +
 facet_wrap(~PerDiemRaison , scales = 'free')
 
-```
-
 Flatten PerDiems
 
-```{r}
 loop_perdiem <- subset(loop_perdiem , 
 !(PerDiemDollar > 100 & PerDiemRaison == 'jnv') &
 !(PerDiemDollar > 400 & PerDiemRaison == 'atelier'))
@@ -621,52 +467,20 @@ function(x) sum(x$PerDiemDollar) / 3)
 
 qplot(flat_perdiem$V1)
 
-```
-
-
 
 ### Vente Médicament
 
-```{r}
 table(indiv$IndivVendeMedicUB1)
-
 table(indiv$IndivVendeMedicMontantExact == 0)
-```
 
 ### Cadeaux
 
-```{r}
 table(indiv$IndivCadeauUB1)
-
 table(indiv$IndivCadeauMontantExact == 0)
-```
-
-
 
 
 ### Activité privé
 
-```{r ActPriveeHeatMap}
-heat_Prive <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'ActPriveeYN')
-
-heat_Prive <- subset(heat_Prive , ResumePost != '')
-
-qplot(x = rep("" , nrow(heat_Prive)) ,y = ResumePost , data = heat_Prive, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
-
-#MultipTables(indiv ,  'ActPriveeYN')
-
-heat_Prive$Source <- 'Activite Privee'
-```
-
-
-
-```{r ActivPriveeDistrib}
 loop_activ_privee <- subset(loop_activ_privee , 
 ActivPriveeDollar < 10000)
 
@@ -675,10 +489,7 @@ facet_wrap(~ActPriveeLieu , scales = 'free')
 
 table(loop_activ_privee$ActPriveeLieu)
 
-```
 
-
-```{r FlatActivPrivee}
 loop_activ_privee <- subset(loop_activ_privee , 
 ActivPriveeDollar < 800)
 
@@ -686,132 +497,30 @@ flat_act_privee <- ddply(loop_activ_privee , .(PARENT_KEY) ,
 function(x) sum(x$ActivPriveeDollar))
 
 qplot(flat_act_privee$V1)
-```
-
 
 ### Activité non santé
 
-```{r ActNonSanteHeatMap}
-mean(indiv_full$ActNonSanteYN == 'oui')
-
-
-heat_NonSante <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'ActNonSanteYN')
-
-heat_NonSante <- subset(heat_NonSante , ResumePost != '')
-
-qplot(x =rep("" , nrow(heat_NonSante)) ,y = ResumePost , data = heat_NonSante, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province  , scales = 'free_y') +
-theme_bw()+ 
-geom_text()
-
-#MultipTables(indiv ,  'ActNonSanteYN')
-heat_NonSante$Source <- 'Activite Non Sante'
-```
-
 Quelles sont ces activites ?
 
-```{r ActNonSanteDistrib}
 loop_activ_non_sante <- subset(loop_activ_non_sante , ActivNonSanteDollar < 5000)
 
 qplot(data = loop_activ_non_sante , x = ActivNonSanteDollar) +
 facet_wrap(~ActNonSanteType , scales = 'free')
 
-#table(loop_activ_non_sante$ActNonSanteType)
 
-````
-
-```{r flatActivNonSante}
 flat_ans <- ddply(loop_activ_non_sante , .(PARENT_KEY) ,
 function(x) sum(x$ActivNonSanteDollar))
 
 qplot(flat_ans$V1)
 
-```
-
 
 ### Autre revenus
 
-```{r AutreRevenusHeatMap}
-heat_AutreRevenu <- CreateHeatMapData(indiv_full , c('Province'  , 
-'FacilTypeEntry' , 'ResumePost') , 'AutreRevenuYN')
-
-heat_AutreRevenu <- subset(heat_AutreRevenu , ResumePost != '')
-
-qplot(x = rep("" , nrow(heat_AutreRevenu)), y = ResumePost , 
-data = heat_AutreRevenu, fill = V1, 
-geom = "raster" , label = round(V1 , 2))+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Province , scales = 'free_y') +
-theme_bw()+  
-geom_text() 
-
-#MultipTables(indiv ,  'AutreRevenuYN')
-
-heat_AutreRevenu$Source <- 'Autre Revenus'
-```
-
 Quels sont ces revenus ?
-
-```{r AutreDistrib}
 
 qplot(loop_autre_revenu$AutreRevenuDollar)
 
-#table(loop_autre_revenu$AutreRevenuSource)
-
-#out <- unique(loop_autre_revenu$AutreRevenuSource)
-#write.csv(out , '../output/tables/source_autre_revenu.csv')
-
-```
-
 __Recoder et reaffecter dans revenus prives plus haut si besoin__
-
-### Résumés
-
-```{r HeatByProvince , fig.width=12}
-
-heat_by_province <- rbind(heat_AutreRevenu , heat_NonSante , heat_PerDiems ,
-heat_Prive , heat_heuresup , heat_honoraire , 
-heat_prime , heat_prime_part , heat_wage )
-
-provs <- unique(heat_by_province$Province)
-
-revenu <- c("Salaire"  , "Prime de Risque" , "Partage des Recettes" ,
-"Heures Supplementaires"  , "Prime Partenaire" , "Per Diem" , 
-"Activite Privee" , "Activite Non Sante" , "Autre Revenus")
-
-heat_by_province$Source <- factor(heat_by_province$Source , 
-levels = revenu , 
-ordered = TRUE
-)
-
-
-qplot(x =Province ,y = ResumePost , data = heat_by_province, 
-fill = V1, geom = "raster")+
-scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-facet_grid(FacilTypeEntry~Source , scales = 'free_y' ) +
-theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-xlab('') + ylab('')
-
-
-#for(i in 1:length(provs)){
-#  prov <- provs[i]
-#  dat <- subset(heat_by_province , 
-#                Province == prov )
-#  p <- qplot(x =rep("" , nrow(dat)) ,y = ResumePost , data = dat, fill = V1, 
-#        geom = "raster" , label = round(V1 , 2))+
-#    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-#    facet_grid(FacilTypeEntry~Source) +
-#    theme_bw() + labs(title = prov) +
-#    xlab('') + ylab('')
-#  print(p)
-#  }
-
-```
-
-
 
 ### Reconstruction Revenu Mensuel
 
