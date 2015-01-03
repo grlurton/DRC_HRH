@@ -1,12 +1,73 @@
+setwd('C:/Users/grlurton/Documents/DRCHRH')
+
+stage <- 'analysis'
+
+source('code/useful_functions.r')
+
+###Reconstituer tous les revenus
 
 
 
-######
-melt_wage_facil <- subset(melt_keep , (PrimeDollar < 4000 | is.na(PrimeDollar) & WageDollar < 1500)
-)
 
-qplot(data = melt_wage_facil , y = value , x = WageDollar , geom = 'jitter' , col = FacOwnership) + 
-  facet_grid(Province ~ FacilTypeEntry) +
+
+
+
+
+## Extract revenues from loops
+
+melted_indiv <- melt(indiv , id = c("instanceID" , "Province" , "Sex" , "Age" , "Matrimonial" , 
+                                  "NumberFinancialDependants" , "LastEduc" , 
+                                  "FacilityType" , "Structure" , "Role"))
+
+indiv_list <- subset(melted_indiv , select = -c(value , variable))
+
+indiv_list <- indiv_list[!duplicated(indiv_list) , ]
+
+extract_from_loop <- function(data , variable , value){
+    out <- data.frame(PARENT_KEY =  data$PARENT_KEY , value = data[,value] , variable = variable)
+    merge(indiv_list , out , by.y = 'PARENT_KEY' , by.x = 'instanceID' , all.y = TRUE)
+}
+
+revenue_entry <- read.csv('data/revenues_entry.csv' , as.is = TRUE)
+nonIndivRev <- revenue_entry[revenue_entry$RevenueTable != 'indiv' ,]
+
+tot_rev <- melted_indiv[melted_indiv$variable %in% revenue_entry$RevenueAmount ,]
+tot_rev$variable <- as.character(tot_rev$variable)
+
+for(i in 1:nrow(nonIndivRev)){
+  tab <- eval(parse(text=nonIndivRev$RevenueTable[i]))
+  var <- nonIndivRev$RevenueAmount[i]
+  lab <- nonIndivRev$RevenueLabel[i]
+  print(lab)
+  out <- extract_from_loop(tab , lab , var)
+  tot_rev <- rbind(tot_rev , out)
+}
+  
+tot_rev <- subset(tot_rev , !is.na(value))
+
+
+FacRelevant <- subset(facilities ,  select = c("Structure"  , "FacLevel" , "FacOwnership" , 
+                                               "FacAppui" , "FacRurban" , "EczAppui"))
+tot_rev_full <- merge(FacRelevant , tot_rev , by = 'Structure' , all.x = FALSE)
+
+
+
+
+
+
+
+####Dropper valeurs aberrantes
+melt_wage_facil <- subset(melt_indiv , !( (variable == 'WageDollar' & value > 4000) | 
+                                            variable == 'PrimeDollar' & value > 1500))
+
+loop_prime_partenaire <- subset(loop_prime_partenaire , 
+                                CompSalaireDollar < 100000)
+
+
+####Plot and Model
+qplot(data = melt_wage_facil[melt_wage_facil$variable == 'WageDollar' ,] , 
+      x = value , geom = 'jitter' , col = FacOwnership) + 
+  facet_grid(Province ~ FacilityType) +
   theme_bw()
 
 ### Prime de Risque
@@ -17,8 +78,6 @@ qplot(data = melt_wage_facil , y = value , x = PrimeDollar , geom = 'jitter', co
 
 ### Prime Partenaire
 
-loop_prime_partenaire <- subset(loop_prime_partenaire , 
-                                CompSalaireDollar < 100000)
 
 qplot(data = loop_prime_partenaire , x = CompSalaireDollar ,
       binwidth = 5 , fill = PrimePartenaireFrequence) +
