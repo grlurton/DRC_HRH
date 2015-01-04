@@ -123,17 +123,59 @@ ub_unit$variable[ub_unit$variable == 'IndivCadeauMontantUnit'] <- 'IndivCadeauMo
 ub_unit$variable[ub_unit$variable == 'IndivVendeMedicMontantUnit'] <- 'IndivVendeMedicMontantExact'
 
 
-ub_last <- merge(ub_last , ub_unit , by.x = c('instanceID' , 'variable') , by.y =  c('instanceID' , 'variable'))
+ub_last <- merge(ub_last , ub_unit , by.x = c('instanceID' , 'variable') , by.y =  c('instanceID' , 'variable') ,
+                 all = TRUE)
+
+table(ub_last$variable[ub_last$value == 'no_response'])
+ub_last <- subset(ub_last , value != 'no_response')
+
+ub_last_num <- subset(ub_last , !is.na(unit))
+ub_last_num$value <- as.numeric(ub_last_num$value)
+ub_last_num <- StandardizeOver(data = ub_last_num , Value = 'value' , Currency = 'unit' , 'unfoldingBracket')
+
+ub_bracketing <- read.csv('data/ub_bracketing.csv')
+ub_last_bracket <- subset(ub_last , is.na(unit))
+ub_last_bracket <- merge(ub_last_bracket , ub_bracketing , by.x = 'value' , by.y = 'value')
+ub_last_bracket$amount <- runif(n = nrow(ub_last_bracket) , min = ub_last_bracket$min , max = ub_last_bracket$max)
 
 
 
+mean(runif(n = nrow(ub_last_bracket) , min = ub_last_bracket$min , max = ub_last_bracket$max))
+mean(ub_last_num$unfoldingBracketDollar[ub_last_num$unfoldingBracketDollar != 0 & 
+                                          ub_last_num$unfoldingBracketDollar < 1000])
+
+ext_ub_brack <- subset(ub_last_bracket , select = c(variable, amount  , instanceID))
+ext_ub_num <- subset(ub_last_num , select = c(variable , unfoldingBracketDollar , instanceID))
+
+colnames(ext_ub_brack) <- colnames(ext_ub_num) <- c('variable' , 'value' , 'instanceID')
+
+ub_final <- rbind(ext_ub_brack , ext_ub_num)
+ub_final <- subset(ub_final , value < 1000)
 
 
+ub_final$variable[substr(ub_final$variable , 1 , 6) == 'IndivC'] <- 'Cadeau'
+ub_final$variable[substr(ub_final$variable , 1 , 6) == 'IndivV'] <- 'Vente de Medicament'
+
+ddply(ub_final , .(variable) , function(x) mean(x$value))
+
+qplot(data = ub_final[ub_final$value < 100 ,]  , x = value) +
+  facet_wrap(~ variable)
+
+total_ub <- merge(ub_final , indiv_list , by = 'instanceID')
+total_ub$period <- 'mois_precedent'
+total_ub$MonthlyDollar <- total_ub$value
+
+total_ub <- subset(total_ub , MonthlyDollar != 0)
+ 
+ddply(total_ub , .(Province , variable) , function(x) mean(x$value) )
+
+tot_rev <- rbind(tot_rev , total_ub)
 
 ### Resume Income
 
 rev_resumed <- ddply(tot_rev , .(instanceID , variable) , function(x) sum(x$MonthlyDollar))
-qplot(rev_resumed$V1)
+qplot(data = rev_resumed , x = V1) + facet_wrap(~variable , scales = 'free')
+
 
 ##
 
@@ -141,15 +183,9 @@ FacRelevant <- subset(facilities ,  select = c("Structure"  , "FacLevel" , "FacO
                                                "FacAppui" , "FacRurban" , "EczAppui"))
 tot_rev_full <- merge(FacRelevant , tot_rev , by = 'Structure' , all.x = FALSE)
 
-### Vente Médicament
 
-table(indiv$IndivVendeMedicUB1)
-table(indiv$IndivVendeMedicMontantExact == 0)
 
-### Cadeaux
 
-table(indiv$IndivCadeauUB1)
-table(indiv$IndivCadeauMontantExact == 0)
 
 
 ####Plot and Model
