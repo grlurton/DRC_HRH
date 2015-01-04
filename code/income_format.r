@@ -95,6 +95,41 @@ tot_rev <- subset(tot_rev , !(instanceID %in% outliers))
 qplot(data = tot_rev , x = value) +
   facet_wrap(~variable , scales = 'free')
 
+## Unfolding Brackets
+
+ub_abaque <- read.csv('data/unfolding_brackets.csv' , as.is = TRUE)
+
+ub_data <- indiv[ ,  c(ub_abaque$Label , 'instanceID')]
+
+ub_flat <- melt(ub_data , id = 'instanceID')
+ub_flat <- subset(ub_flat , !is.na(value) & value != '')
+
+ub_flat <- merge(ub_flat , ub_abaque , by.x = 'variable' , by.y = 'Label')
+
+ub_last <- ddply(ub_flat , .(instanceID) , 
+                 function(data){
+                   mm <- max(data$rank)
+                   subset(data , rank == mm)
+                 })
+
+ub_unit <- subset(melt(indiv , id = 'instanceID') ,
+                  variable %in% c('IndivVendeMedicMontantUnit' , 'IndivCadeauMontantUnit') & value != '')
+
+colnames(ub_unit) <- c("instanceID" , "variable" , "unit")
+
+ub_last$variable <- as.character(ub_last$variable)
+ub_unit$variable <- as.character(ub_unit$variable)
+ub_unit$variable[ub_unit$variable == 'IndivCadeauMontantUnit'] <- 'IndivCadeauMontantExact'
+ub_unit$variable[ub_unit$variable == 'IndivVendeMedicMontantUnit'] <- 'IndivVendeMedicMontantExact'
+
+
+ub_last <- merge(ub_last , ub_unit , by.x = c('instanceID' , 'variable') , by.y =  c('instanceID' , 'variable'))
+
+
+
+
+
+
 ### Resume Income
 
 rev_resumed <- ddply(tot_rev , .(instanceID , variable) , function(x) sum(x$MonthlyDollar))
@@ -149,50 +184,11 @@ qplot(ii$HonoraireDollar)
 qplot(data = indiv , x =HeureSupDollar) + 
   facet_wrap(~Province)
 
-
-### Reconstruction Revenu Mensuel
-
-```{r}
-out_income <- function(Id , Value , Income){
-  data.frame(indiv = Id , value = Value , income = Income)
-}
-
-wage <- out_income(indiv$meta.instanceID , indiv$WageDollar , 'Salaire')
-prime_risque <- out_income(indiv$meta.instanceID , indiv$PrimeDollar , 'Prime de Risque')
-prime_partenaire <- out_income(primIndiv$PARENT_KEY , primIndiv$V1 , 
-                               'Prime Partenaire')
-per_diem <- out_income(flat_perdiem$PARENT_KEY , flat_perdiem$V1 , 'Per Diems')
-honoraire <- out_income(indiv$meta.instanceID , indiv$HonoraireNorm ,
-                        'Partage de Recettes')
-heures_sup <- out_income(indiv$meta.instanceID , indiv$HeureSupDollar , 
-                         'Heures Supplementaires')
-act_privee <- out_income(flat_act_privee$PARENT_KEY , flat_act_privee$V1 , 
-                         'Activite Privee')
-act_non_sante <- out_income(flat_ans$PARENT_KEY , flat_ans$V1 , 
-                            'Activite Non Sante')
-
-data_flat <- rbind(wage , prime_risque , prime_partenaire , 
-                   per_diem , honoraire , heures_sup , act_privee , act_non_sante)
-
-data_flat <- subset(data_flat , !is.na(value))
-data_flat$value <- as.numeric(as.character(data_flat$value))
-
-total_income <- ddply(data_flat , .(indiv) , 
-                      function(x) sum(x$value))
-
-
-total_income <- subset(total_income  , V1 < 10000)
-
-qplot(total_income$V1 , binwidth = 50)
-
 total_income <- merge(total_income , indiv , by.x='indiv' , by.y='meta.instanceID')
 
 ddply(total_income , .(ResumePost) , function(x)  median(x$V1))
 
 
-```
-
-```{r}
 ForAnalysisIncome <- subset(data_flat , indiv %in% total_income$indiv)
 
 bysource <- ddply(ForAnalysisIncome, .(income) , 

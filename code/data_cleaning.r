@@ -162,7 +162,7 @@ simplifNames <- function(data , varnames , set){
       colnames(data)[i] <- nameNew
     }
   }
-  data <- subset(data , select = varnames$newName)
+#  data <- subset(data , select = varnames$newName)
   data
 }
 
@@ -176,7 +176,6 @@ loop_perdiem <- simplifNames(loop_perdiem , varnames , 'loop_perdiem')
 loop_prime_partenaire <- simplifNames(loop_prime_partenaire , varnames , 'loop_prim_part')
 indiv <- simplifNames(indiv , varnames , 'individuals')
 facilities <- simplifNames(facilities , varnames , 'facilities')
-
 
 ## Creating Unique Role Variable
 
