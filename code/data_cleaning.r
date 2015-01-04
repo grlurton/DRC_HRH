@@ -167,6 +167,46 @@ simplifNames <- function(data , varnames , set){
 }
 
 
+### Autre
+
+recode_autre <- read.csv('data/recode_source_autre_revenu.csv' , as.is = TRUE)
+loop_autre_revenu <- merge(loop_autre_revenu , recode_autre , 
+                           by.x = 'AutreRevenuSource' , by.y = 'Autre')
+
+
+autre_for_prive <- subset(loop_autre_revenu , Recode == 'prestation des soins de santé')
+autre_for_non_sante <- subset(loop_autre_revenu , 
+                              !(Recode %in% c('prestation des soins de santé' , 'famille') ) 
+                              )
+                                          
+autre_for_prive <- data.frame(X = autre_for_prive$X ,
+                              ActPriveeLieu = autre_for_prive$Recode ,
+                              ActPriveeAmount = autre_for_prive$AutreRevenuAmount ,
+                              ActPriveeUnit = autre_for_prive$AutreRevenuUnit ,
+                              PARENT_KEY = autre_for_prive$PARENT_KEY ,
+                              KEY = autre_for_prive$KEY , 
+                              SET.OF.ActPriveeGroup = '' ,
+                              ActivPriveeDollar = autre_for_prive$AutreRevenuDollar ,
+                              ActivPriveeFC = autre_for_prive$AutreRevenuFC
+                              )
+
+autre_for_non_sante <- data.frame(X = autre_for_non_sante$X ,
+                              ActNonSanteType = autre_for_non_sante$Recode ,
+                              ActNonSanteProprio = '' ,
+                              ActNonSanteAmount = autre_for_non_sante$AutreRevenuAmount ,
+                              ActNonSanteUnit = autre_for_non_sante$AutreRevenuUnit ,
+                              PARENT_KEY = autre_for_non_sante$PARENT_KEY ,
+                              KEY = autre_for_non_sante$KEY , 
+                              SET.OF.ActNonSanteGroup = '' ,
+                              ActivNonSanteDollar = autre_for_non_sante$AutreRevenuDollar ,
+                              ActivNonSanteFC = autre_for_non_sante$AutreRevenuFC
+                              )
+
+loop_activ_privee <- rbind(loop_activ_privee , autre_for_prive)
+loop_activ_non_sante <- rbind(loop_activ_non_sante , autre_for_non_sante)
+
+## Simplify
+
 loop_activ_non_sante <- simplifNames(loop_activ_non_sante , varnames , 'loop_activ_non_sante')
 loop_activ_privee <- simplifNames(loop_activ_privee , varnames , 'loop_activ_prive')
 loop_appui_fac <- simplifNames(loop_appui_fac , varnames , 'loop_appui_fac')
