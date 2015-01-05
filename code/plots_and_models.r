@@ -4,106 +4,23 @@ stage <- 'modelisation'
 
 source('code/useful_functions.r')
 
+RevSum <- ddply(total_revenu , .(instanceID , variable , Role) ,  function(x) sum(x$value))
+RevTot <- ddply(total_revenu , .(instanceID) ,  function(x) sum(x$value))
 
+##Ordering Individuals
+ordRev <- RevTot$instanceID[order(RevTot$V1)]
+RevSum$instanceID <- factor(RevSum$instanceID , levels =  ordRev , ordered = TRUE)
 
+##Ordering Revenues
+orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
+                   'Honoraires' , 'Heures supplémentaires' , 'Activité  Privée' , 
+                   'Activité non santé' , "Autres revenus" , "Vente de Medicament" , "Cadeau")
 
+RevSum$variable <- factor(RevSum$variable , levels =  orderedIncome)
 
-####Plot and Model
-qplot(data = melt_wage_facil[melt_wage_facil$variable == 'WageDollar' ,] , 
-      x = value , geom = 'jitter' , col = FacOwnership) + 
-  facet_grid(Province ~ FacilityType) +
-  theme_bw()
+qplot(data = RevSum , x = instanceID , y = V1 , geom = 'bar' , stat = 'identity' , width = 1 , fill = variable)+
+  theme(axis.text.x = element_blank()) + facet_wrap(~Role , scales = 'free')
 
-### Prime de Risque
-
-qplot(data = melt_wage_facil , y = value , x = PrimeDollar , geom = 'jitter', col = FacOwnership) + 
-  facet_grid(Province ~ FacilTypeEntry) +
-  theme_bw()
-
-### Prime Partenaire
-
-qplot(data = loop_prime_partenaire , x = CompSalaireDollar ,
-      binwidth = 5 , fill = PrimePartenaireFrequence) +
-  facet_grid(PrimePartenaireVar~CompSalairePeriod , scales = 'free')
-
-qplot(data = flat_prim , x = Amount) +
-  facet_grid(CompSalairePeriod~PrimePartenaireVar , scales = 'free')
-
-
-### Partage de recettes
-
-qplot(ii$HonoraireDollar)
-
-
-### Heures supplémentaires
-
-qplot(data = indiv , x =HeureSupDollar) + 
-  facet_wrap(~Province)
-
-total_income <- merge(total_income , indiv , by.x='indiv' , by.y='meta.instanceID')
-
-ddply(total_income , .(ResumePost) , function(x)  median(x$V1))
-
-
-ForAnalysisIncome <- subset(data_flat , indiv %in% total_income$indiv)
-
-bysource <- ddply(ForAnalysisIncome, .(income) , 
-                  function(x) sum(x$value))
-
-qplot(data = bysource , x = income , y = V1 , geom = 'bar' , stat = "identity")
-
-FirstSourceOfIncome <- ddply(data_flat , .(indiv) , 
-                             function(x){
-                               mainIncome <- max(x$value , na.rm = TRUE)
-                               val <- as.character(x$income[x$value == mainIncome])
-                               if(length(val) > 1) val <- val[1]
-                               val
-                             }
-)
-N <- nrow(FirstSourceOfIncome)
-
-ggplot(data  = FirstSourceOfIncome , aes(x= V1)) + 
-  geom_bar(aes(y = (..count..)/sum(..count..))) +
-  ylab('% pour qui cela constitue le premier revenu') +
-  xlab('Type de Revenu') +
-  theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-
-
-
-data_flat <- subset(data_flat , value < 5000)
-
-matRev <- dcast(data_flat , 
-                indiv ~ income , value.var = 'value' , 
-                fun.aggregate = function(x) sum(x , na.rm = FALSE))
-
-
-aa <- princomp(as.matrix(matRev[,-c(1)]) , cor = TRUE )
-
-biplot(aa)
-
-data_flat2 <- merge(data_flat , indiv_full , by.x = 'indiv' , by.y = 'meta.instanceID' ,
-                    all = FALSE)
-
-
-
-RevSum <- ddply(data_flat2 , .(indiv) ,  function(x) sum(x$value))
-
-ordRev <- RevSum$indiv[order(RevSum$V1)]
-
-
-data_flat2$indiv <- factor(data_flat2$indiv , levels =  ordRev , ordered = TRUE)
-
-orderedIncome <- c('Salaire' , 'Prime de Risque' , 'Prime Partenaire' , 'Per Diems' , 
-                   'Partage de Recettes' , 'Heures Supplementaires' , 'Activite Privee' , 
-                   'Activite Non Sante')
-
-data_flat2$income <- factor(data_flat2$income , levels =  orderedIncome , ordered = TRUE)
-
-qplot(x = indiv, y = value , data=data_flat2, geom="bar", fill=factor(income) ,
-      stat = 'identity') + 
-  facet_wrap(~ResumePost , scales = 'free') + 
-  theme(axis.text.x = element_blank())
 
 
 
@@ -216,7 +133,6 @@ ddply(totalIncome , .(Profile) ,
 
 ### Determinants
 
-```{r}
 colnames(matRev) <- c("indiv" , "Salaire"  , "Prime_de_Risque","Prime_Partenaire","Per_Diems" , "Partage_de_Recettes","Heures_Supplementaires","Activite_Privee","Activite_Non Sante" )
 indout <- ddply(indiv_full , .(meta.instanceID) , nrow)
 indout <- subset(indout , V1 >1)
@@ -283,7 +199,7 @@ On modélise
 
 Etapes :
   
-  1. declarer les covariables du modele
+1. declarer les covariables du modele
 2. creer le modele en ajoutant le y
 3. extraire les donneees avec `simcf`
 4. faire tourner (tous les modeles)
