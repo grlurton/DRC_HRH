@@ -1,4 +1,8 @@
+setwd('C:/Users/grlurton/Documents/DRCHRH')
 
+stage <- 'modelisation'
+
+source('code/useful_functions.r')
 
 
 

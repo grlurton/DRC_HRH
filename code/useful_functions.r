@@ -124,4 +124,12 @@ if(stage == 'analysis'){
   loop_autre_revenu <-read.csv('data/questionnaires_analysis/loop_autre_revenu_select.csv' , as.is = TRUE)
   loop_perdiem <-read.csv('data/questionnaires_analysis/loop_perdiem_select.csv' , as.is = TRUE)
   loop_prime_partenaire <-read.csv('data/questionnaires_analysis/loop_prime_partenaire_select.csv', as.is = TRUE)  
+  rm(sample_final)
+}
+
+if(stage == 'modelisation'){
+  indiv <- read.csv('data/questionnaires_analysis/individual_data_select.csv'  , as.is = TRUE)
+  facilities <- read.csv('data/questionnaires_analysis/facility_data_select.csv' , as.is = TRUE)
+  total_revenu <- read.csv('data/questionnaires_analysis/total_revenue_table.csv' , as.is = TRUE)
+  rm(sample_final)
 }

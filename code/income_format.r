@@ -184,3 +184,6 @@ qplot(data = rev_resumed , x = V1) + facet_wrap(~variable , scales = 'free')
 FacRelevant <- subset(facilities ,  select = c("Structure"  , "FacLevel" , "FacOwnership" , 
                                                "FacAppui" , "FacRurban" , "EczAppui"))
 tot_rev_full <- merge(FacRelevant , tot_rev , by = 'Structure' , all.x = FALSE)
+
+
+write.csv(tot_rev_full , 'data/questionnaires_analysis/total_revenue_table.csv')
