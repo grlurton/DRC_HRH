@@ -127,7 +127,7 @@ indiv$GroupHGR.IndivHGRPost <- RecodePost(indiv$GroupHGR.IndivHGRPost)
 ### Recode some facilities characteristics
 
 facilities$FacRurban[facilities$FacRurban == 'semiurbain'] <- 'urbain'
-#facilities$FacLevel[facilities$FacLevel %in% c('autre', 'csr')] <- 'cs'
+facilities$FacLevel[facilities$FacLevel %in% c('autre')] <- 'cs'
 
 
 ZoneMilieu <- function(data){
