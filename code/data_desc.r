@@ -145,17 +145,13 @@ effectif_data <- staff_recode(effectif_data , recode_staff_input)
 
 output.table(meanNumHW , 'hw_by_faclevel_role_prov')
 
-## Taking out two outliers
-
-## Semiurbain == Urbain
-
 data_plot <- merge(effectif_data , norms , 
                    by.x = c('FacLevel' , 'staff_recode') ,
                    by.y = c('facility_type' , 'categorie'))
 
 plot_norm <- function(data , FacLevel , maxValue , xlab){
   qplot(data = data_plot[data_plot$Statut == "Total"  & 
-                           data_plot$FacLevel == FacLevel &
+                           data_plot$FacLevel %in% FacLevel &
                            data_plot$value <= maxValue, ] ,
         x = value , y = FacLevel , col = FacRurban , shape = FacLevel , geom = 'jitter' ) +
     facet_grid(staff_recode ~ Province ) + theme_bw()+
@@ -167,7 +163,7 @@ plot_norm <- function(data , FacLevel , maxValue , xlab){
 }
 
 pdf(file = "output/graphs/staffing_comparison_to_norm.pdf" , width = 14)
-plot_norm(data_plot , 'cs' , 20 , 'Distribution du nombre de travailleurs dans les centres de santé')
+plot_norm(data_plot , c('cs' , 'csr') , 20 , 'Distribution du nombre de travailleurs dans les centres de santé')
 plot_norm(data_plot , 'hgr' , 10 , 'Distribution du nombre de travailleurs dans les HGR')
 dev.off()
 
