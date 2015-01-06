@@ -156,7 +156,7 @@ plot_norm <- function(data , FacLevel , maxValue , xlab){
         x = value , y = FacLevel , col = FacRurban , shape = FacLevel , geom = 'jitter' ) +
     facet_grid(staff_recode ~ Province ) + theme_bw()+
     geom_vline(data = data_plot[data_plot$Statut == "Total" & 
-                                  data_plot$FacLevel == FacLevel,], 
+                                  data_plot$FacLevel %in% FacLevel,], 
                mapping = aes(xintercept = nombre) , color = 'green' , size = 1.2) +
     scale_x_continuous(breaks=seq(0,maxValue , 5)) + scale_colour_brewer(palette="Set1") +
     xlab(xlab) + ylab('')
