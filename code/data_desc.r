@@ -283,14 +283,22 @@ table(indiv$LastEduc , indiv$Sex)
 
 indiv$Age[indiv$Age > 100 | indiv$Age < 18] <- NA
 
-table(indiv$Age[indiv$CSRole != 'medecin' & indiv$FacilityType == 'cs'] > 62)
-table(indiv$Age[indiv$CSRole == 'medecin' & indiv$FacilityType == 'cs'] > 65)
+retraite <- function(data){
+  data <- subset(data , !is.na(Age) )
+  non_med <- data.frame(Cadre = 'Non medecin' , 
+                     Total = nrow(data[data$Role != 'medecin' , ]) , 
+                     Retraite = nrow(data[data$Role != 'medecin' & data$Age > 62, ])
+                     )
+  med <- data.frame(Cadre = 'Medecin' , 
+                    Total = nrow(data[data$Role == 'medecin' , ]) , 
+                    Retraite = nrow(data[data$Role == 'medecin' & data$Age > 65, ])
+  )
+  rbind(non_med , med)
+}
 
-table(indiv$Age[indiv$HGRRole != 'medecin' & indiv$FacilityType == 'hgr'] > 62)
-table(indiv$Age[indiv$HGRRole == 'medecin' & indiv$FacilityType == 'hgr'] > 65)
+df_retraite <- ddply(indiv , .(FacilityType) , retraite)
+output.table(tab = df_retraite , name =  'table_retraite')
 
-table(indiv$Age[indiv$ECZRole != 'medecin' & indiv$FacilityType == 'ecz'] > 62)
-table(indiv$Age[indiv$ECZRole == 'medecin' & indiv$FacilityType == 'ecz'] > 65)
 
 ## Description de la distribution des revenus
 
