@@ -13,7 +13,7 @@ RevSum$instanceID <- factor(RevSum$instanceID , levels =  ordRev , ordered = TRU
 
 ##Ordering Revenues
 orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
-                   'Honoraires' , 'Heures supplémentaires' , 'Activité  Privée' , 
+                   'Prime Locale' , 'Heures supplémentaires' , 'Activité  Privée' , 
                    'Activité non santé' , "Autres revenus" , "Vente de Medicament" , "Cadeau")
 
 RevSum$variable <- factor(RevSum$variable , levels =  orderedIncome)

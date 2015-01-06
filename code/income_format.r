@@ -77,6 +77,7 @@ tot_rev$value <- as.numeric(tot_rev$value)
 
 tot_rev$MonthlyDollar <- NormalizeIncome(tot_rev$value , tot_rev$period)
 
+
 ### Drop Unlikely values
 
 qplot(data = tot_rev , x = value) +
@@ -85,7 +86,7 @@ qplot(data = tot_rev , x = value) +
 outliers <- unique(tot_rev$instanceID[
   (tot_rev$variable == 'Activité  Privée' & tot_rev$value > 7000) |
   (tot_rev$variable == 'Activité non santé' & tot_rev$value > 2000) |
-  (tot_rev$variable == 'Honoraires' & tot_rev$value > 1000) |
+  (tot_rev$variable == 'Prime Locale' & tot_rev$value > 1000) |
   (tot_rev$variable == 'Per Diem' & tot_rev$value > 500) |
   (tot_rev$variable == 'Prime de Partenaire' & tot_rev$value > 750) |
   (tot_rev$variable == 'Prime de Risque' & tot_rev$value > 750) |  
