@@ -82,7 +82,13 @@ sample_final <- read.csv('data/samplefinal.csv' , strip.white=TRUE)
 sample_final$Province <- UnifyNames(sample_final$Province)
 sample_final$Zone <- UnifyNames(sample_final$Zone)
 
+## Declare ordering variables
 
+ordering_staff <- c("autre" ,
+                   "administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
+                   "administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
+
+ordering_milieu <- c("urbain" , "rural")
 
 ##Data Environments loads
 
@@ -124,6 +130,9 @@ if(stage == 'analysis'){
   loop_autre_revenu <-read.csv('data/questionnaires_analysis/loop_autre_revenu_select.csv' , as.is = TRUE)
   loop_perdiem <-read.csv('data/questionnaires_analysis/loop_perdiem_select.csv' , as.is = TRUE)
   loop_prime_partenaire <-read.csv('data/questionnaires_analysis/loop_prime_partenaire_select.csv', as.is = TRUE)  
+  
+  facilities$FacRurban <- factor(facilities$FacRurban , levels = ordering_milieu , ordered = TRUE)
+  
   rm(sample_final)
 }
 

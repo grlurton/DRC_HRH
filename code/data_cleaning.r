@@ -238,5 +238,3 @@ write.csv(indiv , 'data/questionnaires_analysis/individual_data_select.csv')
 write.csv(facilities , 'data/questionnaires_analysis/facility_data_select.csv')
 
 rm(list = ls())
-
-

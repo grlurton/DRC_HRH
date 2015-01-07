@@ -178,10 +178,6 @@ percentage_norm <- function(melted_facilities){
   perc
 }
 
-ordered_staff <- c("autre" ,
-"administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
-"administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
-
 create_split <- expand.grid(unique(data_plot$Province) ,
                             ordered_staff , unique(data_plot$FacLevel) , 
                             unique(data_plot$FacRurban) )
@@ -198,7 +194,7 @@ data_heat_map$staff <- factor(x = data_heat_map$staff ,
                               levels =  ordered_staff ,
                               ordered = TRUE)
 
-qplot(x =FacRurban ,y = staff_recode , data = data_heat_map, fill = V1, 
+qplot(x =FacRurban ,y = staff , data = data_heat_map, fill = V1, 
       geom = "raster" , label = round(V1 , 2))+
   scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
   facet_grid(FacLevel~Province) + theme_bw()+ 
@@ -208,8 +204,7 @@ qplot(x =FacRurban ,y = staff_recode , data = data_heat_map, fill = V1,
 
 taux_status <- function(staff_data){
   data_use <- dcast(staff_data , instanceID ~ Statut , value.var = 'value' , fun.aggregate = sum)
-  head(data_use)
-  data_use <- subset(data_use , Total >= Mecanise) #adhoc fixing here...
+  data_use <- subset(data_use , data_use$Total >= data_use$Mecanise) #adhoc fixing here...
   if (nrow(data_use) > 0){
     Mecanise_prop <-  sum(data_use$Mecanise) / sum(data_use$Total)
     Mecanise_N <- sum(data_use$Mecanise)
@@ -318,10 +313,8 @@ CreateHeatMapData <- function(data , dimensions , revenu_type){
                      function(x) percentage_revenu(x , revenu_type))
   heat_data$FacilityType <- factor(heat_data$FacilityType , levels = c('cs' , 'hgr' , 'ecz') , 
                                      ordered = TRUE)
-  order_cadre <- c("autre" ,
-                   "administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
-                   "administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
-  heat_data$Role <- factor(heat_data$Role , levels = order_cadre , ordered = TRUE)
+
+  heat_data$Role <- factor(heat_data$Role , levels = ordering_staff , ordered = TRUE)
   heat_data
 }
 
