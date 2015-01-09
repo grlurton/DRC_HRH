@@ -48,7 +48,7 @@ total_revenu$RevenueEntry[total_revenu$variable == 'Vente de Medicament'] <- 'Ve
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
              FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
              NumberFinancialDependants + LastEduc + FacilityType + Role ~ RevenueEntry ,
-             function(x) length(x) > 1
+             function(x) length(x) > 0
              )
   
 
@@ -84,42 +84,25 @@ modelData$Power[modelData$RoleInit %in% c('medecin','infirmier_titulaire' ,
                                                 'medecin_directeur')] <- 1
 
 modelData$Power[is.na(modelData$Power)] <- 0
+modelData$Role[modelData$Role == ''] <- NA
 
-On modélise 
-
-Etapes :
-  
-1. declarer les covariables du modele
-2. creer le modele en ajoutant le y
-3. extraire les donneees avec `simcf`
-4. faire tourner (tous les modeles)
-5. constituer les cf
-6. calculer expected values from cf
-7. compile cfs dans plotting frames
-8. plot
-
-
-2 -> 4 peuvent se faire dans une boucle
-
+##Create Models
 
 make_formula <- function(y , covariates){
-  formula <- paste(var,  covariates, sep = ' ~ ')
+  formula <- paste(y,  covariates, sep = ' ~ ')
   as.formula(formula)
 }
 
-covs_indiv <- "GroupDemographics.IndivSex + GroupDemographics.IndivAge + LastEducation" 
-covs_hgrcs <-  "administrateur + autre + infirmier +  labo + medecin + pharmacien+ FacAppui"
-covs_ecz <- "administrateur_gestionnaire  + autre  + infirmier_superviseur + mcz + EczAppui"
-covs_hfsgen <- "FacRurban + FacLevel + Power  + (1|Province)"
+covs_indiv <- "Sex + Age + LastEducation + Role + Power" 
+covs_hgrcs <-  "FacLevel + FacOwnership + FacRurban + (1|Province)"
+covs_ecz <- "EczAppui + FacRurban + (1|Province)"
 
-covs_hgrcs <- paste(covs_indiv , covs_hgrcs , covs_hfsgen, sept = "+")
-covs_ecz <- paste(covs_indiv , covs_ecz , covs_hfsgen, sept = "+")
+covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = "+")
+covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
 
-
-
-prob_salaire <- glmer(make_formula('wage') ,
+prob_salaire <- glmer(make_formula('Wage' , covs_hgrcs) ,
                       family = binomial(link = 'logit') , 
-                      data = modelData)
+                      data = modelData[modelData$FacLevel != 'ecz' , ])
 summary(prob_salaire)
 
 modelData$PrimeRisque <- modelData$PrimeRisqueYN == 'oui'
