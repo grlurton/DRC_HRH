@@ -229,6 +229,35 @@ indiv$RoleInit[indiv$FacilityType == 'ecz'] <- indiv$DataPostInitECZ[indiv$Facil
 
 
 
+### Quel appui dans les centres
+
+NAppuiFac <- ddply(loop_appui_fac , .(PARENT_KEY) , function(data) data.frame(NAppuiFac = nrow(data)))
+
+NAppuiMotivFac <- ddply(loop_appui_fac , .(PARENT_KEY) , 
+                     function(data){
+                       data.frame(NAppuiMotivFac = sum(data$FacSupportMotivation== 'oui') )
+                     }
+                     )
+
+AppuiFac <- merge(NAppuiFac , NAppuiMotivFac)
+
+NAppuiZs <- ddply(loop_appui_zs , .(PARENT_KEY) , function(data) data.frame(NAppuiZs = nrow(data)))
+
+NAppuiMotivZs <- ddply(loop_appui_zs , .(PARENT_KEY) , 
+                        function(data){
+                          data.frame(NAppuiMotivZs = sum(data$ZSAppuiMotivation== 'oui') )
+                        }
+                       )
+AppuiZS <- merge(NAppuiZs , NAppuiMotivZs)
+
+
+facilities <- merge(facilities , AppuiFac , 
+                    by.x = 'instanceID' , by.y = 'PARENT_KEY' , all = TRUE)
+
+facilities <- merge(facilities , AppuiZS , 
+                    by.x = 'instanceID' , by.y = 'PARENT_KEY' , all = TRUE)
+
+
 ## Export selected data
 
 write.csv(loop_appui_zs , 'data/questionnaires_analysis/loop_appui_zs_select.csv')
