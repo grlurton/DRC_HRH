@@ -7,7 +7,7 @@ source('code/useful_functions.r')
 ## Extract revenues from loops
 
 melted_indiv <- melt(indiv , id = c("instanceID" , "Province" , "Sex" , "Age" , "Matrimonial" , 
-                                  "NumberFinancialDependants" , "LastEduc" , 
+                                  "NumberFinancialDependants" , "LastEduc" , "RoleInit" ,
                                   "FacilityType" , "Structure" , "Role" , "HonorairePeriod" , "HeureSupPeriod"))
 
 indiv_list <- subset(melted_indiv , select = -c(value , variable))

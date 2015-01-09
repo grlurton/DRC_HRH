@@ -223,6 +223,10 @@ indiv$Role <- indiv$CSRole
 indiv$Role[indiv$FacilityType == 'hgr'] <-indiv$HGRRole[indiv$FacilityType == 'hgr']
 indiv$Role[indiv$FacilityType == 'ecz'] <- indiv$DataPostInitECZ[indiv$FacilityType == 'ecz']
 
+indiv$RoleInit <- indiv$DataPostInitCS
+indiv$RoleInit[indiv$FacilityType == 'hgr'] <-indiv$DataPostInitHGR[indiv$FacilityType == 'hgr']
+indiv$RoleInit[indiv$FacilityType == 'ecz'] <- indiv$DataPostInitECZ[indiv$FacilityType == 'ecz']
+
 
 
 ## Export selected data

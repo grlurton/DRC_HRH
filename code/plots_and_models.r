@@ -18,34 +18,47 @@ orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Die
 
 RevSum$variable <- factor(RevSum$variable , levels =  orderedIncome)
 
+pdf('output/graphs/distrib_revenus.pdf')
 qplot(data = RevSum , x = instanceID , y = V1 , geom = 'bar' , stat = 'identity' , width = 1 , fill = variable)+
   theme(axis.text.x = element_blank()) + facet_wrap(~Role , scales = 'free')
+dev.off()
 
 
-### Determinants
 
-colnames(matRev) <- c("indiv" , "Salaire"  , "Prime_de_Risque","Prime_Partenaire","Per_Diems" , "Partage_de_Recettes","Heures_Supplementaires","Activite_Privee","Activite_Non Sante" )
-indout <- ddply(indiv_full , .(meta.instanceID) , nrow)
-indout <- subset(indout , V1 >1)
-indiv_model <- subset(indiv_full , !(meta.instanceID %in% indout$meta.instanceID))
+### Modelling
 
-modelData <- merge(matRev , indiv_model , all.x = FALSE , all.y = FALSE , by.x = 'indiv' , by.y = 'meta.instanceID')
+##Pour les modèles simples logistiques, dcast pour avoir juste les données
 
-####Les logistiques pour le plaisir
+rev_type <- read.csv('data/revenues_entry.csv')
+rev_type <- subset(rev_type , select = c(RevenueLabel , RevenueEntry))
+rev_type$RevenueLabel <- as.character(rev_type$RevenueLabel)
+rev_type$RevenueEntry <- as.character(rev_type$RevenueEntry)
 
+rev_type$RevenueEntry <- substr(rev_type$RevenueEntry , 1 , nchar(rev_type$RevenueEntry) - 2)
+
+
+
+total_revenu <- merge(total_revenu , rev_type , 
+                      by.x = 'variable' , by.y = 'RevenueLabel' , all.x = TRUE)
+
+total_revenu$RevenueEntry[total_revenu$variable == 'Cadeau'] <- 'Cadeau' 
+total_revenu$RevenueEntry[total_revenu$variable == 'Vente de Medicament'] <- 'Vente_Medic'
+
+
+modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
+             FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
+             NumberFinancialDependants + LastEduc + FacilityType + Role ~ RevenueEntry ,
+             function(x) length(x) > 1
+             )
+  
+
+##Modelisation
 
 library(lme4)
-##Probabilite d'avoir un salaire
-
-modelData$ecz <- as.numeric(modelData$FacLevel %in% c('ecz'))
-modelData$hgrcs <- as.numeric(modelData$FacLevel %in% c('hgr' , 'cs'))
-modelData$wage <- modelData$WageYN == 'oui'
-
-##
 
 modelData$FacRurban[modelData$FacRurban == ''] <- 'NA'
 
-modelData$LastEducation <- modelData$GroupDemographics.IndivLastEduc
+modelData$LastEducation <- modelData$LastEduc
 modelData$LastEducation [modelData$LastEducation  %in%
                            c('medecin_generaliste' , 'medecin_specialiste' ,
                              'pharmacien' , 'diplome_etudes_superieures')] <- 'medecin-pharma-etudesup'
@@ -64,27 +77,13 @@ modelData$LastEducation[modelData$LastEducation %in%
 modelData$LastEducation[modelData$LastEducation %in%c('')] <- NA
 
 
-modelData$PostECZ <- modelData$ResumePost
-modelData$PostECZ[modelData$FacLevel == 'ecz'] <- NA
-
-modelData$PostCS <- modelData$ResumePost
-modelData$PostCS[modelData$FacLevel != 'ecz'] <- NA
-
-disjunctif <- model.matrix( ~ ResumePost , data = modelData)
-colnames(disjunctif) <- c('x' , 'administrateur' , 'administrateur_gestionnaire' , 'autre' , 'infirmier' , 
-                          'infirmier_superviseur' , 'labo' , 'medecin' , 'mcz' , 'pharmacien')
-modelData <- cbind(modelData , disjunctif)
-
-
-modelData$Power[modelData$DataPostInitHGR %in% c('directeur_nursing' , 
+modelData$Power[modelData$RoleInit %in% c('directeur_nursing' , 
                                                  'medecin_chef_staff' ,
                                                  'medecin_directeur')] <- 1
-modelData$Power[modelData$DataPostInitCS %in% c('medecin','infirmier_titulaire' ,
+modelData$Power[modelData$RoleInit %in% c('medecin','infirmier_titulaire' ,
                                                 'medecin_directeur')] <- 1
 
 modelData$Power[is.na(modelData$Power)] <- 0
-
-```
 
 On modélise 
 
@@ -102,7 +101,6 @@ Etapes :
 
 2 -> 4 peuvent se faire dans une boucle
 
-```{r}
 
 make_formula <- function(y , covariates){
   formula <- paste(var,  covariates, sep = ' ~ ')
