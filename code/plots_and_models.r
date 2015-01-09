@@ -41,10 +41,7 @@ rev_type$RevenueEntry <- substr(rev_type$RevenueEntry , 1 , nchar(rev_type$Reven
 total_revenu <- merge(total_revenu , rev_type , 
                       by.x = 'variable' , by.y = 'RevenueLabel' , all.x = TRUE)
 
-total_revenu$RevenueEntry[total_revenu$variable == 'Cadeau'] <- 'Cadeau' 
-total_revenu$RevenueEntry[total_revenu$variable == 'Vente de Medicament'] <- 'Vente_Medic'
-
-
+total_revenu$RevenueEntry[total_revenu$variable %in% c('Cadeau' , 'Vente de Medicament')] <- 'informel' 
 
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
              FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
@@ -116,6 +113,26 @@ covs_ecz <- "FacRurban + FacMotivation + (1|Province)"
 
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = "+")
 covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
+
+revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "informel" , "PerDiem"  ,  
+          "PrimeRisque" , "PrimesPartenaires" , "Wage")
+
+models_ecz <- list()
+models_fac <- list()
+
+for(i in 1:length(revs)){
+  rev <- revs[i]
+  print(paste('Running model for ' , rev , 'in facilities'))
+  model_fit_fac <- glmer(make_formula(rev , covs_hgrcs) ,
+                     family = binomial(link = 'logit') , 
+                     data = modelData[modelData$FacLevel != 'ecz' , ])
+  print(paste('Running model for ' , rev , 'in ecz'))
+  model_fit_ecz <- glmer(make_formula(rev , covs_ecz) ,
+                         family = binomial(link = 'logit') , 
+                         data = modelData[modelData$FacLevel == 'ecz' , ])
+  models_ecz[[rev]] <- model_fit_ecz
+  models_fac[[rev]] <- model_fit_fac
+}
 
 prob_salaire <- glmer(make_formula('Wage' , covs_hgrcs) ,
                       family = binomial(link = 'logit') , 
