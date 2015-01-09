@@ -86,6 +86,17 @@ modelData$Power[modelData$RoleInit %in% c('medecin','infirmier_titulaire' ,
 modelData$Power[is.na(modelData$Power)] <- 0
 modelData$Role[modelData$Role == ''] <- NA
 
+table(modelData$Role , modelData$FacLevel)
+
+##This should be handled before => trace and check
+
+modelData$FacLevel[modelData$Role %in% c('administrateur_gestionnaire' ,
+                                         'infirmier_superviseur' , 
+                                         'medecin_chef_zone')] <- 'ecz'
+
+modelData$FacLevel[modelData$Role %in% c('medecin' , 'infirmier') & 
+                     modelData$FacLevel == 'ecz'] <- NA
+
 ##Create Models
 
 make_formula <- function(y , covariates){
