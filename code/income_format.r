@@ -183,7 +183,8 @@ qplot(data = rev_resumed , x = V1) + facet_wrap(~variable , scales = 'free')
 ## Add facilities variables
 
 FacRelevant <- subset(facilities ,  select = c("Structure"  , "FacLevel" , "FacOwnership" , 
-                                               "FacAppui" , "FacRurban" , "EczAppui"))
+                                               "FacAppui" , "FacRurban" , "EczAppui" , "NAppuiFac",
+                                               "NAppuiMotivFac","NAppuiZs" ,"NAppuiMotivZs"))
 tot_rev_full <- merge(FacRelevant , tot_rev , by = 'Structure' , all.x = FALSE)
 
 

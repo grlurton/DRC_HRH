@@ -45,9 +45,11 @@ total_revenu$RevenueEntry[total_revenu$variable == 'Cadeau'] <- 'Cadeau'
 total_revenu$RevenueEntry[total_revenu$variable == 'Vente de Medicament'] <- 'Vente_Medic'
 
 
+
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
              FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
-             NumberFinancialDependants + LastEduc + FacilityType + Role ~ RevenueEntry ,
+             NumberFinancialDependants + LastEduc + FacilityType + Role +
+               NAppuiFac + NAppuiMotivFac + NAppuiZs + NAppuiMotivZs ~ RevenueEntry ,
              function(x) length(x) > 0
              )
   
@@ -86,6 +88,10 @@ modelData$Power[modelData$RoleInit %in% c('medecin','infirmier_titulaire' ,
 modelData$Power[is.na(modelData$Power)] <- 0
 modelData$Role[modelData$Role == ''] <- NA
 
+modelData$FacMotivation <- (modelData$NAppuiMotivZs > 0 | modelData$NAppuiMotivFac > 1 )
+modelData$FacMotivation[is.na(modelData$FacMotivation)] <- FALSE
+
+
 table(modelData$Role , modelData$FacLevel)
 
 ##This should be handled before => trace and check
@@ -105,8 +111,8 @@ make_formula <- function(y , covariates){
 }
 
 covs_indiv <- "Sex + Age + LastEducation + Role + Power" 
-covs_hgrcs <-  "FacLevel + FacOwnership + FacRurban + (1|Province)"
-covs_ecz <- "EczAppui + FacRurban + (1|Province)"
+covs_hgrcs <-  "FacLevel + FacOwnership + FacRurban + FacMotivation + (1|Province)"
+covs_ecz <- "FacRurban + FacMotivation + (1|Province)"
 
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = "+")
 covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
