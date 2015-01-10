@@ -23,6 +23,60 @@ qplot(data = RevSum , x = instanceID , y = V1 , geom = 'bar' , stat = 'identity'
   theme(axis.text.x = element_blank()) + facet_wrap(~Role , scales = 'free')
 dev.off()
 
+### Some data management
+
+total_revenu$FacRurban[total_revenu$FacRurban == ''] <- 'NA'
+
+total_revenu$LastEducation <- total_revenu$LastEduc
+total_revenu$LastEducation [total_revenu$LastEducation  %in%
+                              c('medecin_generaliste' , 'medecin_specialiste' ,
+                                'pharmacien' , 'diplome_etudes_superieures')] <- 'medecin-pharma-etudesup'
+
+total_revenu$LastEducation[total_revenu$LastEducation %in% 
+                             c('gestion_administration' , 'gestion_administration autre'  , 'autre')] <-
+  'autre'
+
+total_revenu$LastEducation[total_revenu$LastEducation %in% 
+                             c('infirmiere_ao' , 'infirmiere_a1' ,
+                               'technicien_labo' , 'infirmiere_a2' )] <- 'a0-a1-a2'
+
+total_revenu$LastEducation[total_revenu$LastEducation %in% 
+                             c('infirmiere_a3')] <- 'a3'
+
+total_revenu$LastEducation[total_revenu$LastEducation %in%c('')] <- NA
+
+
+total_revenu$Power[total_revenu$RoleInit %in% c('directeur_nursing' , 
+                                                'medecin_chef_staff' ,
+                                                'medecin_directeur')] <- 1
+total_revenu$Power[total_revenu$RoleInit %in% c('medecin','infirmier_titulaire' ,
+                                                'medecin_directeur')] <- 1
+
+total_revenu$Power[is.na(total_revenu$Power)] <- 0
+total_revenu$Role[total_revenu$Role == ''] <- NA
+
+total_revenu$FacMotivation <- (total_revenu$NAppuiMotivZs > 0 | total_revenu$NAppuiMotivFac > 1 )
+total_revenu$FacMotivation[is.na(total_revenu$FacMotivation)] <- FALSE
+
+
+table(total_revenu$Role , total_revenu$FacLevel)
+
+##This should be handled before => trace and check
+
+total_revenu$FacLevel[total_revenu$Role %in% c('administrateur_gestionnaire' ,
+                                               'infirmier_superviseur' , 
+                                               'medecin_chef_zone')] <- 'ecz'
+
+total_revenu$FacLevel[total_revenu$Role %in% c('medecin' , 'infirmier') & 
+                        total_revenu$FacLevel == 'ecz'] <- NA
+
+
+
+
+
+
+
+
 
 
 ### Modelling
@@ -37,7 +91,6 @@ rev_type$RevenueEntry <- as.character(rev_type$RevenueEntry)
 rev_type$RevenueEntry <- substr(rev_type$RevenueEntry , 1 , nchar(rev_type$RevenueEntry) - 2)
 
 
-
 total_revenu <- merge(total_revenu , rev_type , 
                       by.x = 'variable' , by.y = 'RevenueLabel' , all.x = TRUE)
 
@@ -45,8 +98,8 @@ total_revenu$RevenueEntry[total_revenu$variable %in% c('Cadeau' , 'Vente de Medi
 
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
              FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
-             NumberFinancialDependants + LastEduc + FacilityType + Role +
-               NAppuiFac + NAppuiMotivFac + NAppuiZs + NAppuiMotivZs ~ RevenueEntry ,
+             NumberFinancialDependants + LastEducation + FacilityType + Role + Power +
+               FacMotivation ~ RevenueEntry ,
              function(x) length(x) > 0
              )
   
@@ -55,50 +108,6 @@ modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + 
 
 library(lme4)
 
-modelData$FacRurban[modelData$FacRurban == ''] <- 'NA'
-
-modelData$LastEducation <- modelData$LastEduc
-modelData$LastEducation [modelData$LastEducation  %in%
-                           c('medecin_generaliste' , 'medecin_specialiste' ,
-                             'pharmacien' , 'diplome_etudes_superieures')] <- 'medecin-pharma-etudesup'
-
-modelData$LastEducation[modelData$LastEducation %in% 
-                          c('gestion_administration' , 'gestion_administration autre'  , 'autre')] <-
-  'autre'
-
-modelData$LastEducation[modelData$LastEducation %in% 
-                          c('infirmiere_ao' , 'infirmiere_a1' ,
-                            'technicien_labo' , 'infirmiere_a2' )] <- 'a0-a1-a2'
-
-modelData$LastEducation[modelData$LastEducation %in% 
-                          c('infirmiere_a3')] <- 'a3'
-
-modelData$LastEducation[modelData$LastEducation %in%c('')] <- NA
-
-
-modelData$Power[modelData$RoleInit %in% c('directeur_nursing' , 
-                                                 'medecin_chef_staff' ,
-                                                 'medecin_directeur')] <- 1
-modelData$Power[modelData$RoleInit %in% c('medecin','infirmier_titulaire' ,
-                                                'medecin_directeur')] <- 1
-
-modelData$Power[is.na(modelData$Power)] <- 0
-modelData$Role[modelData$Role == ''] <- NA
-
-modelData$FacMotivation <- (modelData$NAppuiMotivZs > 0 | modelData$NAppuiMotivFac > 1 )
-modelData$FacMotivation[is.na(modelData$FacMotivation)] <- FALSE
-
-
-table(modelData$Role , modelData$FacLevel)
-
-##This should be handled before => trace and check
-
-modelData$FacLevel[modelData$Role %in% c('administrateur_gestionnaire' ,
-                                         'infirmier_superviseur' , 
-                                         'medecin_chef_zone')] <- 'ecz'
-
-modelData$FacLevel[modelData$Role %in% c('medecin' , 'infirmier') & 
-                     modelData$FacLevel == 'ecz'] <- NA
 
 ##Create Models
 
@@ -107,9 +116,9 @@ make_formula <- function(y , covariates){
   as.formula(formula)
 }
 
-covs_indiv <- "Sex + Age + LastEducation + Role + Power" 
-covs_hgrcs <-  "FacLevel + FacOwnership + FacRurban + FacMotivation + (1|Province)"
-covs_ecz <- "FacRurban + FacMotivation + (1|Province)"
+covs_indiv <- "Sex + Age + LastEducation + Role" 
+covs_hgrcs <-  "FacLevel + FacOwnership + FacRurban + FacMotivation + Power + Province"
+covs_ecz <- "FacRurban + FacMotivation + Province"
 
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = "+")
 covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
@@ -120,52 +129,73 @@ revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "informel"
 models_ecz <- list()
 models_fac <- list()
 
+
+sink('output/models_logistics.txt')
 for(i in 1:length(revs)){
   rev <- revs[i]
   print(paste('Running model for ' , rev , 'in facilities'))
-  model_fit_fac <- glmer(make_formula(rev , covs_hgrcs) ,
+  model_fit_fac <- glm(make_formula(rev , covs_hgrcs) ,
                      family = binomial(link = 'logit') , 
                      data = modelData[modelData$FacLevel != 'ecz' , ])
+  print(summary(model_fit_fac))
+  
   print(paste('Running model for ' , rev , 'in ecz'))
-  model_fit_ecz <- glmer(make_formula(rev , covs_ecz) ,
+  model_fit_ecz <- glm(make_formula(rev , covs_ecz) ,
                          family = binomial(link = 'logit') , 
                          data = modelData[modelData$FacLevel == 'ecz' , ])
+  print(summary(model_fit_ecz))
+  
   models_ecz[[rev]] <- model_fit_ecz
   models_fac[[rev]] <- model_fit_fac
 }
+sink()
 
-prob_salaire <- glmer(make_formula('Wage' , covs_hgrcs) ,
-                      family = binomial(link = 'logit') , 
-                      data = modelData[modelData$FacLevel != 'ecz' , ])
-summary(prob_salaire)
+### Models on amount
 
-modelData$PrimeRisque <- modelData$PrimeRisqueYN == 'oui'
-prob_pdr <- glmer(make_formula('PrimeRisque') ,
-                  family = binomial(link = 'logit') , 
-                  data = modelData)
-summary(prob_pdr)
-
-modelData$Partage_de_Recettes[is.na(modelData$Partage_de_Recettes) |
-                                modelData$Partage_de_Recettes == 0] <- 1
-
-amount_honoraire <- lmer(make_formula('log(Partage_de_Recettes)'), 
-                         data = modelData)
-summary(amount_honoraire)
-
-modelData$Prime_Partenaire[is.na(modelData$Prime_Partenaire) |
-                             modelData$Prime_Partenaire == 0] <- 1
-modelData$Prime_Partenaire[modelData$Prime_Partenaire < 0 |
-                             modelData$Prime_Partenaire > 10000] <- NA
-
-amount_prime <- lmer(make_formula('log(Prime_Partenaire)') ,
-                     data = modelData)
-summary(amount_prime)
-
-```
+data_amount <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
+                       FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
+                       NumberFinancialDependants + LastEducation + FacilityType + Role + Power +
+                       FacMotivation ~ RevenueEntry , value.var = 'value' , 
+                        function(x) sum(x , na.rm = TRUE)
+                     )
 
 
 
-```{r}
+
+models_ecz2 <- list()
+models_fac2 <- list()
+
+
+revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "informel" , "PerDiem"  ,  
+          "PrimesPartenaires")
+
+
+sink('output/models_amount.txt')
+for(i in 1:length(revs)){
+  rev <- revs[i]
+  zeros <- data_amount[,rev] == 0
+  
+  data_amount[zeros,rev] <- NA
+  logging <- paste('log(' , rev , ')' , sep = '')
+  print(paste('Running model for ' , rev , 'in facilities'))
+  model_fit_fac <- lm(make_formula(logging , covs_hgrcs) ,
+                       data = data_amount[data_amount$FacLevel != 'ecz' , ])
+  print(summary(model_fit_fac))
+  
+  print(paste('Running model for ' , rev , 'in ecz'))
+  if (sum(!is.na(data_amount[data_amount$FacLevel == 'ecz' , rev])) > 10){
+    model_fit_ecz <- glm(make_formula(logging , covs_ecz) , 
+                       data = data_amount[data_amount$FacLevel == 'ecz' , ])
+    print(summary(model_fit_ecz))
+    models_ecz2[[rev]] <- model_fit_ecz
+  }
+  
+  models_fac2[[rev]] <- model_fit_fac
+}
+sink()
+
+
+
 library(arm)
 
 compute_link <- function(data , betas){
