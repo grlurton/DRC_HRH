@@ -42,12 +42,12 @@ F-statistic: 12.02 on 20 and 677 DF,  p-value: < 2.2e-16
 [1] "Running model for  ActNonSante in ecz"
 
 Call:
-glm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
+lm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
     "ecz", ])
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.5679  -0.6601  -0.1706   0.5143   2.6560  
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.5679 -0.6601 -0.1706  0.5143  2.6560 
 
 Coefficients:
                                        Estimate Std. Error t value Pr(>|t|)   
@@ -67,14 +67,10 @@ Provincesud_kivu                      0.9254679  0.6673397   1.387  0.17539
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for gaussian family taken to be 1.137859)
-
-    Null deviance: 112.237  on 43  degrees of freedom
-Residual deviance:  35.274  on 31  degrees of freedom
+Residual standard error: 1.067 on 31 degrees of freedom
   (78 observations deleted due to missingness)
-AIC: 143.14
-
-Number of Fisher Scoring iterations: 2
+Multiple R-squared:  0.6857,	Adjusted R-squared:  0.5641 
+F-statistic: 5.637 on 12 and 31 DF,  p-value: 5.033e-05
 
 [1] "Running model for  ActPrivee in facilities"
 
@@ -162,12 +158,12 @@ F-statistic: 5.073 on 20 and 188 DF,  p-value: 5.837e-10
 [1] "Running model for  AutreRevenu in ecz"
 
 Call:
-glm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
+lm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
     "ecz", ])
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.4974  -0.2657   0.0000   0.4631   1.9163  
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.4974 -0.2657  0.0000  0.4631  1.9163 
 
 Coefficients:
                                       Estimate Std. Error t value Pr(>|t|)  
@@ -187,14 +183,10 @@ Provincesud_kivu                     -0.705061   1.092259  -0.646   0.5331
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for gaussian family taken to be 1.50766)
-
-    Null deviance: 60.325  on 22  degrees of freedom
-Residual deviance: 15.077  on 10  degrees of freedom
+Residual standard error: 1.228 on 10 degrees of freedom
   (99 observations deleted due to missingness)
-AIC: 83.557
-
-Number of Fisher Scoring iterations: 2
+Multiple R-squared:  0.7501,	Adjusted R-squared:  0.4502 
+F-statistic: 2.501 on 12 and 10 DF,  p-value: 0.07804
 
 [1] "Running model for  Honoraire in facilities"
 
@@ -240,12 +232,12 @@ F-statistic: 56.22 on 20 and 1421 DF,  p-value: < 2.2e-16
 [1] "Running model for  Honoraire in ecz"
 
 Call:
-glm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
+lm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
     "ecz", ])
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.4036  -0.4208  -0.1430   0.4678   1.5306  
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.4036 -0.4208 -0.1430  0.4678  1.5306 
 
 Coefficients:
                                        Estimate Std. Error t value Pr(>|t|)    
@@ -265,14 +257,10 @@ Provincesud_kivu                      1.028e+00  2.470e-01   4.163 9.04e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for gaussian family taken to be 0.4090402)
-
-    Null deviance: 70.841  on 80  degrees of freedom
-Residual deviance: 27.815  on 68  degrees of freedom
+Residual standard error: 0.6396 on 68 degrees of freedom
   (41 observations deleted due to missingness)
-AIC: 171.29
-
-Number of Fisher Scoring iterations: 2
+Multiple R-squared:  0.6074,	Adjusted R-squared:  0.5381 
+F-statistic: 8.766 on 12 and 68 DF,  p-value: 8.211e-10
 
 [1] "Running model for  informel in facilities"
 
@@ -318,12 +306,12 @@ F-statistic: 6.302 on 20 and 712 DF,  p-value: 8.293e-16
 [1] "Running model for  informel in ecz"
 
 Call:
-glm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
+lm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
     "ecz", ])
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--4.5647  -0.6165   0.0776   0.7151   2.2030  
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5647 -0.6165  0.0776  0.7151  2.2030 
 
 Coefficients: (1 not defined because of singularities)
                                        Estimate Std. Error t value Pr(>|t|)
@@ -340,14 +328,10 @@ FacMotivationTRUE                    -0.7811660  2.8476934  -0.274    0.787
 Provinceequateur                      0.4391701  1.3570739   0.324    0.750
 Provincesud_kivu                     -0.1564897  1.0145693  -0.154    0.879
 
-(Dispersion parameter for gaussian family taken to be 2.861638)
-
-    Null deviance: 95.111  on 29  degrees of freedom
-Residual deviance: 54.371  on 19  degrees of freedom
+Residual standard error: 1.692 on 19 degrees of freedom
   (92 observations deleted due to missingness)
-AIC: 126.98
-
-Number of Fisher Scoring iterations: 2
+Multiple R-squared:  0.4283,	Adjusted R-squared:  0.1275 
+F-statistic: 1.424 on 10 and 19 DF,  p-value: 0.2433
 
 [1] "Running model for  PerDiem in facilities"
 
@@ -393,12 +377,12 @@ F-statistic: 12.13 on 20 and 943 DF,  p-value: < 2.2e-16
 [1] "Running model for  PerDiem in ecz"
 
 Call:
-glm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
+lm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
     "ecz", ])
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--2.97023  -0.35644   0.01056   0.44631   1.82623  
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.97023 -0.35644  0.01056  0.44631  1.82623 
 
 Coefficients:
                                        Estimate Std. Error t value Pr(>|t|)    
@@ -418,14 +402,10 @@ Provincesud_kivu                      0.8314511  0.2111496   3.938 0.000162 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for gaussian family taken to be 0.5472594)
-
-    Null deviance: 163.066  on 102  degrees of freedom
-Residual deviance:  49.253  on  90  degrees of freedom
+Residual standard error: 0.7398 on 90 degrees of freedom
   (19 observations deleted due to missingness)
-AIC: 244.31
-
-Number of Fisher Scoring iterations: 2
+Multiple R-squared:  0.698,	Adjusted R-squared:  0.6577 
+F-statistic: 17.33 on 12 and 90 DF,  p-value: < 2.2e-16
 
 [1] "Running model for  PrimesPartenaires in facilities"
 
@@ -471,12 +451,12 @@ F-statistic: 17.09 on 20 and 591 DF,  p-value: < 2.2e-16
 [1] "Running model for  PrimesPartenaires in ecz"
 
 Call:
-glm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
+lm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$FacLevel == 
     "ecz", ])
 
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--2.28983  -0.45669   0.04799   0.50218   1.50040  
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.28983 -0.45669  0.04799  0.50218  1.50040 
 
 Coefficients:
                                      Estimate Std. Error t value Pr(>|t|)    
@@ -496,12 +476,8 @@ Provincesud_kivu                      1.68460    0.32633   5.162 3.74e-06 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for gaussian family taken to be 0.5682064)
-
-    Null deviance: 66.962  on 65  degrees of freedom
-Residual deviance: 30.115  on 53  degrees of freedom
+Residual standard error: 0.7538 on 53 degrees of freedom
   (56 observations deleted due to missingness)
-AIC: 163.51
-
-Number of Fisher Scoring iterations: 2
+Multiple R-squared:  0.5503,	Adjusted R-squared:  0.4484 
+F-statistic: 5.404 on 12 and 53 DF,  p-value: 6.93e-06
 

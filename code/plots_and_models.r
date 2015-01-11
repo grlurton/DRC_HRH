@@ -166,7 +166,6 @@ data_amount <- dcast(total_revenu , formula = instanceID + Structure + FacLevel 
 models_ecz2 <- list()
 models_fac2 <- list()
 
-
 revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "informel" , "PerDiem"  ,  
           "PrimesPartenaires")
 
@@ -185,7 +184,7 @@ for(i in 1:length(revs)){
   
   print(paste('Running model for ' , rev , 'in ecz'))
   if (sum(!is.na(data_amount[data_amount$FacLevel == 'ecz' , rev])) > 10){
-    model_fit_ecz <- glm(make_formula(logging , covs_ecz) , 
+    model_fit_ecz <- lm(make_formula(logging , covs_ecz) , 
                        data = data_amount[data_amount$FacLevel == 'ecz' , ])
     print(summary(model_fit_ecz))
     models_ecz2[[rev]] <- model_fit_ecz
@@ -193,6 +192,29 @@ for(i in 1:length(revs)){
   
   models_fac2[[rev]] <- model_fit_fac
 }
+sink()
+
+#### Model complete revenue
+
+data_total_revenu <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
+                             FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
+                             NumberFinancialDependants + LastEducation + FacilityType + Role + Power +
+                             FacMotivation ~ . , value.var = 'value' , 
+                           function(x) sum(x , na.rm = TRUE)
+                           )
+colnames(data_total_revenu)[ncol(data_total_revenu)] <- 'revenue'
+
+
+sink('output/models_total.txt')
+print('Running model for facilities')
+model_fit_fac <- lm(make_formula('revenue' , covs_hgrcs) ,
+                    data = data_total_revenu[data_total_revenu$FacLevel != 'ecz' , ])
+print(summary(model_fit_fac))
+  
+print('Running model for ecz')
+model_fit_ecz <- lm(make_formula('revenue' , covs_ecz) , 
+                     data = data_total_revenu[data_total_revenu$FacLevel == 'ecz' , ])
+print(summary(model_fit_ecz))
 sink()
 
 
