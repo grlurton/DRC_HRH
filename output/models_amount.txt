@@ -84,39 +84,38 @@ lm(formula = make_formula(logging, covs_hgrcs), data = data_amount[data_amount$F
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.5044 -0.6174  0.0723  0.7200  2.9869 
+-3.5125 -0.6502  0.0838  0.7656  2.9898 
 
 Coefficients:
-                                                       Estimate Std. Error t value Pr(>|t|)   
-(Intercept)                                           2.6183238  0.9584697   2.732  0.00717 **
-SexHomme                                              0.4154998  0.2550235   1.629  0.10566   
-Age                                                  -0.0007431  0.0038119  -0.195  0.84575   
-LastEducationa3                                       0.0403311  0.3518582   0.115  0.90892   
-LastEducationautre                                    0.1420874  0.7411317   0.192  0.84826   
-LastEducationmedecin-pharma-etudesup                  0.7064303  0.8601113   0.821  0.41295   
-LastEducationmedecin_generaliste medecin_specialiste  2.2575913  1.2809659   1.762  0.08033 . 
-Roleautre                                             0.3531293  0.9452941   0.374  0.70933   
-Roleinfirmier                                         0.1409707  0.8144464   0.173  0.86285   
-Rolelabo                                              0.4611612  0.9395665   0.491  0.62437   
-Rolemedecin                                           0.6710468  0.9796924   0.685  0.49458   
-Rolepharmacien                                        0.9255901  1.0920983   0.848  0.39824   
-FacLevelcsr                                          -0.3749186  0.2775634  -1.351  0.17910   
-FacLevelhgr                                          -0.0636171  0.3125777  -0.204  0.83904   
-FacOwnershipprivee                                   -0.0120814  0.3558438  -0.034  0.97297   
-FacOwnershippublique                                 -0.2967507  0.2648593  -1.120  0.26459   
-FacRurbanurbain                                       0.4433859  0.2903925   1.527  0.12921   
-FacMotivationTRUE                                     0.2571225  0.3124753   0.823  0.41208   
-Power                                                 0.1262885  0.2765566   0.457  0.64868   
-Provinceequateur                                      0.3972002  0.3789482   1.048  0.29649   
-Provincekatanga                                       0.3900937  0.3209309   1.216  0.22636   
-Provincesud_kivu                                     -0.4462435  0.4449495  -1.003  0.31775   
+                                      Estimate Std. Error t value Pr(>|t|)   
+(Intercept)                           2.581556   0.964000   2.678  0.00835 **
+SexHomme                              0.440950   0.256076   1.722  0.08742 . 
+Age                                  -0.000899   0.003834  -0.235  0.81496   
+LastEducationa3                       0.007184   0.353385   0.020  0.98381   
+LastEducationautre                    0.149111   0.745606   0.200  0.84180   
+LastEducationmedecin-pharma-etudesup  0.725900   0.865234   0.839  0.40301   
+Roleautre                             0.382509   0.950841   0.402  0.68812   
+Roleinfirmier                         0.196316   0.818650   0.240  0.81085   
+Rolelabo                              0.495107   0.945018   0.524  0.60122   
+Rolemedecin                           0.864686   0.978200   0.884  0.37833   
+Rolepharmacien                        0.930262   1.098707   0.847  0.39870   
+FacLevelcsr                          -0.410112   0.278380  -1.473  0.14308   
+FacLevelhgr                          -0.131247   0.311630  -0.421  0.67432   
+FacOwnershipprivee                   -0.052169   0.357125  -0.146  0.88408   
+FacOwnershippublique                 -0.309118   0.266351  -1.161  0.24791   
+FacRurbanurbain                       0.440053   0.292143   1.506  0.13438   
+FacMotivationTRUE                     0.251047   0.314344   0.799  0.42594   
+Power                                 0.044552   0.273523   0.163  0.87086   
+Provinceequateur                      0.420667   0.380962   1.104  0.27150   
+Provincekatanga                       0.436771   0.321559   1.358  0.17669   
+Provincesud_kivu                     -0.426577   0.447475  -0.953  0.34218   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 1.253 on 131 degrees of freedom
+Residual standard error: 1.261 on 132 degrees of freedom
   (1495 observations deleted due to missingness)
-Multiple R-squared:  0.3215,	Adjusted R-squared:  0.2127 
-F-statistic: 2.956 on 21 and 131 DF,  p-value: 8.858e-05
+Multiple R-squared:  0.308,	Adjusted R-squared:  0.2032 
+F-statistic: 2.938 on 20 and 132 DF,  p-value: 0.000123
 
 [1] "Running model for  ActPrivee in ecz"
 [1] "Running model for  AutreRevenu in facilities"
@@ -205,39 +204,38 @@ lm(formula = make_formula(logging, covs_hgrcs), data = data_amount[data_amount$F
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--6.1653 -0.4944  0.0510  0.5498  3.4220 
+-6.1681 -0.4965  0.0473  0.5483  3.4160 
 
 Coefficients:
-                                                       Estimate Std. Error t value Pr(>|t|)    
-(Intercept)                                           4.127e+00  1.658e-01  24.895  < 2e-16 ***
-SexHomme                                              1.080e-02  4.941e-02   0.219 0.826962    
-Age                                                  -4.173e-05  1.288e-04  -0.324 0.746082    
-LastEducationa3                                      -2.683e-01  6.326e-02  -4.240 2.38e-05 ***
-LastEducationautre                                   -6.205e-01  9.742e-02  -6.369 2.57e-10 ***
-LastEducationmedecin-pharma-etudesup                  6.446e-02  2.154e-01   0.299 0.764804    
-LastEducationmedecin_generaliste medecin_specialiste  8.665e-01  6.539e-01   1.325 0.185299    
-Roleautre                                            -9.345e-01  1.352e-01  -6.911 7.23e-12 ***
-Roleinfirmier                                        -1.094e+00  1.487e-01  -7.353 3.27e-13 ***
-Rolelabo                                             -9.825e-01  1.646e-01  -5.969 3.00e-09 ***
-Rolemedecin                                          -1.829e-01  2.550e-01  -0.717 0.473232    
-Rolepharmacien                                       -1.012e+00  1.725e-01  -5.866 5.55e-09 ***
-FacLevelcsr                                           2.661e-01  6.087e-02   4.371 1.33e-05 ***
-FacLevelhgr                                           5.510e-01  6.220e-02   8.857  < 2e-16 ***
-FacOwnershipprivee                                    2.379e-01  1.212e-01   1.964 0.049783 *  
-FacOwnershippublique                                 -3.873e-01  5.667e-02  -6.834 1.22e-11 ***
-FacRurbanurbain                                       3.518e-01  6.017e-02   5.846 6.22e-09 ***
-FacMotivationTRUE                                     2.044e-01  5.907e-02   3.461 0.000555 ***
-Power                                                 1.837e-01  6.272e-02   2.929 0.003453 ** 
-Provinceequateur                                     -2.968e-01  6.803e-02  -4.363 1.37e-05 ***
-Provincekatanga                                       2.615e-01  6.973e-02   3.750 0.000184 ***
-Provincesud_kivu                                      9.633e-01  6.418e-02  15.011  < 2e-16 ***
+                                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                           4.128e+00  1.658e-01  24.898  < 2e-16 ***
+SexHomme                              1.306e-02  4.939e-02   0.264 0.791579    
+Age                                  -4.149e-05  1.289e-04  -0.322 0.747515    
+LastEducationa3                      -2.698e-01  6.327e-02  -4.264 2.14e-05 ***
+LastEducationautre                   -6.191e-01  9.744e-02  -6.354 2.82e-10 ***
+LastEducationmedecin-pharma-etudesup  6.328e-02  2.155e-01   0.294 0.769042    
+Roleautre                            -9.354e-01  1.352e-01  -6.916 6.99e-12 ***
+Roleinfirmier                        -1.092e+00  1.488e-01  -7.341 3.56e-13 ***
+Rolelabo                             -9.838e-01  1.646e-01  -5.976 2.89e-09 ***
+Rolemedecin                          -1.579e-01  2.543e-01  -0.621 0.534744    
+Rolepharmacien                       -1.012e+00  1.725e-01  -5.868 5.48e-09 ***
+FacLevelcsr                           2.626e-01  6.082e-02   4.317 1.69e-05 ***
+FacLevelhgr                           5.454e-01  6.207e-02   8.787  < 2e-16 ***
+FacOwnershipprivee                    2.314e-01  1.211e-01   1.911 0.056236 .  
+FacOwnershippublique                 -3.889e-01  5.667e-02  -6.863 1.00e-11 ***
+FacRurbanurbain                       3.533e-01  6.017e-02   5.872 5.36e-09 ***
+FacMotivationTRUE                     2.042e-01  5.909e-02   3.456 0.000565 ***
+Power                                 1.780e-01  6.258e-02   2.844 0.004522 ** 
+Provinceequateur                     -2.974e-01  6.804e-02  -4.370 1.33e-05 ***
+Provincekatanga                       2.657e-01  6.967e-02   3.813 0.000143 ***
+Provincesud_kivu                      9.626e-01  6.419e-02  14.997  < 2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.854 on 1420 degrees of freedom
+Residual standard error: 0.8542 on 1421 degrees of freedom
   (206 observations deleted due to missingness)
-Multiple R-squared:  0.4424,	Adjusted R-squared:  0.4342 
-F-statistic: 53.65 on 21 and 1420 DF,  p-value: < 2.2e-16
+Multiple R-squared:  0.4417,	Adjusted R-squared:  0.4339 
+F-statistic: 56.22 on 20 and 1421 DF,  p-value: < 2.2e-16
 
 [1] "Running model for  Honoraire in ecz"
 
@@ -284,39 +282,38 @@ lm(formula = make_formula(logging, covs_hgrcs), data = data_amount[data_amount$F
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--7.1757 -0.7466  0.0717  0.9111  3.4702 
+-7.1746 -0.7486  0.0745  0.9099  3.4691 
 
 Coefficients:
-                                                       Estimate Std. Error t value Pr(>|t|)    
-(Intercept)                                           1.0817023  0.3962808   2.730  0.00650 ** 
-SexHomme                                              0.1988066  0.1073458   1.852  0.06444 .  
-Age                                                   0.0007646  0.0012193   0.627  0.53080    
-LastEducationa3                                       0.0499954  0.1401822   0.357  0.72146    
-LastEducationautre                                    0.5283896  0.2109694   2.505  0.01248 *  
-LastEducationmedecin-pharma-etudesup                  1.0457839  0.4468325   2.340  0.01954 *  
-LastEducationmedecin_generaliste medecin_specialiste  1.2622230  1.0958479   1.152  0.24978    
-Roleautre                                             0.3937991  0.3458248   1.139  0.25520    
-Roleinfirmier                                         0.3270319  0.3639148   0.899  0.36914    
-Rolelabo                                              0.2079665  0.3973480   0.523  0.60087    
-Rolemedecin                                          -0.1346280  0.5911365  -0.228  0.81991    
-Rolepharmacien                                       -0.3890520  0.4699424  -0.828  0.40802    
-FacLevelcsr                                           0.2821088  0.1367653   2.063  0.03950 *  
-FacLevelhgr                                           0.1812263  0.1411347   1.284  0.19954    
-FacOwnershipprivee                                   -0.1685904  0.2469535  -0.683  0.49503    
-FacOwnershippublique                                  0.1719231  0.1291651   1.331  0.18360    
-FacRurbanurbain                                       0.4876191  0.1533696   3.179  0.00154 ** 
-FacMotivationTRUE                                    -0.0724373  0.1320354  -0.549  0.58344    
-Power                                                 0.4233403  0.1385951   3.055  0.00234 ** 
-Provinceequateur                                     -0.4136299  0.1706699  -2.424  0.01562 *  
-Provincekatanga                                      -0.0142439  0.1771097  -0.080  0.93592    
-Provincesud_kivu                                     -0.7768815  0.1358871  -5.717  1.6e-08 ***
+                                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                           1.0821022  0.3960113   2.733  0.00644 ** 
+SexHomme                              0.1996642  0.1072013   1.863  0.06294 .  
+Age                                   0.0007632  0.0012185   0.626  0.53128    
+LastEducationa3                       0.0495225  0.1400715   0.354  0.72378    
+LastEducationautre                    0.5293595  0.2107809   2.511  0.01224 *  
+LastEducationmedecin-pharma-etudesup  1.0449389  0.4465165   2.340  0.01955 *  
+Roleautre                             0.3941984  0.3455885   1.141  0.25440    
+Roleinfirmier                         0.3282254  0.3636297   0.903  0.36702    
+Rolelabo                              0.2081227  0.3970814   0.524  0.60035    
+Rolemedecin                          -0.1150596  0.5838364  -0.197  0.84383    
+Rolepharmacien                       -0.3891163  0.4696277  -0.829  0.40763    
+FacLevelcsr                           0.2796984  0.1362229   2.053  0.04041 *  
+FacLevelhgr                           0.1780092  0.1402610   1.269  0.20481    
+FacOwnershipprivee                   -0.1711138  0.2465149  -0.694  0.48783    
+FacOwnershippublique                  0.1712369  0.1290400   1.327  0.18493    
+FacRurbanurbain                       0.4878504  0.1532633   3.183  0.00152 ** 
+FacMotivationTRUE                    -0.0723739  0.1319467  -0.549  0.58351    
+Power                                 0.4205371  0.1379002   3.050  0.00238 ** 
+Provinceequateur                     -0.4140063  0.1705469  -2.428  0.01545 *  
+Provincekatanga                      -0.0104606  0.1761327  -0.059  0.95266    
+Provincesud_kivu                     -0.7773688  0.1357777  -5.725 1.52e-08 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 1.331 on 711 degrees of freedom
+Residual standard error: 1.33 on 712 degrees of freedom
   (915 observations deleted due to missingness)
-Multiple R-squared:  0.1505,	Adjusted R-squared:  0.1254 
-F-statistic: 5.996 on 21 and 711 DF,  p-value: 2.086e-15
+Multiple R-squared:  0.1504,	Adjusted R-squared:  0.1265 
+F-statistic: 6.302 on 20 and 712 DF,  p-value: 8.293e-16
 
 [1] "Running model for  informel in ecz"
 

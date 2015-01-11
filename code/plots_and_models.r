@@ -29,7 +29,8 @@ total_revenu$FacRurban[total_revenu$FacRurban == ''] <- 'NA'
 
 total_revenu$LastEducation <- total_revenu$LastEduc
 total_revenu$LastEducation [total_revenu$LastEducation  %in%
-                              c('medecin_generaliste' , 'medecin_specialiste' ,
+                              c('medecin_generaliste' , 'medecin_specialiste' , 
+                                'medecin_generaliste medecin_specialiste' ,
                                 'pharmacien' , 'diplome_etudes_superieures')] <- 'medecin-pharma-etudesup'
 
 total_revenu$LastEducation[total_revenu$LastEducation %in% 
