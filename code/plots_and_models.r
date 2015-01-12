@@ -73,15 +73,6 @@ total_revenu$FacLevel[total_revenu$Role %in% c('medecin' , 'infirmier') &
 
 
 
-
-
-
-
-
-
-
-### Modelling
-
 ##Pour les modèles simples logistiques, dcast pour avoir juste les données
 
 rev_type <- read.csv('data/revenues_entry.csv')
@@ -96,6 +87,49 @@ total_revenu <- merge(total_revenu , rev_type ,
                       by.x = 'variable' , by.y = 'RevenueLabel' , all.x = TRUE)
 
 total_revenu$RevenueEntry[total_revenu$variable %in% c('Cadeau' , 'Vente de Medicament')] <- 'informel' 
+total_revenu$RevenueEntry[total_revenu$variable %in% c("Autres revenus")] <- 'Activité non santé' 
+
+
+
+orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
+                   'Prime Locale' , 'Heures supplémentaires' , 'Activité  Privée' , 
+                   'Activité non santé' , "Autres revenus" , "informel")
+
+
+
+##Representation du revenu des MCZ
+
+revenu_mcz <- subset(total_revenu , Role == "medecin_chef_zone")
+
+revenu_mcz$variable <- factor(revenu_mcz$variable , levels =  orderedIncome)
+
+rev_comp_mcz <- ddply(revenu_mcz , .(Province) , 
+                      function(x){
+                        nombre <- nrow(x)
+                        ddply(x , .(variable) , 
+                              function(x){
+                                sum(x$value) / nombre
+                              })
+                      } 
+                        )
+
+
+pdf('output/graphs/MCZ_income_dist.pdf', width = 10)
+qplot(data = rev_comp_mcz , y = V1 , x = 1 , fill = variable , geom = 'bar' , position = 'stack' ,
+      stat = 'identity') +
+  facet_grid(Province~.) + theme_bw() + scale_fill_brewer(palette="Set1") + 
+  theme(axis.text.y = element_blank()) +
+  xlab('') + ylab('Average Income') + coord_flip() + labs(title = "Distribution of MCZ Income")
+dev.off()
+
+
+
+
+
+
+
+
+### Modelling
 
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
              FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
