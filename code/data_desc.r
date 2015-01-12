@@ -361,3 +361,23 @@ p <- qplot(x =Province ,y = Role , data = heat_complete,
   xlab('') + ylab('')
 print(p)
 dev.off()
+
+##Bancarisation
+
+bancar_data <- subset(melted_indiv_full , variable == 'WageMode' & value != '' & Role != '')
+
+bancarisation_heatmap <- ddply(bancar_data , .(Role , Province , FacilityType , FacRurban) , 
+                               function(x) mean(x$value == 'banque'))
+output.table(tab = bancarisation_heatmap , name = 'bancarisation_data')
+
+
+pdf('output/graphs/bancarisation_heatmap.pdf', width = 14)
+p <- qplot(x =FacRurban ,y = Role , data = bancarisation_heatmap, 
+           fill = V1, geom = "raster"  , main = 'Percentage of bancarized people')+
+  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+  facet_grid(FacilityType~Province , scales = 'free_y' ) +
+  theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  xlab('') + ylab('')
+print(p)
+dev.off()
+
