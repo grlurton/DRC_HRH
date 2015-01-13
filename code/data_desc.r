@@ -230,6 +230,9 @@ taux_status <- function(staff_data){
 status_dist <- ddply(effectif_data , .(staff_recode , FacLevel , Province , FacRurban) , taux_status)
 output.table(status_dist , 'status_distribution')
 
+status_dist_province <- ddply(effectif_data , .(Province) , taux_status)
+output.table(status_dist_province , 'status_distribution_by_province')
+
 status_dist <- subset(status_dist , !is.na(FacRurban))
 status_dist$staff_recode <- factor(x = status_dist$staff_recode , 
                               levels =  ordering_staff ,
@@ -255,12 +258,6 @@ heat_map_status(status_dist , 'Immatricule_prop' , 'Proportion de personnel imma
 heat_map_status(status_dist , 'Present_prop' , 'Proportion de personnel présent')
 dev.off()
 
-
-sum(status_dist$Immatricule_N) / sum(status_dist$Total)
-sum(status_dist$Mecanise_N) / sum(status_dist$Total)
-
-mean(indiv$HWImmatriculation == 'oui')
-mean(indiv$HWMecanise == 'oui')
 
 
 ####Donnees inidividuelles
