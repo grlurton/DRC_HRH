@@ -123,11 +123,47 @@ qplot(data = rev_comp_mcz , y = V1 , x = 1 , fill = variable , geom = 'bar' , po
 dev.off()
 
 
+## Dist of total income
+
+data_total_income <- ddply(total_revenu , .(instanceID , Role , Province , FacLevel)  , 
+                           function(x) sum(x$value , na.rm = TRUE))
 
 
+data_total_income <- subset(data_total_income , !is.na(Role) & !is.na(FacLevel))
 
+make_dist <- function(x){
+  median <- median(x$V1)
+  max <- max(x$V1)
+  min <- min(x$V1)
+  data.frame(median , max , min)
+}
 
+data_total_income_plot <- ddply(data_total_income , .(Province , Role , FacLevel) , 
+                                make_dist)
 
+data_total_income_plot$Role <- factor(data_total_income_plot$Role , 
+                                      levels = ordering_staff , 
+                                      ordered = TRUE)
+data_total_income_plot$FacLevel <- factor(data_total_income_plot$FacLevel , 
+                                      levels = ordering_facilities , 
+                                      ordered = TRUE)
+
+pdf('output/graphs/income_median_distribution.pdf' , width = 14)
+ggplot(data = data_total_income_plot , aes(x = median , y = Role , col = 1 )) +
+  geom_point(size = 2.5) + 
+  facet_grid(FacLevel~ Province, scales = 'free_y') +
+  geom_errorbarh(aes(xmax = max, xmin = min , height = .5 ), col = 2)+
+  theme_bw() + xlab('Total Income') +
+  guides(col = FALSE)
+dev.off()
+
+table_rev_role_only <- ddply(data_total_income , .(Role) , 
+                                make_dist)
+output.table(table_rev_role_only , 'revenu_distributions_role')
+
+table_rev_province_role <- ddply(data_total_income , .(Province , Role) , 
+                                make_dist)
+output.table(table_rev_province_role , 'revenu_distributions_province_role')
 
 
 
