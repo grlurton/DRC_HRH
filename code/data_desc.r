@@ -193,7 +193,7 @@ data_heat_map$staff <- factor(x = data_heat_map$staff ,
                               levels =  ordering_staff ,
                               ordered = TRUE)
 
-pdf('output/graphs/staffing_heatmap.pdf')
+pdf('output/graphs/staffing_heatmap.pdf' , width = 14)
 qplot(x =FacRurban ,y = staff , data = data_heat_map, fill = V1, 
       geom = "raster" , label = round(V1 , 2) , main = '% of facilities with appropriate level of staffing')+
   scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" ,

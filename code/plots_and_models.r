@@ -129,6 +129,8 @@ dev.off()
 
 
 
+
+
 ### Modelling
 
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
