@@ -90,6 +90,8 @@ ordering_staff <- c("autre" ,
 
 ordering_milieu <- c("urbain" , "rural")
 
+ordering_facilities <- c("cs" , "csr" , "hgr" , "ecz")
+
 ##Data Environments loads
 
 

@@ -179,7 +179,7 @@ percentage_norm <- function(melted_facilities){
 }
 
 create_split <- expand.grid(unique(data_plot$Province) ,
-                            ordered_staff , unique(data_plot$FacLevel) , 
+                            ordering_staff , unique(data_plot$FacLevel) , 
                             unique(data_plot$FacRurban) )
 colnames(create_split) <- c("province" , "staff" , "level" , "rurbain")
 
@@ -188,17 +188,22 @@ data_heat_map <- ddply(data_plot ,
                        .(staff_recode , Province , FacLevel , FacRurban) ,
                        percentage_norm)
 
-data_heat_map <- subset(data_heat_map , !is.na(V1))
 
 data_heat_map$staff <- factor(x = data_heat_map$staff , 
-                              levels =  ordered_staff ,
+                              levels =  ordering_staff ,
                               ordered = TRUE)
 
+pdf('output/graphs/staffing_heatmap.pdf')
 qplot(x =FacRurban ,y = staff , data = data_heat_map, fill = V1, 
-      geom = "raster" , label = round(V1 , 2))+
-  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
-  facet_grid(FacLevel~Province) + theme_bw()+ 
-  geom_text()
+      geom = "raster" , label = round(V1 , 2) , main = '% of facilities with appropriate level of staffing')+
+  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" ,
+                      name = 'Legend') +
+  facet_grid(FacLevel~Province) + theme_bw() + 
+  geom_text() +
+  xlab('') + ylab('Staffing category')
+dev.off()
+
+
 
 ### Taux de mecanisation
 
@@ -227,14 +232,18 @@ output.table(status_dist , 'status_distribution')
 
 status_dist <- subset(status_dist , !is.na(FacRurban))
 status_dist$staff_recode <- factor(x = status_dist$staff_recode , 
-                              levels =  ordered_staff ,
+                              levels =  ordering_staff ,
                               ordered = TRUE)
+
+status_dist$FacLevel <- factor(x = status_dist$FacLevel , 
+                                   levels =  ordering_facilities ,
+                                   ordered = TRUE)
 
 heat_map_status <- function(data , var , titre){
   data$varToPlot <- data[,var]
   qplot(x =FacRurban ,y = staff_recode , data = data, fill = varToPlot ,
         geom = "raster" , label = round(varToPlot , 2) , main = titre)+
-    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" , name = 'Legend') +
     facet_grid(FacLevel~Province , scales = 'free_y') +
     theme_bw()+
     geom_text() + xlab('') + ylab('')
@@ -325,7 +334,7 @@ make_heat_revenue <- function(data , revenu_data , revenu_name){
   title <- paste('Heatmap for' , revenu_name , sep = ' ')
   plot <- qplot(y = Role , data = heat_data, fill = V1, x = rep("" , nrow(heat_data)) ,
         geom = "raster" , label = round(V1 , 2) , main = title)+
-    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" , name = 'Legend') +
     facet_grid(FacilityType~Province , scales = 'free_y') +
     theme_bw()+
     geom_text() + xlab('') + ylab('')
@@ -355,7 +364,7 @@ heat_complete$Source <- factor(heat_complete$Source ,
 
 p <- qplot(x =Province ,y = Role , data = heat_complete, 
       fill = V1, geom = "raster"  , main = 'Prevalence of each source of revenue')+
-  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" , name = 'Legend') +
   facet_grid(FacilityType~Source , scales = 'free_y' ) +
   theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   xlab('') + ylab('')
@@ -374,10 +383,9 @@ output.table(tab = bancarisation_heatmap , name = 'bancarisation_data')
 pdf('output/graphs/bancarisation_heatmap.pdf', width = 14)
 p <- qplot(x =FacRurban ,y = Role , data = bancarisation_heatmap, 
            fill = V1, geom = "raster"  , main = 'Percentage of bancarized people')+
-  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green") +
+  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" , name = 'Legend') +
   facet_grid(FacilityType~Province , scales = 'free_y' ) +
   theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   xlab('') + ylab('')
 print(p)
 dev.off()
-
