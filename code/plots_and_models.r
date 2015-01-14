@@ -12,7 +12,7 @@ ordRev <- RevTot$instanceID[order(RevTot$V1)]
 RevSum$instanceID <- factor(RevSum$instanceID , levels =  ordRev , ordered = TRUE)
 
 ##Ordering Revenues
-orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
+orderedIncome <- c('Salaire' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
                    'Prime Locale' , 'Heures supplémentaires' , 'Activité  Privée' , 
                    'Activité non santé' , "Autres revenus" , "Vente de Medicament" , "Cadeau")
 
@@ -22,6 +22,8 @@ pdf('output/graphs/distrib_revenus.pdf')
 qplot(data = RevSum , x = instanceID , y = V1 , geom = 'bar' , stat = 'identity' , width = 1 , fill = variable)+
   theme(axis.text.x = element_blank()) + facet_wrap(~Role , scales = 'free')
 dev.off()
+
+table(RevSum$variable)
 
 ### Some data management
 
@@ -88,14 +90,14 @@ total_revenu <- merge(total_revenu , rev_type ,
 
 
 total_revenu$RevenueEntry <- total_revenu$variable
-total_revenu$RevenueEntry[total_revenu$variable %in% c('Cadeau' , 'Vente de Medicament')] <- 'informel' 
+total_revenu$RevenueEntry[total_revenu$variable %in% c('Cadeau' , 'Vente de Medicament')] <- 'Informel' 
 total_revenu$RevenueEntry[total_revenu$variable %in% c("Autres revenus")] <- 'Activité non santé' 
 
 
 
-orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
+orderedIncome <- c('Salaire' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
                    'Prime Locale' , 'Heures supplémentaires' , 'Activité  Privée' , 
-                   'Activité non santé' , "informel")
+                   'Activité non santé' , "Informel")
 
 
 
@@ -230,21 +232,27 @@ dist_role$Role <- factor(dist_role$Role ,
                          levels = ord_st , 
                          ordered = TRUE)
 
-pdf('output/graphs/median_income_distribution.pdf')
+pdf('output/graphs/median_income_distribution.pdf' , width = 14)
 qplot(data = dist_role , y = V1 , x = Role , fill = RevenueEntry , geom = 'bar' , position = 'stack' ,
       stat = 'identity') +
-  theme_bw() + scale_fill_brewer(palette="Set1") + #facet_wrap(~ Role , scales = 'free_x') +
- # theme(axis.text.y = element_blank()) + 
+  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type of Income') + 
   coord_flip() + 
   xlab('') + ylab('Median Income') + 
   labs(title = "Median income and average distribution")
+
+dist_role$Role <- factor(dist_role$Role ,
+                         levels = rev(ordering_staff) , 
+                         ordered = TRUE)
+
+qplot(data = dist_role , y = V1 , x = Role , fill = RevenueEntry , geom = 'bar' , position = 'stack' ,
+      stat = 'identity') +
+  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type of Income') + 
+  xlab('') + ylab('Median Income') + 
+  labs(title = "Median income and average distribution") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 dev.off()
 
-
-
-colnames(distrib_data)
-
-
+dist_role_table <- dcast(dist_role , formula = Role ~ RevenueEntry)
+output.table(dist_role_table , 'median_revenue_composition')
 
 
 ### Modelling
@@ -276,8 +284,8 @@ covs_ecz <- "FacRurban + FacMotivation + Province"
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = "+")
 covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
 
-revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "informel" , "PerDiem"  ,  
-          "PrimeRisque" , "PrimesPartenaires" , "Wage")
+revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "Informel" , "PerDiem"  ,  
+          "PrimeRisque" , "PrimesPartenaires" , "Salaire")
 
 models_ecz <- list()
 models_fac <- list()
@@ -318,7 +326,7 @@ data_amount <- dcast(total_revenu , formula = instanceID + Structure + FacLevel 
 models_ecz2 <- list()
 models_fac2 <- list()
 
-revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "informel" , "PerDiem"  ,  
+revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "Informel" , "PerDiem"  ,  
           "PrimesPartenaires")
 
 
@@ -622,7 +630,7 @@ make_plot_df <- function(counterfacs_prov , func , model , n , type){
   toPlot
 }
 
-plot_df_wage_prob <- make_plot_df(counterfacts_province , simulateLogit , prob_salaire , 10000 , 'salaire')
+plot_df_Salaire_prob <- make_plot_df(counterfacts_province , simulateLogit , prob_salaire , 10000 , 'salaire')
 plot_df_pdr_prob <- make_plot_df(counterfacts_province , simulateLogit , prob_pdr , 10000 , 'prime de risque')
 plot_df_hon_amount <- make_plot_df(counterfacts_province , amount_predict , amount_honoraire , 10000 , 'honoraire')
 plot_df_primePart_amount <- make_plot_df(counterfacts_province , amount_predict , amount_prime , 10000 , 'top up')
@@ -631,7 +639,7 @@ plot_df_primePart_amount <- make_plot_df(counterfacts_province , amount_predict 
 
 ```{r, fig.width=10}  
 
-plot1 <- subset(plot_df_wage_prob , FacAppui == 'non')
+plot1 <- subset(plot_df_Salaire_prob , FacAppui == 'non')
 ggplot(plot1, aes(x=mean, y =  post , col = factor(autorite))) +
   geom_point() + geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .2)) +
   xlim(c(0,1)) + theme_bw() +
@@ -639,7 +647,7 @@ ggplot(plot1, aes(x=mean, y =  post , col = factor(autorite))) +
   ylab("") +
   facet_grid(prov ~ facility , scales = 'free_y'  )
 
-plot2 <- subset(plot_df_wage_prob , autorite == 0)
+plot2 <- subset(plot_df_Salaire_prob , autorite == 0)
 ggplot(plot2, aes(x=mean, y =  post , col = factor(FacAppui))) +
   geom_point() + geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .2)) +
   xlim(c(0,1)) + theme_bw() +
