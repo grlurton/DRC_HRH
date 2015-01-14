@@ -283,12 +283,12 @@ indiv$Age[indiv$Age > 100 | indiv$Age < 18] <- NA
 retraite <- function(data){
   data <- subset(data , !is.na(Age) )
   non_med <- data.frame(Cadre = 'Non medecin' , 
-                     Total = nrow(data[data$Role != 'medecin' , ]) , 
-                     Retraite = nrow(data[data$Role != 'medecin' & data$Age > 62, ])
+                     Total = nrow(data[!(data$Role %in% c('medecin', 'medecin_chef_zone')) , ]) , 
+                     Retraite = nrow(data[!(data$Role %in% c('medecin', 'medecin_chef_zone')) & data$Age > 62, ])
                      )
   med <- data.frame(Cadre = 'Medecin' , 
-                    Total = nrow(data[data$Role == 'medecin' , ]) , 
-                    Retraite = nrow(data[data$Role == 'medecin' & data$Age > 65, ])
+                    Total = nrow(data[data$Role %in% c('medecin', 'medecin_chef_zone'), ]) , 
+                    Retraite = nrow(data[data$Role  %in% c('medecin', 'medecin_chef_zone') & data$Age > 65, ])
   )
   rbind(non_med , med)
 }
