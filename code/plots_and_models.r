@@ -86,6 +86,8 @@ rev_type$RevenueEntry <- substr(rev_type$RevenueEntry , 1 , nchar(rev_type$Reven
 total_revenu <- merge(total_revenu , rev_type , 
                       by.x = 'variable' , by.y = 'RevenueLabel' , all.x = TRUE)
 
+
+total_revenu$RevenueEntry <- total_revenu$variable
 total_revenu$RevenueEntry[total_revenu$variable %in% c('Cadeau' , 'Vente de Medicament')] <- 'informel' 
 total_revenu$RevenueEntry[total_revenu$variable %in% c("Autres revenus")] <- 'Activité non santé' 
 
@@ -93,7 +95,7 @@ total_revenu$RevenueEntry[total_revenu$variable %in% c("Autres revenus")] <- 'Ac
 
 orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
                    'Prime Locale' , 'Heures supplémentaires' , 'Activité  Privée' , 
-                   'Activité non santé' , "Autres revenus" , "informel")
+                   'Activité non santé' , "informel")
 
 
 
@@ -101,12 +103,12 @@ orderedIncome <- c('Wage' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Die
 
 revenu_mcz <- subset(total_revenu , Role == "medecin_chef_zone")
 
-revenu_mcz$variable <- factor(revenu_mcz$variable , levels =  orderedIncome)
+revenu_mcz$RevenueEntry <- factor(revenu_mcz$RevenueEntry , levels =  orderedIncome)
 
 rev_comp_mcz <- ddply(revenu_mcz , .(Province) , 
                       function(x){
                         nombre <- nrow(x)
-                        ddply(x , .(variable) , 
+                        ddply(x , .(RevenueEntry) , 
                               function(x){
                                 sum(x$value) / nombre
                               })
@@ -115,7 +117,7 @@ rev_comp_mcz <- ddply(revenu_mcz , .(Province) ,
 
 
 pdf('output/graphs/MCZ_income_dist.pdf', width = 10)
-qplot(data = rev_comp_mcz , y = V1 , x = 1 , fill = variable , geom = 'bar' , position = 'stack' ,
+qplot(data = rev_comp_mcz , y = V1 , x = 1 , fill = RevenueEntry , geom = 'bar' , position = 'stack' ,
       stat = 'identity') +
   facet_grid(Province~.) + theme_bw() + scale_fill_brewer(palette="Set1") + 
   theme(axis.text.y = element_blank()) +
@@ -164,6 +166,84 @@ output.table(table_rev_role_only , 'revenu_distributions_role')
 table_rev_province_role <- ddply(data_total_income , .(Province , Role) , 
                                 make_dist)
 output.table(table_rev_province_role , 'revenu_distributions_province_role')
+
+### Table 1
+
+percent_revenu <- function(data , total){
+  sum(data$value) / total
+}
+
+distrib_data <- ddply(total_revenu , .(Role, instanceID) , 
+                      function(data){
+                        total <- sum(data$value)
+                        out <- ddply(data , .(RevenueEntry) ,
+                                     function(x) percent_revenu(x , total))
+                        out
+                        })
+
+distrib_data$RevenueEntry <- factor(distrib_data$RevenueEntry ,
+                                levels = orderedIncome , 
+                                ordered = TRUE )
+
+revenue_median <- ddply(total_revenu , .(Role) , 
+                        function(x){
+                          total <- ddply(x , .(instanceID),
+                                         function(x){
+                                           sum(x$value)
+                                           }
+                                         )
+                          median(total$V1)
+                        }
+                        )
+                        
+
+distrib_data <- subset(distrib_data , !is.na(Role))
+revenue_median <- subset(revenue_median , !is.na(Role))
+
+colnames(revenue_median) <- c('Role' , 'median')
+
+distrib_data_grid <- data.frame(RevenueEntry = orderedIncome , dumm = 'dummy')
+
+distrib_data_explode <- ddply(distrib_data , .(instanceID) ,
+                              function(x){
+                                out <- merge(x , distrib_data_grid , by = 'RevenueEntry' , all.y = TRUE)
+                                out$Role <- unique(x$Role)
+                                out
+                              }
+                              )
+
+distrib_data_explode$V1[is.na(distrib_data_explode$V1)] <- 0
+
+
+distrib_data_explode <- merge(distrib_data_explode , revenue_median ,
+                              by = 'Role' , all.x = TRUE)
+
+distrib_data_explode$amount <- distrib_data_explode$V1 * distrib_data_explode$median
+
+dist_role <- ddply(distrib_data_explode , .(Role , RevenueEntry) , 
+                   function(x) mean(x$amount))
+
+ord_st <- revenue_median$Role[order(revenue_median$median)]
+
+
+dist_role$Role <- factor(dist_role$Role ,
+                         levels = ord_st , 
+                         ordered = TRUE)
+
+pdf('output/graphs/median_income_distribution.pdf')
+qplot(data = dist_role , y = V1 , x = Role , fill = RevenueEntry , geom = 'bar' , position = 'stack' ,
+      stat = 'identity') +
+  theme_bw() + scale_fill_brewer(palette="Set1") + #facet_wrap(~ Role , scales = 'free_x') +
+ # theme(axis.text.y = element_blank()) + 
+  coord_flip() + 
+  xlab('') + ylab('Median Income') + 
+  labs(title = "Median income and average distribution")
+dev.off()
+
+
+
+colnames(distrib_data)
+
 
 
 
