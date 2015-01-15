@@ -1,0 +1,160 @@
+"","Role","FacilityType","Province","ActNonSanteType","V1","perc"
+"13","administrateur","cs","bandundu","Agriculture / elevage",2,0.222222222222222
+"14","administrateur","cs","bandundu","Autre",1,0.111111111111111
+"15","administrateur","cs","bandundu","Negoce / commerce",2,0.222222222222222
+"18","administrateur","cs","katanga","Agriculture / elevage",3,0.272727272727273
+"19","administrateur","cs","katanga","Negoce / commerce",1,0.0909090909090909
+"21","administrateur","cs","sud_kivu","Agriculture / elevage",3,0.25
+"22","administrateur","cs","sud_kivu","Negoce / commerce",3,0.25
+"24","administrateur","hgr","bandundu","Agriculture / elevage",2,0.25
+"25","administrateur","hgr","bandundu","Negoce / commerce",3,0.375
+"27","administrateur","hgr","equateur","Agriculture / elevage",2,0.25
+"28","administrateur","hgr","equateur","Negoce / commerce",1,0.125
+"30","administrateur","hgr","katanga","Agriculture / elevage",2,0.5
+"31","administrateur","hgr","katanga","Negoce / commerce",1,0.25
+"33","administrateur","hgr","sud_kivu","Autre",1,0.142857142857143
+"34","administrateur","hgr","sud_kivu","Negoce / commerce",1,0.142857142857143
+"36","administrateur_gestionnaire","ecz","bandundu","Agriculture / elevage",3,0.2
+"37","administrateur_gestionnaire","ecz","bandundu","Negoce / commerce",1,0.0666666666666667
+"38","administrateur_gestionnaire","ecz","bandundu","Taxi",1,0.0666666666666667
+"40","administrateur_gestionnaire","ecz","equateur","Agriculture / elevage",1,0.166666666666667
+"41","administrateur_gestionnaire","ecz","equateur","Negoce / commerce",2,0.333333333333333
+"43","administrateur_gestionnaire","ecz","katanga","Agriculture / elevage",1,0.166666666666667
+"44","administrateur_gestionnaire","ecz","katanga","Autre",1,0.166666666666667
+"45","administrateur_gestionnaire","ecz","katanga","Location Maison",1,0.166666666666667
+"46","administrateur_gestionnaire","ecz","katanga","Negoce / commerce",4,0.666666666666667
+"48","administrateur_gestionnaire","ecz","sud_kivu","Agriculture / elevage",1,0.125
+"49","administrateur_gestionnaire","ecz","sud_kivu","Autre",1,0.125
+"50","administrateur_gestionnaire","ecz","sud_kivu","Negoce / commerce",2,0.25
+"52","autre","cs","bandundu","Agriculture / elevage",63,0.67741935483871
+"53","autre","cs","bandundu","Autre",2,0.021505376344086
+"54","autre","cs","bandundu","Negoce / commerce",9,0.0967741935483871
+"56","autre","cs","equateur","Agriculture / elevage",4,0.363636363636364
+"57","autre","cs","equateur","Autre",1,0.0909090909090909
+"58","autre","cs","equateur","Negoce / commerce",1,0.0909090909090909
+"60","autre","cs","katanga","Agriculture / elevage",9,0.230769230769231
+"61","autre","cs","katanga","Autre",5,0.128205128205128
+"62","autre","cs","katanga","Negoce / commerce",6,0.153846153846154
+"63","autre","cs","katanga","Taxi",1,0.0256410256410256
+"65","autre","cs","sud_kivu","Agriculture / elevage",9,0.219512195121951
+"66","autre","cs","sud_kivu","Autre",1,0.024390243902439
+"67","autre","cs","sud_kivu","Negoce / commerce",7,0.170731707317073
+"69","autre","ecz","bandundu","Agriculture / elevage",5,0.5
+"71","autre","ecz","equateur","Agriculture / elevage",2,0.4
+"72","autre","ecz","equateur","Negoce / commerce",1,0.2
+"74","autre","ecz","katanga","Agriculture / elevage",2,0.666666666666667
+"76","autre","ecz","sud_kivu","Negoce / commerce",1,0.142857142857143
+"78","autre","hgr","bandundu","Agriculture / elevage",9,0.75
+"80","autre","hgr","equateur","Autre",1,0.333333333333333
+"82","autre","hgr","katanga","Location Maison",1,0.166666666666667
+"83","autre","hgr","katanga","Negoce / commerce",1,0.166666666666667
+"84","autre","hgr","katanga","Taxi",1,0.166666666666667
+"86","autre","hgr","sud_kivu","Agriculture / elevage",1,0.125
+"87","autre","hgr","sud_kivu","Negoce / commerce",2,0.25
+"89","infirmier","cs","bandundu","",1,0.00305810397553517
+"90","infirmier","cs","bandundu","Agriculture / elevage",144,0.440366972477064
+"91","infirmier","cs","bandundu","Autre",8,0.0244648318042813
+"92","infirmier","cs","bandundu","enseignement",1,0.00305810397553517
+"93","infirmier","cs","bandundu","Location Maison",1,0.00305810397553517
+"94","infirmier","cs","bandundu","minier",2,0.00611620795107034
+"95","infirmier","cs","bandundu","Negoce / commerce",34,0.103975535168196
+"96","infirmier","cs","bandundu","Taxi",2,0.00611620795107034
+"98","infirmier","cs","equateur","Agriculture / elevage",66,0.407407407407407
+"99","infirmier","cs","equateur","Autre",6,0.037037037037037
+"100","infirmier","cs","equateur","enseignement",1,0.00617283950617284
+"101","infirmier","cs","equateur","Negoce / commerce",18,0.111111111111111
+"102","infirmier","cs","equateur","Taxi",1,0.00617283950617284
+"104","infirmier","cs","katanga","Agriculture / elevage",76,0.4
+"105","infirmier","cs","katanga","Autre",14,0.0736842105263158
+"106","infirmier","cs","katanga","enseignement",1,0.00526315789473684
+"107","infirmier","cs","katanga","Location Maison",7,0.0368421052631579
+"108","infirmier","cs","katanga","minier",1,0.00526315789473684
+"109","infirmier","cs","katanga","Negoce / commerce",33,0.173684210526316
+"110","infirmier","cs","katanga","Taxi",7,0.0368421052631579
+"112","infirmier","cs","sud_kivu","Agriculture / elevage",27,0.134328358208955
+"113","infirmier","cs","sud_kivu","Autre",11,0.054726368159204
+"114","infirmier","cs","sud_kivu","enseignement",1,0.00497512437810945
+"115","infirmier","cs","sud_kivu","Location Maison",4,0.0199004975124378
+"116","infirmier","cs","sud_kivu","Negoce / commerce",23,0.114427860696517
+"118","infirmier","hgr","bandundu","Agriculture / elevage",15,0.348837209302326
+"119","infirmier","hgr","bandundu","Autre",2,0.0465116279069767
+"120","infirmier","hgr","bandundu","enseignement",1,0.0232558139534884
+"121","infirmier","hgr","bandundu","Negoce / commerce",9,0.209302325581395
+"123","infirmier","hgr","equateur","Agriculture / elevage",21,0.39622641509434
+"124","infirmier","hgr","equateur","Autre",1,0.0188679245283019
+"125","infirmier","hgr","equateur","Negoce / commerce",3,0.0566037735849057
+"127","infirmier","hgr","katanga","Agriculture / elevage",18,0.375
+"128","infirmier","hgr","katanga","Autre",3,0.0625
+"129","infirmier","hgr","katanga","enseignement",2,0.0416666666666667
+"130","infirmier","hgr","katanga","Location Maison",3,0.0625
+"131","infirmier","hgr","katanga","Negoce / commerce",11,0.229166666666667
+"132","infirmier","hgr","katanga","Taxi",1,0.0208333333333333
+"134","infirmier","hgr","sud_kivu","",1,0.0161290322580645
+"135","infirmier","hgr","sud_kivu","Agriculture / elevage",7,0.112903225806452
+"136","infirmier","hgr","sud_kivu","Autre",6,0.0967741935483871
+"137","infirmier","hgr","sud_kivu","Negoce / commerce",5,0.0806451612903226
+"139","infirmier_superviseur","ecz","bandundu","Agriculture / elevage",7,0.466666666666667
+"140","infirmier_superviseur","ecz","bandundu","Autre",2,0.133333333333333
+"141","infirmier_superviseur","ecz","bandundu","Negoce / commerce",1,0.0666666666666667
+"143","infirmier_superviseur","ecz","equateur","Agriculture / elevage",4,0.5
+"145","infirmier_superviseur","ecz","katanga","Agriculture / elevage",3,0.375
+"146","infirmier_superviseur","ecz","katanga","Autre",1,0.125
+"147","infirmier_superviseur","ecz","katanga","Location Maison",3,0.375
+"148","infirmier_superviseur","ecz","katanga","Negoce / commerce",5,0.625
+"150","infirmier_superviseur","ecz","sud_kivu","Negoce / commerce",1,0.1
+"152","labo","cs","bandundu","",1,0.0454545454545455
+"153","labo","cs","bandundu","Agriculture / elevage",5,0.227272727272727
+"154","labo","cs","bandundu","Autre",1,0.0454545454545455
+"155","labo","cs","bandundu","Negoce / commerce",1,0.0454545454545455
+"157","labo","cs","equateur","Agriculture / elevage",3,0.375
+"159","labo","cs","katanga","Agriculture / elevage",9,0.321428571428571
+"160","labo","cs","katanga","Autre",5,0.178571428571429
+"161","labo","cs","katanga","Location Maison",1,0.0357142857142857
+"162","labo","cs","katanga","minier",1,0.0357142857142857
+"163","labo","cs","katanga","Negoce / commerce",4,0.142857142857143
+"165","labo","cs","sud_kivu","Agriculture / elevage",6,0.214285714285714
+"166","labo","cs","sud_kivu","Autre",2,0.0714285714285714
+"167","labo","cs","sud_kivu","Negoce / commerce",3,0.107142857142857
+"169","labo","hgr","bandundu","Agriculture / elevage",2,0.5
+"172","labo","hgr","katanga","Negoce / commerce",1,0.142857142857143
+"175","medecin","cs","bandundu","Agriculture / elevage",1,0.166666666666667
+"177","medecin","cs","equateur","Negoce / commerce",1,0.2
+"179","medecin","cs","katanga","Agriculture / elevage",5,0.238095238095238
+"180","medecin","cs","katanga","Autre",2,0.0952380952380952
+"181","medecin","cs","katanga","Location Maison",1,0.0476190476190476
+"182","medecin","cs","katanga","Negoce / commerce",1,0.0476190476190476
+"185","medecin","hgr","bandundu","Agriculture / elevage",2,0.181818181818182
+"186","medecin","hgr","bandundu","Negoce / commerce",1,0.0909090909090909
+"189","medecin","hgr","katanga","Agriculture / elevage",3,0.12
+"190","medecin","hgr","katanga","Autre",2,0.08
+"191","medecin","hgr","katanga","enseignement",1,0.04
+"192","medecin","hgr","katanga","Location Maison",2,0.08
+"193","medecin","hgr","katanga","Negoce / commerce",6,0.24
+"194","medecin","hgr","katanga","Taxi",3,0.12
+"196","medecin","hgr","sud_kivu","Agriculture / elevage",1,0.0714285714285714
+"197","medecin","hgr","sud_kivu","Autre",2,0.142857142857143
+"198","medecin","hgr","sud_kivu","enseignement",1,0.0714285714285714
+"199","medecin","hgr","sud_kivu","Location Maison",1,0.0714285714285714
+"200","medecin","hgr","sud_kivu","Negoce / commerce",2,0.142857142857143
+"202","medecin_chef_zone","ecz","bandundu","Agriculture / elevage",1,0.25
+"204","medecin_chef_zone","ecz","equateur","Agriculture / elevage",1,0.142857142857143
+"205","medecin_chef_zone","ecz","equateur","Negoce / commerce",1,0.142857142857143
+"207","medecin_chef_zone","ecz","katanga","Agriculture / elevage",2,0.333333333333333
+"208","medecin_chef_zone","ecz","katanga","enseignement",1,0.166666666666667
+"209","medecin_chef_zone","ecz","katanga","Location Maison",2,0.333333333333333
+"211","medecin_chef_zone","ecz","sud_kivu","Agriculture / elevage",1,0.2
+"212","medecin_chef_zone","ecz","sud_kivu","Autre",1,0.2
+"213","medecin_chef_zone","ecz","sud_kivu","Location Maison",1,0.2
+"215","pharmacien","cs","bandundu","Agriculture / elevage",2,0.333333333333333
+"217","pharmacien","cs","equateur","Agriculture / elevage",5,0.5
+"218","pharmacien","cs","equateur","Negoce / commerce",4,0.4
+"220","pharmacien","cs","katanga","Agriculture / elevage",8,0.533333333333333
+"221","pharmacien","cs","katanga","Autre",2,0.133333333333333
+"222","pharmacien","cs","katanga","Location Maison",1,0.0666666666666667
+"223","pharmacien","cs","katanga","Negoce / commerce",2,0.133333333333333
+"225","pharmacien","cs","sud_kivu","Agriculture / elevage",7,0.368421052631579
+"226","pharmacien","cs","sud_kivu","Location Maison",1,0.0526315789473684
+"227","pharmacien","cs","sud_kivu","Negoce / commerce",1,0.0526315789473684
+"229","pharmacien","hgr","bandundu","Agriculture / elevage",1,0.5
+"230","pharmacien","hgr","bandundu","Negoce / commerce",1,0.5
+"232","pharmacien","hgr","sud_kivu","Negoce / commerce",1,0.166666666666667

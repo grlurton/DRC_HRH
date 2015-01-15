@@ -374,3 +374,45 @@ p <- qplot(x =FacRurban ,y = Role , data = bancarisation_heatmap,
   xlab('') + ylab('')
 print(p)
 dev.off()
+
+####Activ Non Sante
+
+activ_non_sante$ActNonSanteType[activ_non_sante$ActNonSanteType %in% c('Agriculture-elevage-peche-chasse' ,
+                                                                       'agriculture_elevage')] <- 'Agriculture / elevage'
+
+activ_non_sante$ActNonSanteType[activ_non_sante$ActNonSanteType %in% c('autre' , 'veux_pas_dire' ,
+                                                                       'Autres')] <- 'Autre'
+
+activ_non_sante$ActNonSanteType[activ_non_sante$ActNonSanteType %in% c('location maison' ,
+                                                                       'location_maison')] <- 'Location Maison'
+
+activ_non_sante$ActNonSanteType[activ_non_sante$ActNonSanteType %in% c('location moyens de transport' ,
+                                                                       'taxi')] <- 'Taxi'
+
+activ_non_sante$ActNonSanteType[activ_non_sante$ActNonSanteType %in% c('negoce-commerce' ,
+                                                                       'negoce_commerce')] <- 'Negoce / commerce'
+
+
+activ_non_sante <- merge(indiv , loop_activ_non_sante , by.x = 'instanceID' , by.y = 'PARENT_KEY' , 
+                         all = T)
+
+freq_activite <- function(data){
+  nbre <- length(unique(data$instanceID))
+  act_nbre <- ddply(data , .(ActNonSanteType) , 
+                    function(x){
+                      length(unique(x$instanceID))
+                    })
+  act_nbre$perc <- act_nbre$V1 / nbre
+  act_nbre
+}
+
+IGA_stratif<- ddply(activ_non_sante , .(Role , FacilityType , Province ) , function(data) freq_activite(data))
+IGA_stratif <-  subset(IGA_stratif , !is.na(ActNonSanteType) & !is.na(perc) & Role != '')
+output.table(IGA_stratif , 'IGA_table_stratified')
+
+IGA_non_stratif <- freq_activite(activ_non_sante)
+IGA_non_stratif <- subset(IGA_non_stratif , !is.na(ActNonSanteType))
+output.table(IGA_non_stratif , 'IGA_table_non_stratified')
+
+table(loop_activ_non_sante$ActNonSanteType , )
+
