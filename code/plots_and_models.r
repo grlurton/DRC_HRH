@@ -191,7 +191,7 @@ revenue_median <- ddply(total_revenu , .(Role) ,
                         function(x){
                           total <- ddply(x , .(instanceID),
                                          function(x){
-                                           sum(x$value)
+                                             sum(x$value)
                                            }
                                          )
                           median(total$V1)
