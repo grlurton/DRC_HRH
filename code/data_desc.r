@@ -130,7 +130,7 @@ plot_norm <- function(data , FacLevel , maxValue , xlab){
 
 pdf(file = "output/graphs/staffing_comparison_to_norm.pdf" , width = 14)
 plot_norm(data_plot , c('cs' , 'csr') , 20 , 'Distribution du nombre de travailleurs dans les centres de santé')
-plot_norm(data_plot , 'hgr' , 50 , 'Distribution du nombre de travailleurs dans les HGR')
+plot_norm(data_plot , 'hgr' , 100 , 'Distribution du nombre de travailleurs dans les HGR')
 dev.off()
 
 
