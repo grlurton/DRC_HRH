@@ -246,7 +246,7 @@ geom_text() + xlab('') + ylab('')
              
 dev.off()
 
-
+output.table(dd , 'comparison_immatricule_mecanise')
 
 ####Donnees inidividuelles
 
