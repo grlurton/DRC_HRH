@@ -69,54 +69,23 @@ tabAppuiFull$NAppui[is.na(tabAppuiFull$NAppui)] <- 0
 tab_appui_full <- ddply(tabAppuiFull , .(Province , FacLevel , FacRurban , FacOwnership ) , nrow)
 output.table(tab_appui_full , 'fac_number_appui')
 
-### Staffing 
+##### Code for recoding staff and integrating norm 
 
-#### ECZ
+setwd('C:/Users/grlurton/Documents/DRCHRH')
 
-staff_ecz <- function(facilities){
-  ecz <- subset(facilities , FacLevel == 'ecz')
-  N <- nrow(ecz)
-  MCZ <- c(sum(ecz$ECZMCZNbre == 'oui') ,
-           sum(ecz$ECZMCZImmatricule == 'oui') ,
-           sum(ecz$ECZMCZMecanise == 'oui') ,
-           sum(ecz$ECZMCZPresent == 'oui') )
-  MDH <- c(sum(ecz$ECZMDHNbre == 'oui') ,
-           sum(ecz$ECZMDHImmatricule == 'oui') ,
-           sum(ecz$ECZMDHMecanise == 'oui') ,
-           sum(ecz$ECZMDHPresent == 'oui') )
-  DN <- c(sum(ecz$ECZDNNbre == 'oui') ,
-          sum(ecz$ECZDNImmatricule == 'oui') ,
-          sum(ecz$ECZDNMecanise == 'oui') ,
-          sum(ecz$ECZDNPresent == 'oui') )
-  AG <- c(sum(ecz$ECZAGNbre == 'oui') ,
-          sum(ecz$ECZAGImmatricule == 'oui') ,
-          sum(ecz$ECZAGMecanise == 'oui') ,
-          sum(ecz$ECZAGPresent == 'oui') )
-  IS <- c(mean(ecz$ECZISNbre , na.rm = TRUE) ,
-          mean(ecz$ECZISImmatricule , na.rm = TRUE) ,
-          mean(ecz$ECZISMecanise , na.rm = TRUE) ,
-          mean(ecz$ECZISPresent , na.rm = TRUE))
-  Noms <- c('MCZ' , 'MDH' , 'DN' , 'AG' , 'IS (Nombre moyen)')
-  out <- matrix(c(MCZ , MDH , DN , AG , IS) , byrow = TRUE , nrow = 5 ,
-                dimnames = list(Noms ,
-                                c('Nombre' , 'Immatriculés' , 'Mecanise' , 'Presents')))
-  out <- as.data.frame(out)
-  out$Staff <- Noms
-  out
-}
+stage <- 'analysis'
 
-ecz_staffing <- ddply(facilities , .(Province) ,
-                      staff_ecz)
-output.table(ecz_staffing , 'ecz_staffing')
-
-#### Centres de santé
+source('code/useful_functions.r')
 
 melted_fac <- melt(data = facilities , id = c("instanceID", "Province" , "FacLevel" , "FacRurban") )
 
 effectif_variables <- read.csv('data/variables_effectif.csv' , as.is = TRUE)
 
+melted_fac$variable <- as.character(melted_fac$variable)
+
 effectif_data <- subset(melted_fac , variable %in% effectif_variables$VarName)
-effectif_data <- merge(effectif_data , effectif_variables , by.x ='variable' , by.y = 'VarName')
+effectif_data <- merge(effectif_data , effectif_variables , by.x ='variable' , by.y = 'VarName' , all.x = TRUE)
+
 effectif_data$value[effectif_data$value == 'oui'] <- 1
 effectif_data$value[effectif_data$value == 'non'] <- 0
 effectif_data$value <- as.numeric(effectif_data$value)
@@ -125,29 +94,26 @@ meanNumHW <- ddply(effectif_data , .(Province , Statut , FacLevel , Role) ,
                    function(x)  mean(x$value , na.rm = TRUE))
 
 meanNumHW <- subset(meanNumHW , !is.na(V1))
+output.table(meanNumHW , 'hw_by_faclevel_role_prov')
 
-#Comparing to norm
-
-##Loading the norm is
-
-norms <- read.csv('data/input_norms.csv' , as.is = TRUE)
-
-##Recoding categories in melted facilities data
+##Recoding categories in into Role to simploify data
 recode_staff_input <-  read.csv('data/input_recode_staff.csv' , as.is = TRUE)
 
-staff_recode <- function(melted_data , recode_input){
-  out <- merge(melted_data  , recode_input , by.x = 'Role' , by.y = 'staff_init' , all.x = TRUE)
-  out <- subset(out , !is.na(value))
-  out
-}
 
-effectif_data <- staff_recode(effectif_data , recode_staff_input)
+effectif_data <- merge(effectif_data , recode_staff_input, by.x = 'Role' , by.y = 'staff_init' , all.x = TRUE)
 
-output.table(meanNumHW , 'hw_by_faclevel_role_prov')
+##Loading the norm
+norms <- read.csv('data/input_norms.csv' , as.is = TRUE)
 
 data_plot <- merge(effectif_data , norms , 
                    by.x = c('FacLevel' , 'staff_recode') ,
                    by.y = c('facility_type' , 'categorie'))
+
+data_plot <- subset(data_plot , !is.na(Province) & !is.na(Role) & !is.na(FacLevel) & !is.na(value))
+
+
+
+#### Plotting staffing and others
 
 plot_norm <- function(data , FacLevel , maxValue , xlab){
   qplot(data = data_plot[data_plot$Statut == "Total"  & 
@@ -164,7 +130,7 @@ plot_norm <- function(data , FacLevel , maxValue , xlab){
 
 pdf(file = "output/graphs/staffing_comparison_to_norm.pdf" , width = 14)
 plot_norm(data_plot , c('cs' , 'csr') , 20 , 'Distribution du nombre de travailleurs dans les centres de santé')
-plot_norm(data_plot , 'hgr' , 10 , 'Distribution du nombre de travailleurs dans les HGR')
+plot_norm(data_plot , 'hgr' , 50 , 'Distribution du nombre de travailleurs dans les HGR')
 dev.off()
 
 
@@ -207,6 +173,7 @@ dev.off()
 
 ### Taux de mecanisation
 
+
 taux_status <- function(staff_data){
   data_use <- dcast(staff_data , instanceID ~ Statut , value.var = 'value' , fun.aggregate = sum)
   data_use <- subset(data_use , data_use$Total >= data_use$Mecanise) #adhoc fixing here...
@@ -226,6 +193,8 @@ taux_status <- function(staff_data){
   data.frame(Total , Immatricule_prop , Immatricule_N , Mecanise_prop , Mecanise_N , 
              Present_prop , Present_N)
 }
+
+effectif_data <- subset(effectif_data , !is.na(value))
 
 status_dist <- ddply(effectif_data , .(staff_recode , FacLevel , Province , FacRurban) , taux_status)
 output.table(status_dist , 'status_distribution')
@@ -256,6 +225,25 @@ pdf('output/graphs/heat_maps_status.pdf' , width = 14)
 heat_map_status(status_dist , 'Mecanise_prop' , 'Proportion de personnel mécanisé')
 heat_map_status(status_dist , 'Immatricule_prop' , 'Proportion de personnel immatriculé')
 heat_map_status(status_dist , 'Present_prop' , 'Proportion de personnel présent')
+
+
+status_distb <- ddply(effectif_data , .(staff_recode , FacLevel , Province ) , taux_status)
+dd <- subset(melt(status_distb , id = c("staff_recode" , "FacLevel" , "Province") ) ,
+             variable %in% c( "Mecanise_prop" ,"Immatricule_prop" ) & !is.na(staff_recode))
+dd$value <- as.numeric(dd$value)
+
+dd$staff_recode <- factor(dd$staff_recode ,  levels = ordering_staff , ordered = TRUE)
+dd$FacLevel <- factor(dd$FacLevel ,  levels = ordering_facilities , ordered = TRUE)
+
+
+qplot(x =variable ,y = staff_recode , data = dd, fill = as.numeric(value) ,
+      geom = "raster" , label = round(value , 2) , 
+      main = 'titre')+
+scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" , name = 'Legend') +
+facet_grid(FacLevel~Province , scales = 'free_y') +
+theme_bw()+
+geom_text() + xlab('') + ylab('')             
+             
 dev.off()
 
 

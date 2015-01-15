@@ -84,7 +84,7 @@ sample_final$Zone <- UnifyNames(sample_final$Zone)
 
 ## Declare ordering variables
 
-ordering_staff <- c("autre" ,
+ordering_staff <- c("autre" , "autre_tech" ,
                    "administrateur_gestionnaire", "infirmier_superviseur" ,  "medecin_chef_zone" ,
                    "administrateur" , "labo" , "pharmacien" , "infirmier" , "medecin")
 
