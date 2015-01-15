@@ -414,5 +414,27 @@ IGA_non_stratif <- freq_activite(activ_non_sante)
 IGA_non_stratif <- subset(IGA_non_stratif , !is.na(ActNonSanteType))
 output.table(IGA_non_stratif , 'IGA_table_non_stratified')
 
-table(loop_activ_non_sante$ActNonSanteType , )
 
+## Act sante privee
+
+activ_sante <- merge(indiv , loop_activ_privee , by.x = 'instanceID' , by.y = 'PARENT_KEY' , 
+                         all = T)
+
+freq_activite_sante <- function(data){
+  nbre <- length(unique(data$instanceID))
+  act_nbre <- ddply(data , .(ActPriveeLieu) , 
+                    function(x){
+                      length(unique(x$instanceID))
+                    })
+  act_nbre$Denominateur <- nbre
+  act_nbre$percentage <- act_nbre$V1 / nbre
+  act_nbre
+}
+
+ActSanteStrat <- ddply(activ_sante , .(Role , FacilityType , Province ) , function(data) freq_activite_sante(data))
+ActSanteStrat <-  subset(ActSanteStrat , !is.na(ActPriveeLieu) & !is.na(percentage) & Role != '')
+output.table(ActSanteStrat , 'Act_Privee_stratified')
+
+ActSanteNonStrat <- freq_activite_sante(activ_sante)
+ActSanteNonStrat <-  subset(ActSanteNonStrat , !is.na(ActPriveeLieu) & !is.na(percentage))
+output.table(ActSanteStrat , 'Act_Privee_non_stratified')
