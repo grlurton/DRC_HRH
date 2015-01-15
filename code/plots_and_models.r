@@ -109,7 +109,7 @@ revenu_mcz$RevenueEntry <- factor(revenu_mcz$RevenueEntry , levels =  orderedInc
 
 rev_comp_mcz <- ddply(revenu_mcz , .(Province) , 
                       function(x){
-                        nombre <- nrow(x)
+                        nombre <- length(unique(x$instanceID))
                         ddply(x , .(RevenueEntry) , 
                               function(x){
                                 sum(x$value) / nombre
@@ -255,6 +255,10 @@ dist_role_table <- dcast(dist_role , formula = Role ~ RevenueEntry)
 output.table(dist_role_table , 'median_revenue_composition')
 
 
+
+
+
+
 ### Modelling
 
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
@@ -376,6 +380,69 @@ model_fit_ecz <- lm(make_formula('revenue' , covs_ecz) ,
                      data = data_total_revenu[data_total_revenu$FacLevel == 'ecz' , ])
 print(summary(model_fit_ecz))
 sink()
+
+
+## Count Models
+
+count_rev <- ddply(total_revenu , .(RevenueEntry , instanceID , Structure , FacLevel , FacOwnership , 
+                                      FacAppui , FacRurban , EczAppui , Province , Sex , Age , Matrimonial , 
+                                      RoleInit , NumberFinancialDependants , LastEducation ,
+                                      FacilityType , Role , Power , FacMotivation) , 
+                   nrow)
+colnames(count_rev)[ncol(count_rev)] <- 'Number'
+
+dumm <- data.frame(instanceID = unique(total_revenu$instanceID) , dum = 'dummy')
+
+count_perdiem <- subset(count_rev , RevenueEntry == 'Per Diem')
+count_perdiem <- merge(count_perdiem  ,dumm , all.y = TRUE)
+count_perdiem$Number[is.na(count_perdiem$Number)] <- 0
+
+
+sink('output/models_count_perdiem.txt')
+print('Running PerDiem model for facilities')
+model_fit_fac <- glm(make_formula('Number' , covs_hgrcs ) , family = poisson ,
+                    data = count_perdiem[count_perdiem$FacLevel != 'ecz' , ])
+print(summary(model_fit_fac))
+
+print('Running PerDiem model for ecz')
+model_fit_ecz <- glm(make_formula('Number' , covs_ecz) , family = poisson , 
+                     data = count_perdiem[count_perdiem$FacLevel == 'ecz' , ])
+print(summary(model_fit_ecz))
+sink()
+
+
+
+count_prim_part <- subset(count_rev , RevenueEntry == 'Prime de Partenaire')
+count_prim_part <- merge(count_prim_part  ,dumm , all.y = TRUE)
+count_prim_part$Number[is.na(count_prim_part$Number)] <- 0
+
+sink('output/models_count_prime_partenaire.txt')
+print('Running Prime Partenaire model for facilities')
+model_fit_fac <- glm(make_formula('Number' , covs_hgrcs ) , family = poisson ,
+                     data = count_prim_part[count_prim_part$FacLevel != 'ecz' , ])
+print(summary(model_fit_fac))
+
+print('Running Prime Partenaire for ecz')
+model_fit_ecz <- glm(make_formula('Number' , covs_ecz) , family = poisson , 
+                     data = count_prim_part[count_prim_part$FacLevel == 'ecz' , ])
+print(summary(model_fit_ecz))
+sink()
+
+tab_perdiem <- table(count_perdiem$Number)
+tab_prim_part <- table(count_prim_part$Number)
+
+output.table(tab_perdiem , 'distribution_perdiem')
+output.table(tab_prim_part , 'distribution_prime_partenaire')
+
+
+
+
+
+
+
+
+
+
 
 
 

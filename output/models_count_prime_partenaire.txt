@@ -1,0 +1,84 @@
+[1] "Running Prime Partenaire model for facilities"
+
+Call:
+glm(formula = make_formula("Number", covs_hgrcs), family = poisson, 
+    data = count_prim_part[count_prim_part$FacLevel != "ecz", 
+        ])
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-0.48470  -0.13655  -0.03814   0.02111   1.50117  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)  
+(Intercept)                           0.2048391  0.3069151   0.667   0.5045  
+SexHomme                             -0.0045084  0.0882296  -0.051   0.9592  
+Age                                   0.0004446  0.0008855   0.502   0.6156  
+LastEducationa3                      -0.0448321  0.1105585  -0.406   0.6851  
+LastEducationautre                   -0.0954918  0.1715200  -0.557   0.5777  
+LastEducationmedecin-pharma-etudesup  0.0142299  0.4124691   0.034   0.9725  
+Roleautre                            -0.1809756  0.2403471  -0.753   0.4515  
+Roleinfirmier                        -0.2205275  0.2607553  -0.846   0.3977  
+Rolelabo                             -0.1680244  0.2777166  -0.605   0.5452  
+Rolemedecin                          -0.1468747  0.4875629  -0.301   0.7632  
+Rolepharmacien                       -0.2223495  0.3174717  -0.700   0.4837  
+FacLevelcsr                          -0.0456834  0.1162696  -0.393   0.6944  
+FacLevelhgr                          -0.0032303  0.1068506  -0.030   0.9759  
+FacOwnershipprivee                   -0.0455480  0.2248411  -0.203   0.8395  
+FacOwnershippublique                 -0.0113665  0.1007124  -0.113   0.9101  
+FacRurbanurbain                       0.0314337  0.1235376   0.254   0.7992  
+FacMotivationTRUE                     0.1796946  0.0881305   2.039   0.0415 *
+Power                                 0.0962437  0.1042119   0.924   0.3557  
+Provinceequateur                     -0.0055787  0.1238670  -0.045   0.9641  
+Provincekatanga                       0.0898376  0.1619750   0.555   0.5791  
+Provincesud_kivu                      0.0514917  0.1138041   0.452   0.6509  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 46.135  on 613  degrees of freedom
+Residual deviance: 36.622  on 593  degrees of freedom
+  (1043 observations deleted due to missingness)
+AIC: 1345.2
+
+Number of Fisher Scoring iterations: 4
+
+[1] "Running Prime Partenaire for ecz"
+
+Call:
+glm(formula = make_formula("Number", covs_ecz), family = poisson, 
+    data = count_prim_part[count_prim_part$FacLevel == "ecz", 
+        ])
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-0.95767  -0.26641  -0.02796   0.17587   1.05422  
+
+Coefficients:
+                                      Estimate Std. Error z value Pr(>|z|)  
+(Intercept)                           0.935325   1.228489   0.761   0.4464  
+SexHomme                             -0.112292   0.283991  -0.395   0.6925  
+Age                                   0.007121   0.011987   0.594   0.5525  
+LastEducationautre                   -0.604818   0.505821  -1.196   0.2318  
+LastEducationmedecin-pharma-etudesup -0.365390   0.523119  -0.698   0.4849  
+Roleautre                            -0.763549   0.416288  -1.834   0.0666 .
+Roleinfirmier_superviseur            -0.599888   0.525925  -1.141   0.2540  
+Rolemedecin_chef_zone                -0.134225   0.506241  -0.265   0.7909  
+FacRurbanurbain                       0.110023   0.257165   0.428   0.6688  
+FacMotivationTRUE                    -0.410016   0.725130  -0.565   0.5718  
+Provinceequateur                      0.464690   0.344868   1.347   0.1778  
+Provincekatanga                       0.195380   0.422549   0.462   0.6438  
+Provincesud_kivu                      0.635204   0.369178   1.721   0.0853 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 21.545  on 65  degrees of freedom
+Residual deviance: 11.415  on 53  degrees of freedom
+  (1033 observations deleted due to missingness)
+AIC: 194.34
+
+Number of Fisher Scoring iterations: 4
+
