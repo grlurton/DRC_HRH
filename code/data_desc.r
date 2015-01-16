@@ -419,6 +419,23 @@ IGA_non_stratif <- subset(IGA_non_stratif , !is.na(ActNonSanteType))
 output.table(IGA_non_stratif , 'IGA_table_non_stratified')
 
 
+freq_activite <- function(data){
+  nbre <- length(unique(data$instanceID))
+  act_nbre <- ddply(data , .(ActNonSanteType) , 
+                    function(x){
+                      length(unique(x$instanceID))
+                    })
+  act_nbre$perc <- act_nbre$V1 / nbre
+  act_nbre
+}
+
+
+length(unique(loop_activ_non_sante$PARENT_KEY[loop_activ_non_sante$ActNonSanteProprio == 'travail_direct']))
+length(unique(loop_activ_non_sante$PARENT_KEY))
+
+
+table(loop_activ_non_sante$ActNonSanteProprio)
+
 ## Act sante privee
 
 activ_sante <- merge(indiv , loop_activ_privee , by.x = 'instanceID' , by.y = 'PARENT_KEY' , 
@@ -442,3 +459,11 @@ output.table(ActSanteStrat , 'Act_Privee_stratified')
 ActSanteNonStrat <- freq_activite_sante(activ_sante)
 ActSanteNonStrat <-  subset(ActSanteNonStrat , !is.na(ActPriveeLieu) & !is.na(percentage))
 output.table(ActSanteStrat , 'Act_Privee_non_stratified')
+
+
+
+####
+
+meca_salar <- ddply(indiv,  .(Province), 
+      function(data) as.data.frame(table(data$WageYN , data$HWMecanise)))
+output.table(meca_salar , 'mecanise_vs_salarie')
