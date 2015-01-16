@@ -18,9 +18,13 @@ orderedIncome <- c('Salaire' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per 
 
 RevSum$variable <- factor(RevSum$variable , levels =  orderedIncome)
 
-pdf('output/graphs/distrib_revenus.pdf')
+RevSum <- subset(RevSum , Role != '')
+
+RevSum$Role <- factor(as.character(RevSum$Role) , levels = rev(ordering_staff) , ordered = TRUE)
+
+pdf('output/graphs/distrib_revenus.pdf' , width = 14)
 qplot(data = RevSum , x = instanceID , y = V1 , geom = 'bar' , stat = 'identity' , width = 1 , fill = variable)+
-  theme(axis.text.x = element_blank()) + facet_wrap(~Role , scales = 'free')
+  theme(axis.text.x = element_blank()) + facet_wrap(~Role , scales = 'free') + ylab('Income') + xlab('')
 dev.off()
 
 table(RevSum$variable)
