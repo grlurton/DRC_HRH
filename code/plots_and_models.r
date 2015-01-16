@@ -189,6 +189,11 @@ distrib_data <- ddply(total_revenu , .(Role, instanceID) ,
                         out
                         })
 
+exclude <- distrib_data_explode$instanceID[distrib_data_explode$RevenueEntry == 'Informel' & distrib_data_explode$V1 == 1]
+
+total_revenu <- subset(total_revenu , !(instanceID %in% exclude))
+
+
 distrib_data$RevenueEntry <- factor(distrib_data$RevenueEntry ,
                                 levels = orderedIncome , 
                                 ordered = TRUE )
@@ -222,11 +227,15 @@ distrib_data_explode <- ddply(distrib_data , .(instanceID) ,
 
 distrib_data_explode$V1[is.na(distrib_data_explode$V1)] <- 0
 
-
 distrib_data_explode <- merge(distrib_data_explode , revenue_median ,
                               by = 'Role' , all.x = TRUE)
 
 distrib_data_explode$amount <- distrib_data_explode$V1 * distrib_data_explode$median
+
+distrib_data_explode_tt <- subset(distrib_data_explode , instanceID %in% zz)
+
+distrib_data_explode <- subset(distrib_data_explode , !(distrib_data_explode$RevenueEntry == 'Informel' & V1 == 1))
+
 
 dist_role <- ddply(distrib_data_explode , .(Role , RevenueEntry) , 
                    function(x) mean(x$amount))

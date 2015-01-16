@@ -76,7 +76,7 @@ NormalizeIncome <- function(Amount , Period){
 tot_rev$value <- as.numeric(tot_rev$value)
 
 tot_rev$MonthlyDollar <- NormalizeIncome(tot_rev$value , tot_rev$period)
-
+tot_rev$value <- tot_rev$MonthlyDollar
 
 ### Drop Unlikely values
 
