@@ -189,3 +189,4 @@ tot_rev_full <- merge(FacRelevant , tot_rev , by = 'Structure' , all.x = FALSE)
 
 
 write.csv(tot_rev_full , 'data/questionnaires_analysis/total_revenue_table.csv')
+

@@ -263,6 +263,87 @@ output.table(dist_role_table , 'median_revenue_composition')
 
 
 
+#####
+
+
+
+### Salaires
+
+percentage_revenu <- function(data , N){
+  perc <- length(unique(data$instanceID)) / N
+  perc
+}
+
+CreateHeatMapData <- function(data , revenue_name){
+  N <- length(unique(data$instanceID))
+  data <- subset(data , RevenueEntry == revenue_name)
+  print(N)
+  heat_data <- percentage_revenu(data , N)
+  heat_data
+}
+
+make_heat_revenue <- function(data , revenu_name){
+  heat_data <- ddply(total_revenu , .(Province , FacilityType , Role) , 
+                     function(data) CreateHeatMapData(data , revenu_name ))
+  heat_data <- subset(heat_data ,  Role != '')
+  heat_data$FacilityType <- factor(heat_data$FacilityType , levels = ordering_facilities , 
+                                   ordered = TRUE)
+  heat_data$Role <- factor(heat_data$Role , levels = ordering_staff , ordered = TRUE)
+  
+  title <- paste('Heatmap for' , revenu_name , sep = ' ')
+  plot <- qplot(y = Role , data = heat_data, fill = V1, x = rep("" , nrow(heat_data)) ,
+                geom = "raster" , label = round(V1 , 2) , main = title)+
+    scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" , name = 'Legend') +
+    facet_grid(FacilityType~Province , scales = 'free_y') +
+    theme_bw()+
+    geom_text() + xlab('') + ylab('')
+  heat_data$Source <- revenu_name
+  list(heat_data , plot)
+}
+
+heat_complete <- data.frame(Province = character() , FacilityType = character() , Role = character() , 
+                            V1 = numeric() , Source = character())
+pdf('output/graphs/revenue_heatmap.pdf', width = 14)
+for(i in 1:length(orderedIncome)){
+  heat <- make_heat_revenue(total_revenu , orderedIncome[i])
+  print(heat[[2]])
+  heat_complete <- rbind(heat_complete , heat[[1]])
+  provs <- unique(heat_complete$Province)
+}
+
+revenu <- orderedIncome
+heat_complete$Source <- factor(heat_complete$Source , 
+                               levels = revenu , 
+                               ordered = TRUE)
+
+
+p <- qplot(x =Province ,y = Role , data = heat_complete, 
+           fill = V1, geom = "raster"  , main = 'Prevalence of each source of revenue')+
+  scale_fill_gradient(limits=c(0,1) , low="red" , high = "green" , name = 'Legend') +
+  facet_grid(FacilityType~Source , scales = 'free_y' ) +
+  theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  xlab('') + ylab('')
+print(p)
+dev.off()
+
+output.table(heat_complete , 'revenue_type_prevalence')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Modelling
