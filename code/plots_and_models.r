@@ -131,6 +131,8 @@ qplot(data = rev_comp_mcz , y = V1 , x = 1 , fill = RevenueEntry , geom = 'bar' 
 dev.off()
 
 
+output.table(rev_comp_mcz , 'mcz_revenue')
+
 ## Dist of total income
 
 data_total_income <- ddply(total_revenu , .(instanceID , Role , Province , FacLevel)  , 
