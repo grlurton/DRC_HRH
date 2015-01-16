@@ -202,6 +202,10 @@ output.table(status_dist , 'status_distribution')
 status_dist_province <- ddply(effectif_data , .(Province) , taux_status)
 output.table(status_dist_province , 'status_distribution_by_province')
 
+status_national <- taux_status(effectif_data)
+output.table(status_national , 'status_national')
+
+
 status_dist <- subset(status_dist , !is.na(FacRurban))
 status_dist$staff_recode <- factor(x = status_dist$staff_recode , 
                               levels =  ordering_staff ,
