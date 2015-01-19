@@ -4,7 +4,9 @@ stage <- 'modelisation'
 
 source('code/useful_functions.r')
 
-RevSum <- ddply(total_revenu , .(instanceID , variable , Role) ,  function(x) sum(x$value))
+
+total_revenu <- subset(total_revenu , Role != '' & variable != "Autres revenus")
+RevSum <- ddply(total_revenu , .(instanceID , variable , Role , FacilityType) ,  function(x) sum(x$value))
 RevTot <- ddply(total_revenu , .(instanceID) ,  function(x) sum(x$value))
 
 ##Ordering Individuals
@@ -14,17 +16,25 @@ RevSum$instanceID <- factor(RevSum$instanceID , levels =  ordRev , ordered = TRU
 ##Ordering Revenues
 orderedIncome <- c('Salaire' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
                    'Prime Locale' , 'Heures supplémentaires' , 'Activité  Privée' , 
-                   'Activité non santé' , "Autres revenus" , "Vente de Medicament" , "Cadeau")
+                   'Activité non santé' , "Informel")
 
-RevSum$variable <- factor(RevSum$variable , levels =  orderedIncome)
-
-RevSum <- subset(RevSum , Role != '')
+RevSum$variable <- as.character(RevSum$variable)
 
 RevSum$Role <- factor(as.character(RevSum$Role) , levels = rev(ordering_staff) , ordered = TRUE)
+RevSum$variable[RevSum$variable %in% c("Vente de Medicament" , "Cadeau")] <- 'Informel'
+
+RevSum$variable <- factor(RevSum$variable , levels = rev(orderedIncome) , ordered = TRUE)
 
 pdf('output/graphs/distrib_revenus.pdf' , width = 14)
-qplot(data = RevSum , x = instanceID , y = V1 , geom = 'bar' , stat = 'identity' , width = 1 , fill = variable)+
-  theme(axis.text.x = element_blank()) + facet_wrap(~Role , scales = 'free') + ylab('Income') + xlab('')
+qplot(data = RevSum[RevSum$FacilityType %in% c('cs' , 'csr' , 'hgr') ,] , x = instanceID , y = V1 , geom = 'bar' , 
+      stat = 'identity' , width = 1 , fill = variable)+
+  theme(axis.text.x = element_blank()) + 
+  facet_wrap(~Role , scales = 'free_x') + ylab('Income') + xlab('') + scale_fill_brewer(palette="Set1") 
+
+qplot(data = RevSum[RevSum$FacilityType %in% c('cs' , 'csr' , 'hgr') ,] , x = instanceID , y = V1 , geom = 'bar' , 
+      stat = 'identity' , width = 1 , fill = variable)+
+  theme(axis.text.x = element_blank()) + 
+  facet_wrap(~Role , scales = 'free') + ylab('Income') + xlab('') + scale_fill_brewer(palette="Set1") 
 dev.off()
 
 table(RevSum$variable)
@@ -363,7 +373,17 @@ modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + 
                FacMotivation ~ RevenueEntry ,
              function(x) length(x) > 0
              )
-  
+
+
+revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "Informel" , "PerDiem"  ,  
+          "PrimeRisque" , "PrimesPartenaires" , "Salaire")
+
+colnames(modelData) <- c("instanceID" , "Structure" , "FacLevel" , "FacOwnership" ,
+                         "FacAppui" , "FacRurban" , "EczAppui" , "Province" , 
+                         "Sex" , "Age" , "Matrimonial" , "RoleInit" , 
+                         "NumberFinancialDependants" , "LastEducation" , "FacilityType" , "Role" , 
+                         "Power" , "FacMotivation" , revs)
+
 
 ##Modelisation
 
@@ -384,8 +404,7 @@ covs_ecz <- "FacRurban + FacMotivation + Province"
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = "+")
 covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
 
-revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "Informel" , "PerDiem"  ,  
-          "PrimeRisque" , "PrimesPartenaires" , "Salaire")
+
 
 models_ecz <- list()
 models_fac <- list()
@@ -421,26 +440,35 @@ data_amount <- dcast(total_revenu , formula = instanceID + Structure + FacLevel 
                      )
 
 
+revs <- c("ActPrivee" , "ActNonSante" , "HeureSup" , "Informel" , "PerDiem"  , "PrimesPartenaires" ,
+          "PrimeRisque"  , "PrimeLocale" , "Salaire")
 
+colnames(data_amount) <- c("instanceID" , "Structure" , "FacLevel" , "FacOwnership" ,
+                         "FacAppui" , "FacRurban" , "EczAppui" , "Province" , 
+                         "Sex" , "Age" , "Matrimonial" , "RoleInit" , 
+                         "NumberFinancialDependants" , "LastEducation" , "FacilityType" , "Role" , 
+                         "Power" , "FacMotivation" , revs)
+
+revs <- c("ActPrivee" , "ActNonSante" , "HeureSup" , "Informel" , "PerDiem"  , "PrimesPartenaires" ,
+          "PrimeLocale")
 
 models_ecz2 <- list()
 models_fac2 <- list()
-
-revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "Informel" , "PerDiem"  ,  
-          "PrimesPartenaires")
-
 
 sink('output/models_amount.txt')
 for(i in 1:length(revs)){
   rev <- revs[i]
   zeros <- data_amount[,rev] == 0
-  
-  data_amount[zeros,rev] <- NA
+  if(sum(zeros) >= 1){
+    data_amount[zeros,rev] <- NA
+  }
   logging <- paste('log(' , rev , ')' , sep = '')
   print(paste('Running model for ' , rev , 'in facilities'))
   model_fit_fac <- lm(make_formula(logging , covs_hgrcs) ,
                        data = data_amount[data_amount$FacLevel != 'ecz' , ])
   print(summary(model_fit_fac))
+  models_fac2[[rev]] <- model_fit_fac
+  
   
   print(paste('Running model for ' , rev , 'in ecz'))
   if (sum(!is.na(data_amount[data_amount$FacLevel == 'ecz' , rev])) > 10){
@@ -448,9 +476,7 @@ for(i in 1:length(revs)){
                        data = data_amount[data_amount$FacLevel == 'ecz' , ])
     print(summary(model_fit_ecz))
     models_ecz2[[rev]] <- model_fit_ecz
-  }
-  
-  models_fac2[[rev]] <- model_fit_fac
+  }  
 }
 sink()
 

@@ -1,28 +1,29 @@
 "","Province","RevenueEntry","V1"
 "1","bandundu","Salaire",62.624593716143
 "2","bandundu","Prime de Risque",400.499729144096
-"3","bandundu","Prime de Partenaire",47.5
-"4","bandundu","Per Diem",186.25
-"5","bandundu","Prime Locale",85.3196099674973
-"6","bandundu","Informel",35.9476133659348
+"3","bandundu","Prime de Partenaire",38.75
+"4","bandundu","Per Diem",62.0833333333333
+"5","bandundu","Prime Locale",74.4853737811484
+"6","bandundu","Informel",33.5481989764242
 "7","equateur","Salaire",10.3699117783625
-"8","equateur","Prime de Risque",463.086209565083
-"9","equateur","Prime de Partenaire",209.106175514626
-"10","equateur","Per Diem",107.142857142857
-"11","equateur","Prime Locale",37.9198266522211
-"12","equateur","Activité non santé",14.2857142857143
-"13","equateur","Informel",14.7500386937007
-"14","katanga","Salaire",26.5077645359335
-"15","katanga","Prime de Risque",532.051282051282
-"16","katanga","Prime de Partenaire",121.666666666667
-"17","katanga","Per Diem",265
-"18","katanga","Prime Locale",26.1827374503431
-"19","katanga","Activité  Privée",116.666666666667
-"20","katanga","Activité non santé",365.868544600939
-"21","sud_kivu","Prime de Risque",467.491657638137
-"22","sud_kivu","Prime de Partenaire",333.2
-"23","sud_kivu","Per Diem",263
-"24","sud_kivu","Prime Locale",243.034236186349
-"25","sud_kivu","Heures supplémentaires",40.5200433369448
-"26","sud_kivu","Activité non santé",480
-"27","sud_kivu","Informel",9
+"8","equateur","Prime de Risque",541.092710106795
+"9","equateur","Prime de Partenaire",150.972708043131
+"10","equateur","Per Diem",79.861218593613
+"11","equateur","Prime Locale",44.8846927720168
+"12","equateur","Activité  Privée",21.4285714285714
+"13","equateur","Activité non santé",50
+"14","equateur","Informel",14.7500386937007
+"15","katanga","Salaire",26.5077645359335
+"16","katanga","Prime de Risque",532.051282051282
+"17","katanga","Prime de Partenaire",40.5555555555556
+"18","katanga","Per Diem",88.3333333333334
+"19","katanga","Prime Locale",26.1827374503431
+"20","katanga","Activité  Privée",116.666666666667
+"21","katanga","Activité non santé",308.77211989888
+"22","sud_kivu","Prime de Risque",467.491657638137
+"23","sud_kivu","Prime de Partenaire",164.4
+"24","sud_kivu","Per Diem",87.6666666666667
+"25","sud_kivu","Prime Locale",243.034236186349
+"26","sud_kivu","Heures supplémentaires",40.5200433369448
+"27","sud_kivu","Activité non santé",370
+"28","sud_kivu","Informel",9

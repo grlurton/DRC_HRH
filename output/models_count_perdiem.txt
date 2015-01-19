@@ -6,40 +6,40 @@ glm(formula = make_formula("Number", covs_hgrcs), family = poisson,
 
 Deviance Residuals: 
      Min        1Q    Median        3Q       Max  
--0.82368  -0.24058  -0.05277   0.04162   1.88327  
+-0.80641  -0.24500  -0.05455   0.04138   1.88606  
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)   
-(Intercept)                           6.669e-02  2.589e-01   0.258  0.79675   
-SexHomme                             -4.285e-02  6.679e-02  -0.642  0.52113   
-Age                                   4.384e-05  1.379e-04   0.318  0.75049   
-LastEducationa3                      -9.449e-02  8.674e-02  -1.089  0.27598   
-LastEducationautre                   -1.301e-01  1.423e-01  -0.914  0.36065   
-LastEducationmedecin-pharma-etudesup -2.587e-01  3.696e-01  -0.700  0.48385   
-Roleautre                             4.057e-02  2.248e-01   0.180  0.85681   
-Roleinfirmier                        -5.196e-02  2.454e-01  -0.212  0.83230   
-Rolelabo                             -1.103e-01  2.568e-01  -0.429  0.66760   
-Rolemedecin                           7.893e-02  4.317e-01   0.183  0.85495   
-Rolepharmacien                       -8.649e-02  2.744e-01  -0.315  0.75262   
-FacLevelcsr                           6.129e-02  7.877e-02   0.778  0.43654   
-FacLevelhgr                           9.014e-02  9.575e-02   0.941  0.34649   
-FacOwnershipprivee                    2.158e-01  1.475e-01   1.464  0.14332   
-FacOwnershippublique                  3.558e-02  7.784e-02   0.457  0.64760   
-FacRurbanurbain                       8.440e-02  8.182e-02   1.031  0.30231   
-FacMotivationTRUE                    -7.112e-02  7.913e-02  -0.899  0.36878   
-Power                                 1.650e-01  7.545e-02   2.188  0.02870 * 
-Provinceequateur                      9.636e-02  9.130e-02   1.055  0.29125   
-Provincekatanga                       2.241e-01  9.346e-02   2.398  0.01647 * 
-Provincesud_kivu                      2.646e-01  8.310e-02   3.184  0.00145 **
+(Intercept)                           6.464e-02  2.589e-01   0.250  0.80283   
+SexHomme                             -4.256e-02  6.675e-02  -0.638  0.52370   
+Age                                   4.439e-05  1.379e-04   0.322  0.74762   
+LastEducationa3                      -9.600e-02  8.670e-02  -1.107  0.26819   
+LastEducationautre                   -1.282e-01  1.423e-01  -0.901  0.36772   
+LastEducationmedecin-pharma-etudesup -2.600e-01  3.695e-01  -0.704  0.48169   
+Roleautre                             4.625e-02  2.247e-01   0.206  0.83694   
+Roleinfirmier                        -4.594e-02  2.453e-01  -0.187  0.85142   
+Rolelabo                             -1.079e-01  2.566e-01  -0.421  0.67411   
+Rolemedecin                           1.002e-01  4.304e-01   0.233  0.81597   
+Rolepharmacien                       -8.285e-02  2.743e-01  -0.302  0.76267   
+FacLevelcsr                           5.759e-02  7.847e-02   0.734  0.46301   
+FacLevelhgr                           9.514e-02  9.505e-02   1.001  0.31687   
+FacOwnershipprivee                    2.007e-01  1.459e-01   1.375  0.16913   
+FacOwnershippublique                  3.337e-02  7.761e-02   0.430  0.66718   
+FacRurbanurbain                       8.153e-02  8.143e-02   1.001  0.31677   
+FacMotivationTRUE                    -7.297e-02  7.877e-02  -0.926  0.35429   
+Power                                 1.630e-01  7.523e-02   2.167  0.03026 * 
+Provinceequateur                      9.438e-02  9.114e-02   1.036  0.30043   
+Provincekatanga                       2.302e-01  9.302e-02   2.475  0.01332 * 
+Provincesud_kivu                      2.621e-01  8.299e-02   3.159  0.00158 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for poisson family taken to be 1)
 
-    Null deviance: 160.90  on 971  degrees of freedom
-Residual deviance: 122.74  on 951  degrees of freedom
-  (657 observations deleted due to missingness)
-AIC: 2228.6
+    Null deviance: 161.82  on 975  degrees of freedom
+Residual deviance: 123.66  on 955  degrees of freedom
+  (638 observations deleted due to missingness)
+AIC: 2238.8
 
 Number of Fisher Scoring iterations: 4
 
@@ -51,32 +51,32 @@ glm(formula = make_formula("Number", covs_ecz), family = poisson,
 
 Deviance Residuals: 
      Min        1Q    Median        3Q       Max  
--1.16502  -0.30707  -0.07541   0.21768   1.26690  
+-1.16553  -0.31673  -0.07685   0.22755   1.24085  
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                          -1.568e-01  6.154e-01  -0.255 0.798896    
-SexHomme                              1.818e-01  2.410e-01   0.754 0.450605    
-Age                                   1.078e-05  1.555e-04   0.069 0.944758    
-LastEducationautre                   -1.519e-01  3.054e-01  -0.497 0.618843    
-LastEducationmedecin-pharma-etudesup -2.021e-01  4.122e-01  -0.490 0.623963    
-Roleautre                            -2.010e-02  2.612e-01  -0.077 0.938666    
-Roleinfirmier_superviseur            -9.026e-03  3.335e-01  -0.027 0.978412    
-Rolemedecin_chef_zone                 5.032e-01  4.275e-01   1.177 0.239115    
-FacRurbanurbain                       2.100e-01  1.907e-01   1.101 0.270915    
-FacMotivationTRUE                     6.556e-02  4.322e-01   0.152 0.879432    
-Provinceequateur                      2.987e-01  2.471e-01   1.209 0.226684    
-Provincekatanga                       8.976e-01  2.475e-01   3.626 0.000288 ***
-Provincesud_kivu                      4.212e-01  2.446e-01   1.722 0.085088 .  
+(Intercept)                          -1.704e-01  6.147e-01  -0.277 0.781669    
+SexHomme                              1.821e-01  2.410e-01   0.755 0.449951    
+Age                                   1.163e-05  1.555e-04   0.075 0.940355    
+LastEducationautre                   -1.502e-01  3.053e-01  -0.492 0.622796    
+LastEducationmedecin-pharma-etudesup -2.012e-01  4.120e-01  -0.488 0.625232    
+Roleautre                            -1.871e-02  2.612e-01  -0.072 0.942897    
+Roleinfirmier_superviseur            -6.795e-03  3.334e-01  -0.020 0.983740    
+Rolemedecin_chef_zone                 5.148e-01  4.257e-01   1.209 0.226533    
+FacRurbanurbain                       2.233e-01  1.854e-01   1.204 0.228481    
+FacMotivationTRUE                     7.046e-02  4.321e-01   0.163 0.870479    
+Provinceequateur                      3.117e-01  2.430e-01   1.283 0.199555    
+Provincekatanga                       8.908e-01  2.465e-01   3.614 0.000301 ***
+Provincesud_kivu                      4.232e-01  2.445e-01   1.731 0.083451 .  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for poisson family taken to be 1)
 
-    Null deviance: 51.556  on 102  degrees of freedom
-Residual deviance: 20.744  on  90  degrees of freedom
-  (632 observations deleted due to missingness)
-AIC: 284.68
+    Null deviance: 52.480  on 103  degrees of freedom
+Residual deviance: 20.838  on  91  degrees of freedom
+  (626 observations deleted due to missingness)
+AIC: 287.76
 
 Number of Fisher Scoring iterations: 4
 
