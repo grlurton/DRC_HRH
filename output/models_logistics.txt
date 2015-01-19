@@ -1,48 +1,82 @@
 [1] "Running model for  ActNonSante in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: ActNonSante ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+   924.5   1026.4   -443.2    886.5     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.2340  -0.4592  -0.3080  -0.2059   3.0290  
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.0699 -0.3360 -0.2254 -0.1482  9.7363 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.348    0.5899  
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                       Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                          -4.112949   0.847065  -4.856 1.20e-06 ***
-SexHomme                              0.718514   0.205581   3.495 0.000474 ***
-Age                                  -0.001438   0.003150  -0.457 0.648006    
-LastEducationa3                      -0.624462   0.280581  -2.226 0.026041 *  
-LastEducationautre                   -0.746260   0.524140  -1.424 0.154510    
-LastEducationmedecin-pharma-etudesup  0.582040   0.675900   0.861 0.389165    
-Roleautre                             0.298017   0.758257   0.393 0.694298    
-Roleinfirmier                         0.893156   0.745365   1.198 0.230808    
-Rolelabo                              0.061954   0.807899   0.077 0.938874    
-Rolemedecin                           0.693731   0.841594   0.824 0.409766    
-Rolepharmacien                       -0.138589   0.905735  -0.153 0.878388    
-FacLevelcsr                          -0.277788   0.232556  -1.194 0.232284    
-FacLevelhgr                          -0.611770   0.260984  -2.344 0.019074 *  
-FacOwnershipprivee                    0.290991   0.326691   0.891 0.373079    
-FacOwnershippublique                  0.085474   0.232296   0.368 0.712907    
-FacRurbanurbain                       0.719378   0.221452   3.248 0.001160 ** 
-FacMotivationTRUE                     0.463795   0.244841   1.894 0.058189 .  
-Power                                -0.302733   0.228907  -1.323 0.185997    
-Provinceequateur                      0.634780   0.307904   2.062 0.039244 *  
-Provincekatanga                       1.488966   0.277010   5.375 7.65e-08 ***
-Provincesud_kivu                     -0.036640   0.347755  -0.105 0.916090    
+(Intercept)                          -3.572912   0.868221  -4.115 3.87e-05 ***
+SexHomme                              0.735727   0.205273   3.584 0.000338 ***
+Age                                  -0.001639   0.003228  -0.508 0.611650    
+LastEducationa3                      -0.603074   0.279229  -2.160 0.030789 *  
+LastEducationautre                   -0.809046   0.523096  -1.547 0.121948    
+LastEducationmedecin-pharma-etudesup  0.951545   0.693597   1.372 0.170095    
+Roleautre                             0.221531   0.762496   0.291 0.771408    
+Roleinfirmier                         0.816450   0.748589   1.091 0.275426    
+Rolelabo                             -0.007528   0.809667  -0.009 0.992582    
+Rolemedecin                           0.230584   0.880529   0.262 0.793422    
+Rolepharmacien                       -0.335779   0.917906  -0.366 0.714507    
+FacLevelcsr                          -0.227461   0.232559  -0.978 0.328036    
+FacLevelhgr                          -0.609613   0.260808  -2.337 0.019418 *  
+FacOwnershipprivee                    0.416300   0.327932   1.269 0.204273    
+FacOwnershippublique                  0.134919   0.230698   0.585 0.558664    
+FacRurbanurbain                       0.794613   0.223028   3.563 0.000367 ***
+FacMotivationTRUE                     0.466283   0.244080   1.910 0.056086 .  
+Power                                -0.298735   0.229097  -1.304 0.192244    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 1045.50  on 1603  degrees of freedom
-Residual deviance:  881.94  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 923.94
-
-Number of Fisher Scoring iterations: 7
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.239                                                                                                            
+Age         -0.130 -0.038                                                                                                     
+LastEductn3 -0.064  0.063 -0.123                                                                                              
+LastEdctntr -0.296  0.060 -0.060  0.100                                                                                       
+LstEdctnm-- -0.284  0.048 -0.025  0.058  0.211                                                                                
+Roleautre   -0.732  0.033 -0.016 -0.007  0.061  0.198                                                                         
+Roleinfirmr -0.856  0.079 -0.016 -0.016  0.330  0.315  0.850                                                                  
+Rolelabo    -0.751  0.009 -0.031  0.008  0.255  0.275  0.781  0.874                                                           
+Rolemedecin -0.475 -0.039  0.024 -0.037  0.104 -0.515  0.558  0.577  0.522                                                    
+Rolepharmcn -0.606  0.069  0.010 -0.007  0.131 -0.038  0.630  0.677  0.614  0.598                                             
+FacLevelcsr -0.125  0.030  0.041  0.021 -0.093  0.049  0.029  0.003  0.008 -0.055 -0.011                                      
+FacLevelhgr -0.083  0.001 -0.005  0.092 -0.012 -0.015  0.065  0.027  0.041 -0.060  0.009  0.223                               
+FcOwnrshppr -0.158  0.049  0.024  0.020 -0.003 -0.020  0.009  0.042  0.016  0.053  0.067  0.133 -0.011                        
+FcOwnrshppb -0.222  0.047  0.033 -0.011 -0.050 -0.006 -0.031 -0.012 -0.001  0.003  0.029  0.209 -0.092  0.461                 
+FacRurbnrbn -0.195  0.168 -0.031  0.184  0.056 -0.021 -0.030 -0.001 -0.041 -0.022  0.023  0.136  0.024 -0.020       0.226     
+FcMtvtnTRUE -0.074  0.039 -0.080 -0.007 -0.019  0.040 -0.024  0.008 -0.040 -0.022  0.012 -0.076 -0.053  0.081       0.041     
+Power        0.010 -0.185 -0.026  0.196  0.013 -0.018 -0.006 -0.096 -0.001 -0.123 -0.014 -0.008  0.216 -0.081      -0.009     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.155       
+Power        0.115  0.001
 [1] "Running model for  ActNonSante in ecz"
 
 Call:
@@ -51,80 +85,114 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--1.3480  -0.2048   0.0000   0.0000   2.5829  
+-1.3415  -0.1939   0.0000   0.0000   2.5615  
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)  
-(Intercept)                          -1.580e+02  5.608e+04  -0.003   0.9978  
-SexHomme                              6.475e+01  5.577e+04   0.001   0.9991  
-Age                                   1.227e-01  8.029e-02   1.528   0.1265  
-LastEducationautre                    4.254e+01  2.092e+03   0.020   0.9838  
-LastEducationmedecin-pharma-etudesup -2.183e+01  1.159e+05   0.000   0.9998  
-Roleautre                            -8.363e+02  2.978e+04  -0.028   0.9776  
-Roleinfirmier_superviseur             4.195e+01  2.092e+03   0.020   0.9840  
-Rolemedecin_chef_zone                 6.534e+01  1.159e+05   0.001   0.9996  
-FacRurbanurbain                       2.785e+00  1.330e+00   2.095   0.0362 *
-FacMotivationTRUE                     4.176e+01  2.092e+03   0.020   0.9841  
-Provinceequateur                     -1.122e+00  1.488e+00  -0.755   0.4505  
-Provincekatanga                      -6.253e-01  1.574e+00  -0.397   0.6912  
-Provincesud_kivu                     -5.003e+02  2.071e+03  -0.242   0.8091  
+(Intercept)                          -1.534e+02  5.583e+04  -0.003   0.9978  
+SexHomme                              6.323e+01  5.572e+04   0.001   0.9991  
+Age                                   1.209e-01  8.022e-02   1.507   0.1318  
+LastEducationautre                    4.107e+01  1.220e+03   0.034   0.9731  
+LastEducationmedecin-pharma-etudesup -2.181e+01  1.161e+05   0.000   0.9999  
+Roleautre                            -8.244e+02  2.985e+04  -0.028   0.9780  
+Roleinfirmier_superviseur             4.050e+01  1.220e+03   0.033   0.9735  
+Rolemedecin_chef_zone                 6.391e+01  1.161e+05   0.001   0.9996  
+FacRurbanurbain                       2.731e+00  1.335e+00   2.045   0.0409 *
+FacMotivationTRUE                     4.030e+01  1.220e+03   0.033   0.9736  
+Provinceequateur                     -1.168e+00  1.494e+00  -0.781   0.4346  
+Provincekatanga                      -6.678e-01  1.581e+00  -0.422   0.6727  
+Provincesud_kivu                     -4.933e+02  2.086e+03  -0.237   0.8130  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 46.794  on 111  degrees of freedom
-Residual deviance: 26.638  on  99  degrees of freedom
+    Null deviance: 46.683  on 110  degrees of freedom
+Residual deviance: 26.555  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 52.638
+AIC: 52.555
 
 Number of Fisher Scoring iterations: 25
 
 [1] "Running model for  ActPrivee in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: ActPrivee ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+  2087.8   2189.8  -1024.9   2049.8     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.9799  -1.0807  -0.6423   1.1002   2.0074  
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.5096 -0.8889 -0.4792  0.9063  2.5248 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.2818   0.5309  
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                       Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                          -1.027151   0.392242  -2.619 0.008827 ** 
-SexHomme                              0.428275   0.115590   3.705 0.000211 ***
-Age                                   0.002289   0.001685   1.359 0.174292    
-LastEducationa3                      -0.001584   0.147463  -0.011 0.991427    
-LastEducationautre                    0.750503   0.226225   3.318 0.000908 ***
-LastEducationmedecin-pharma-etudesup -0.895188   0.551118  -1.624 0.104309    
-Roleautre                             0.724720   0.324885   2.231 0.025701 *  
-Roleinfirmier                         1.155467   0.348464   3.316 0.000914 ***
-Rolelabo                              0.599247   0.382186   1.568 0.116894    
-Rolemedecin                           1.277277   0.640696   1.994 0.046198 *  
-Rolepharmacien                        0.974771   0.400486   2.434 0.014934 *  
-FacLevelcsr                           0.048900   0.137902   0.355 0.722888    
-FacLevelhgr                          -0.161767   0.146301  -1.106 0.268853    
-FacOwnershipprivee                   -0.102232   0.248193  -0.412 0.680410    
-FacOwnershippublique                 -0.040759   0.133261  -0.306 0.759710    
-FacRurbanurbain                      -0.618482   0.140027  -4.417 1.00e-05 ***
-FacMotivationTRUE                    -0.046115   0.140529  -0.328 0.742794    
-Power                                -0.232929   0.147400  -1.580 0.114049    
-Provinceequateur                     -0.243692   0.158980  -1.533 0.125313    
-Provincekatanga                       0.392332   0.158898   2.469 0.013546 *  
-Provincesud_kivu                     -1.097801   0.156544  -7.013 2.34e-12 ***
+(Intercept)                          -1.294305   0.467054  -2.771 0.005585 ** 
+SexHomme                              0.435995   0.116180   3.753 0.000175 ***
+Age                                   0.002241   0.001686   1.329 0.183712    
+LastEducationa3                       0.001545   0.148150   0.010 0.991678    
+LastEducationautre                    0.735352   0.226821   3.242 0.001187 ** 
+LastEducationmedecin-pharma-etudesup -0.712814   0.565698  -1.260 0.207647    
+Roleautre                             0.730396   0.325412   2.245 0.024799 *  
+Roleinfirmier                         1.174213   0.349352   3.361 0.000776 ***
+Rolelabo                              0.597596   0.382919   1.561 0.118611    
+Rolemedecin                           1.094831   0.654162   1.674 0.094201 .  
+Rolepharmacien                        0.943416   0.400967   2.353 0.018630 *  
+FacLevelcsr                           0.077926   0.139078   0.560 0.575269    
+FacLevelhgr                          -0.158203   0.147017  -1.076 0.281886    
+FacOwnershipprivee                   -0.007382   0.251715  -0.029 0.976604    
+FacOwnershippublique                  0.002119   0.133506   0.016 0.987339    
+FacRurbanurbain                      -0.601608   0.140722  -4.275 1.91e-05 ***
+FacMotivationTRUE                    -0.059687   0.141178  -0.423 0.672456    
+Power                                -0.236466   0.148660  -1.591 0.111688    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 2220.6  on 1603  degrees of freedom
-Residual deviance: 2060.8  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 2102.8
-
-Number of Fisher Scoring iterations: 6
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.193                                                                                                            
+Age         -0.128 -0.050                                                                                                     
+LastEductn3 -0.098  0.033 -0.104                                                                                              
+LastEdctntr -0.400  0.027 -0.027  0.170                                                                                       
+LstEdctnm-- -0.112  0.003 -0.005  0.058  0.172                                                                                
+Roleautre   -0.567  0.041 -0.032  0.005  0.097  0.055                                                                         
+Roleinfirmr -0.722  0.091 -0.017 -0.007  0.523  0.147  0.769                                                                  
+Rolelabo    -0.602 -0.025 -0.016  0.029  0.379  0.116  0.689  0.804                                                           
+Rolemedecin -0.261 -0.012  0.010 -0.026  0.118 -0.777  0.347  0.373  0.321                                                    
+Rolepharmcn -0.546  0.074  0.000  0.010  0.222 -0.073  0.635  0.692  0.603  0.418                                             
+FacLevelcsr -0.142  0.019  0.015  0.040 -0.091  0.024  0.008  0.011  0.015 -0.034  0.028                                      
+FacLevelhgr -0.199  0.017  0.003  0.087  0.078 -0.018  0.150  0.135  0.134  0.005  0.118  0.263                               
+FcOwnrshppr -0.102  0.025  0.000  0.022 -0.010 -0.010 -0.033 -0.004 -0.038  0.001  0.027  0.132  0.058                        
+FcOwnrshppb -0.181  0.007  0.016 -0.004 -0.102 -0.015 -0.080 -0.078 -0.038 -0.024 -0.007  0.203 -0.004  0.362                 
+FacRurbnrbn -0.176  0.097 -0.022  0.149  0.056 -0.022 -0.008  0.019 -0.015  0.001  0.044  0.130  0.012 -0.089       0.171     
+FcMtvtnTRUE -0.044  0.008 -0.052 -0.006 -0.037  0.008 -0.042 -0.012 -0.050 -0.009  0.023 -0.076 -0.123  0.020       0.044     
+Power       -0.012 -0.246 -0.015  0.215  0.048 -0.007  0.013 -0.104  0.035 -0.098  0.010  0.001  0.195 -0.044       0.004     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.108       
+Power        0.081  0.008
 [1] "Running model for  ActPrivee in ecz"
 
 Call:
@@ -133,80 +201,114 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--1.8847  -0.9140  -0.6901   1.0755   2.1566  
+-1.8808  -0.9183  -0.7025   1.0854   2.1310  
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)  
-(Intercept)                           1.4384400  1.5187144   0.947   0.3436  
-SexHomme                              0.2982839  0.6101812   0.489   0.6250  
-Age                                   0.0002377  0.0003114   0.763   0.4453  
-LastEducationautre                    0.0689856  0.7905672   0.087   0.9305  
-LastEducationmedecin-pharma-etudesup  0.6457297  1.2329208   0.524   0.6005  
-Roleautre                            -0.2094520  0.6128427  -0.342   0.7325  
-Roleinfirmier_superviseur             0.0277782  0.8394292   0.033   0.9736  
-Rolemedecin_chef_zone                -1.3115478  1.2330533  -1.064   0.2875  
-FacRurbanurbain                      -0.5856017  0.5342647  -1.096   0.2730  
-FacMotivationTRUE                    -1.8863808  1.0077079  -1.872   0.0612 .
-Provinceequateur                      0.3309502  0.5598891   0.591   0.5545  
-Provincekatanga                       1.6427114  0.7330759   2.241   0.0250 *
-Provincesud_kivu                     -0.8308308  0.5973971  -1.391   0.1643  
+(Intercept)                           1.4589980  1.5184863   0.961   0.3366  
+SexHomme                              0.2826184  0.6096405   0.464   0.6429  
+Age                                   0.0002268  0.0003091   0.734   0.4630  
+LastEducationautre                    0.0760334  0.7905842   0.096   0.9234  
+LastEducationmedecin-pharma-etudesup  0.6754957  1.2317096   0.548   0.5834  
+Roleautre                            -0.2138203  0.6127033  -0.349   0.7271  
+Roleinfirmier_superviseur             0.0374932  0.8395505   0.045   0.9644  
+Rolemedecin_chef_zone                -1.2344048  1.2337848  -1.001   0.3171  
+FacRurbanurbain                      -0.6091381  0.5344024  -1.140   0.2543  
+FacMotivationTRUE                    -1.8564172  1.0081472  -1.841   0.0656 .
+Provinceequateur                      0.2676732  0.5652891   0.474   0.6358  
+Provincekatanga                       1.5835439  0.7357178   2.152   0.0314 *
+Provincesud_kivu                     -0.8875321  0.6018192  -1.475   0.1403  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 154.37  on 111  degrees of freedom
-Residual deviance: 136.71  on  99  degrees of freedom
+    Null deviance: 153.15  on 110  degrees of freedom
+Residual deviance: 135.93  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 162.71
+AIC: 161.93
 
 Number of Fisher Scoring iterations: 4
 
 [1] "Running model for  AutreRevenu in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: AutreRevenu ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+   573.4    675.4   -267.7    535.4     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.3455  -0.3121  -0.1407  -0.0763   3.7462  
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-1.203 -0.225 -0.110 -0.061 33.523 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 1.651    1.285   
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                       Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                          -5.860470   1.101804  -5.319 1.04e-07 ***
-SexHomme                              0.098015   0.262687   0.373 0.709057    
-Age                                  -0.004565   0.007514  -0.608 0.543460    
-LastEducationa3                       0.077654   0.358931   0.216 0.828716    
-LastEducationautre                   -0.568425   0.596373  -0.953 0.340521    
-LastEducationmedecin-pharma-etudesup  0.795234   0.826589   0.962 0.336016    
-Roleautre                            -0.653720   0.873059  -0.749 0.453996    
-Roleinfirmier                         0.284708   0.793654   0.359 0.719797    
-Rolelabo                              0.613804   0.826003   0.743 0.457421    
-Rolemedecin                           0.619928   1.035901   0.598 0.549544    
-Rolepharmacien                        0.047731   0.889039   0.054 0.957184    
-FacLevelcsr                          -1.816979   0.743629  -2.443 0.014550 *  
-FacLevelhgr                           1.203635   0.265174   4.539 5.65e-06 ***
-FacOwnershipprivee                   -0.211753   0.575402  -0.368 0.712866    
-FacOwnershippublique                 -0.078026   0.282746  -0.276 0.782580    
-FacRurbanurbain                       1.287159   0.330993   3.889 0.000101 ***
-FacMotivationTRUE                     0.336958   0.296642   1.136 0.255995    
-Power                                -0.047784   0.318932  -0.150 0.880902    
-Provinceequateur                      1.001184   0.711839   1.406 0.159583    
-Provincekatanga                       1.454678   0.649550   2.240 0.025122 *  
-Provincesud_kivu                      3.577302   0.626001   5.715 1.10e-08 ***
+(Intercept)                          -4.267611   1.140311  -3.742 0.000182 ***
+SexHomme                              0.106547   0.260331   0.409 0.682337    
+Age                                  -0.004808   0.007568  -0.635 0.525259    
+LastEducationa3                       0.059760   0.355593   0.168 0.866538    
+LastEducationautre                   -0.570682   0.595471  -0.958 0.337876    
+LastEducationmedecin-pharma-etudesup  0.856593   0.833001   1.028 0.303798    
+Roleautre                            -0.676598   0.867555  -0.780 0.435455    
+Roleinfirmier                         0.276442   0.792346   0.349 0.727172    
+Rolelabo                              0.588910   0.824196   0.715 0.474901    
+Rolemedecin                           0.508540   1.050052   0.484 0.628173    
+Rolepharmacien                        0.006765   0.892747   0.008 0.993954    
+FacLevelcsr                          -1.860450   0.736699  -2.525 0.011557 *  
+FacLevelhgr                           1.193782   0.263218   4.535 5.75e-06 ***
+FacOwnershipprivee                   -0.228489   0.567770  -0.402 0.687366    
+FacOwnershippublique                 -0.107654   0.279457  -0.385 0.700071    
+FacRurbanurbain                       1.277056   0.325482   3.924 8.72e-05 ***
+FacMotivationTRUE                     0.362523   0.296194   1.224 0.220976    
+Power                                -0.007265   0.317108  -0.023 0.981722    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 737.76  on 1603  degrees of freedom
-Residual deviance: 522.54  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 564.54
-
-Number of Fisher Scoring iterations: 8
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.150                                                                                                            
+Age         -0.206 -0.117                                                                                                     
+LastEductn3 -0.015  0.076 -0.279                                                                                              
+LastEdctntr -0.405 -0.003 -0.109  0.140                                                                                       
+LstEdctnm-- -0.142  0.021 -0.057  0.079  0.248                                                                                
+Roleautre   -0.463  0.039  0.032 -0.007  0.135  0.069                                                                         
+Roleinfirmr -0.686  0.074 -0.020 -0.019  0.575  0.203  0.640                                                                  
+Rolelabo    -0.594 -0.051 -0.007 -0.010  0.451  0.179  0.598  0.848                                                           
+Rolemedecin -0.380 -0.026  0.053 -0.038  0.218 -0.625  0.421  0.552  0.491                                                    
+Rolepharmcn -0.493  0.050  0.020  0.008  0.240 -0.164  0.519  0.668  0.606  0.623                                             
+FacLevelcsr -0.079  0.002  0.010  0.015  0.040  0.024  0.016  0.026  0.008 -0.017  0.011                                      
+FacLevelhgr -0.221  0.030  0.008  0.078  0.161 -0.010  0.071  0.110  0.115 -0.002  0.053  0.163                               
+FcOwnrshppr -0.109  0.005  0.023  0.010 -0.016 -0.028 -0.002  0.003 -0.050  0.000  0.032  0.065  0.023                        
+FcOwnrshppb -0.207  0.008 -0.030 -0.001 -0.028  0.004 -0.037 -0.027 -0.019 -0.043  0.003  0.082 -0.067  0.338                 
+FacRurbnrbn -0.283  0.108 -0.108  0.068  0.083 -0.013  0.021  0.062  0.022  0.027  0.093  0.058  0.152  0.075       0.340     
+FcMtvtnTRUE -0.104  0.045 -0.074  0.022 -0.016 -0.015 -0.025 -0.012 -0.057  0.002  0.001 -0.061 -0.043  0.046       0.147     
+Power       -0.031 -0.259 -0.040  0.173  0.104  0.029  0.007 -0.066  0.056 -0.105  0.004 -0.011  0.259 -0.037       0.002     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.343       
+Power        0.075  0.055
 [1] "Running model for  AutreRevenu in ecz"
 
 Call:
@@ -219,74 +321,108 @@ Deviance Residuals:
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)
-(Intercept)                          -2.264e+01  5.435e+04   0.000    1.000
-SexHomme                             -6.281e-01  3.089e+04   0.000    1.000
+(Intercept)                          -2.265e+01  5.453e+04   0.000    1.000
+SexHomme                             -6.332e-01  3.102e+04   0.000    1.000
 Age                                  -1.912e-03  1.586e-02  -0.121    0.904
-LastEducationautre                    6.019e-01  4.003e+04   0.000    1.000
-LastEducationmedecin-pharma-etudesup -3.115e-01  6.110e+04   0.000    1.000
-Roleautre                             2.143e-01  3.110e+04   0.000    1.000
-Roleinfirmier_superviseur             5.745e-01  4.298e+04   0.000    1.000
-Rolemedecin_chef_zone                 2.314e+01  5.888e+04   0.000    1.000
-FacRurbanurbain                      -1.952e+01  1.481e+04  -0.001    0.999
-FacMotivationTRUE                    -2.112e+01  4.471e+04   0.000    1.000
-Provinceequateur                     -8.208e-01  2.694e+04   0.000    1.000
-Provincekatanga                      -1.839e-01  2.931e+04   0.000    1.000
-Provincesud_kivu                      2.094e+01  1.749e+04   0.001    0.999
+LastEducationautre                    6.124e-01  4.019e+04   0.000    1.000
+LastEducationmedecin-pharma-etudesup -2.916e-01  6.123e+04   0.000    1.000
+Roleautre                             2.146e-01  3.127e+04   0.000    1.000
+Roleinfirmier_superviseur             5.858e-01  4.313e+04   0.000    1.000
+Rolemedecin_chef_zone                 2.314e+01  5.900e+04   0.000    1.000
+FacRurbanurbain                      -1.952e+01  1.487e+04  -0.001    0.999
+FacMotivationTRUE                    -2.072e+01  4.482e+04   0.000    1.000
+Provinceequateur                     -1.228e+00  2.700e+04   0.000    1.000
+Provincekatanga                      -5.944e-01  2.941e+04   0.000    1.000
+Provincesud_kivu                      2.054e+01  1.754e+04   0.001    0.999
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 11.4280  on 111  degrees of freedom
-Residual deviance:  3.8234  on  99  degrees of freedom
+    Null deviance: 11.4100  on 110  degrees of freedom
+Residual deviance:  3.8234  on  98  degrees of freedom
   (10 observations deleted due to missingness)
 AIC: 29.823
 
 Number of Fisher Scoring iterations: 23
 
 [1] "Running model for  Honoraire in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: Honoraire ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+  1940.1   2042.0   -951.0   1902.1     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.1387  -0.9133  -0.6195   1.0236   2.1571  
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7934 -0.7087 -0.4640  0.8263  3.1094 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.5111   0.7149  
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                           0.6329062  0.4078474   1.552  0.12071    
-SexHomme                             -0.0334445  0.1210066  -0.276  0.78225    
-Age                                  -0.0003633  0.0003739  -0.972  0.33125    
-LastEducationa3                      -0.4700167  0.1562580  -3.008  0.00263 ** 
-LastEducationautre                   -0.2544768  0.2381614  -1.069  0.28529    
-LastEducationmedecin-pharma-etudesup  0.7707312  0.4932675   1.563  0.11817    
-Roleautre                             0.0489566  0.3379383   0.145  0.88481    
-Roleinfirmier                         0.8846046  0.3655999   2.420  0.01554 *  
-Rolelabo                              0.5163118  0.3976278   1.298  0.19412    
-Rolemedecin                          -0.4875472  0.5937875  -0.821  0.41160    
-Rolepharmacien                       -0.2714990  0.4394382  -0.618  0.53669    
-FacLevelcsr                          -0.1542365  0.1462041  -1.055  0.29145    
-FacLevelhgr                          -0.0245630  0.1519257  -0.162  0.87156    
-FacOwnershipprivee                    0.4398897  0.2650462   1.660  0.09698 .  
-FacOwnershippublique                 -0.0808896  0.1387428  -0.583  0.55988    
-FacRurbanurbain                      -0.5708130  0.1463690  -3.900 9.63e-05 ***
-FacMotivationTRUE                     0.2306062  0.1435882   1.606  0.10827    
-Power                                -0.3622769  0.1535488  -2.359  0.01831 *  
-Provinceequateur                     -1.7451534  0.1727112 -10.104  < 2e-16 ***
-Provincekatanga                      -1.7247667  0.1685244 -10.235  < 2e-16 ***
-Provincesud_kivu                     -1.1907850  0.1584299  -7.516 5.64e-14 ***
+(Intercept)                          -0.5375158  0.5379579  -0.999  0.31771    
+SexHomme                             -0.0449333  0.1220727  -0.368  0.71281    
+Age                                  -0.0003499  0.0003704  -0.945  0.34482    
+LastEducationa3                      -0.4779225  0.1574878  -3.035  0.00241 ** 
+LastEducationautre                   -0.2360292  0.2390383  -0.987  0.32344    
+LastEducationmedecin-pharma-etudesup  0.4660652  0.5301241   0.879  0.37931    
+Roleautre                             0.0785924  0.3435882   0.229  0.81907    
+Roleinfirmier                         0.9044371  0.3714873   2.435  0.01491 *  
+Rolelabo                              0.5554811  0.4035998   1.376  0.16872    
+Rolemedecin                          -0.1234308  0.6360011  -0.194  0.84612    
+Rolepharmacien                       -0.1771990  0.4446265  -0.399  0.69024    
+FacLevelcsr                          -0.1678614  0.1474594  -1.138  0.25497    
+FacLevelhgr                          -0.0290153  0.1535311  -0.189  0.85010    
+FacOwnershipprivee                    0.3018153  0.2732082   1.105  0.26929    
+FacOwnershippublique                 -0.1147090  0.1393011  -0.823  0.41025    
+FacRurbanurbain                      -0.5973286  0.1478029  -4.041 5.31e-05 ***
+FacMotivationTRUE                     0.2306502  0.1445905   1.595  0.11067    
+Power                                -0.3888893  0.1555170  -2.501  0.01240 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 2211.7  on 1603  degrees of freedom
-Residual deviance: 1923.1  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 1965.1
-
-Number of Fisher Scoring iterations: 4
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.179                                                                                                            
+Age         -0.013 -0.039                                                                                                     
+LastEductn3 -0.097  0.029 -0.061                                                                                              
+LastEdctntr -0.370  0.004  0.005  0.164                                                                                       
+LstEdctnm-- -0.122  0.009 -0.003  0.057  0.200                                                                                
+Roleautre   -0.521  0.037  0.001  0.011  0.080  0.061                                                                         
+Roleinfirmr -0.667  0.084 -0.004 -0.017  0.521  0.172  0.761                                                                  
+Rolelabo    -0.561 -0.026  0.004  0.023  0.385  0.135  0.689  0.813                                                           
+Rolemedecin -0.262 -0.009  0.004 -0.026  0.135 -0.722  0.376  0.410  0.354                                                    
+Rolepharmcn -0.478  0.066 -0.002  0.015  0.216 -0.088  0.603  0.660  0.580  0.445                                             
+FacLevelcsr -0.111  0.013 -0.036  0.050 -0.106  0.026 -0.012 -0.011 -0.001 -0.050  0.011                                      
+FacLevelhgr -0.179  0.011  0.005  0.091  0.083 -0.006  0.140  0.129  0.131 -0.025  0.095  0.259                               
+FcOwnrshppr -0.091  0.029 -0.010  0.017  0.001 -0.005 -0.036  0.004 -0.040 -0.003  0.017  0.116  0.057                        
+FcOwnrshppb -0.152  0.010 -0.015 -0.005 -0.103 -0.021 -0.089 -0.089 -0.049 -0.036 -0.012  0.180 -0.011  0.334                 
+FacRurbnrbn -0.179  0.118 -0.015  0.143  0.076 -0.047  0.005  0.034 -0.005  0.027  0.063  0.142  0.019 -0.101       0.186     
+FcMtvtnTRUE -0.047  0.013 -0.056 -0.013 -0.043  0.000 -0.042 -0.008 -0.050 -0.001  0.020 -0.065 -0.126  0.024       0.038     
+Power       -0.012 -0.253  0.010  0.225  0.048 -0.005  0.017 -0.109  0.033 -0.110  0.009  0.016  0.203 -0.045       0.007     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.124       
+Power        0.085  0.007
 [1] "Running model for  Honoraire in ecz"
 
 Call:
@@ -295,80 +431,114 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--1.8254  -0.6156  -0.3671   0.6618   2.5678  
+-1.7686  -0.6240  -0.4054   0.6898   2.5367  
 
 Coefficients:
-                                       Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                           1.223e+00  1.630e+00   0.750 0.453208    
-SexHomme                             -3.958e-01  8.158e-01  -0.485 0.627585    
-Age                                   1.386e-04  3.094e-04   0.448 0.654099    
-LastEducationautre                   -1.122e-01  9.656e-01  -0.116 0.907478    
-LastEducationmedecin-pharma-etudesup -1.607e+01  2.585e+03  -0.006 0.995040    
-Roleautre                            -3.809e-02  7.824e-01  -0.049 0.961177    
-Roleinfirmier_superviseur             1.829e-01  1.010e+00   0.181 0.856285    
-Rolemedecin_chef_zone                 1.703e+01  2.585e+03   0.007 0.994742    
-FacRurbanurbain                      -1.468e+00  7.083e-01  -2.072 0.038261 *  
-FacMotivationTRUE                    -3.410e-01  9.765e-01  -0.349 0.726896    
-Provinceequateur                     -2.245e+00  7.303e-01  -3.074 0.002113 ** 
-Provincekatanga                      -1.857e+01  1.458e+03  -0.013 0.989839    
-Provincesud_kivu                     -2.409e+00  7.166e-01  -3.361 0.000776 ***
+                                       Estimate Std. Error z value Pr(>|z|)   
+(Intercept)                           1.199e+00  1.623e+00   0.739  0.45998   
+SexHomme                             -3.890e-01  8.114e-01  -0.479  0.63164   
+Age                                   1.473e-04  3.120e-04   0.472  0.63693   
+LastEducationautre                   -1.187e-01  9.600e-01  -0.124  0.90159   
+LastEducationmedecin-pharma-etudesup -1.611e+01  2.588e+03  -0.006  0.99503   
+Roleautre                            -2.982e-02  7.777e-01  -0.038  0.96941   
+Roleinfirmier_superviseur             1.732e-01  1.006e+00   0.172  0.86327   
+Rolemedecin_chef_zone                 1.697e+01  2.588e+03   0.007  0.99477   
+FacRurbanurbain                      -1.432e+00  7.084e-01  -2.022  0.04320 * 
+FacMotivationTRUE                    -3.508e-01  9.732e-01  -0.360  0.71853   
+Provinceequateur                     -2.180e+00  7.344e-01  -2.968  0.00300 **
+Provincekatanga                      -1.851e+01  1.466e+03  -0.013  0.98992   
+Provincesud_kivu                     -2.354e+00  7.201e-01  -3.268  0.00108 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 130.170  on 111  degrees of freedom
-Residual deviance:  93.173  on  99  degrees of freedom
+    Null deviance: 127.51  on 110  degrees of freedom
+Residual deviance:  92.73  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 119.17
+AIC: 118.73
 
 Number of Fisher Scoring iterations: 17
 
 [1] "Running model for  Informel in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: Informel ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+  1737.0   1839.0   -849.5   1699.0     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.5498  -0.9402   0.4933   0.8410   2.1617  
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.2884 -0.7355  0.3416  0.6249  3.0548 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.4272   0.6536  
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                           0.1854419  0.4238377   0.438 0.661727    
-SexHomme                              0.6000201  0.1262817   4.751 2.02e-06 ***
-Age                                   0.0003204  0.0010183   0.315 0.753047    
-LastEducationa3                       0.1037392  0.1628492   0.637 0.524108    
-LastEducationautre                    0.4414030  0.2528365   1.746 0.080845 .  
-LastEducationmedecin-pharma-etudesup -0.1558398  0.5418772  -0.288 0.773659    
-Roleautre                             0.4734749  0.3417559   1.385 0.165925    
-Roleinfirmier                         1.1296045  0.3729477   3.029 0.002455 ** 
-Rolelabo                              1.0268921  0.4057064   2.531 0.011370 *  
-Rolemedecin                           0.4058700  0.6475526   0.627 0.530807    
-Rolepharmacien                        0.7926877  0.4207725   1.884 0.059580 .  
-FacLevelcsr                          -0.1181536  0.1539006  -0.768 0.442650    
-FacLevelhgr                          -0.9902692  0.1553605  -6.374 1.84e-10 ***
-FacOwnershipprivee                   -0.0633692  0.2689116  -0.236 0.813704    
-FacOwnershippublique                  0.2209168  0.1425535   1.550 0.121211    
-FacRurbanurbain                      -0.5242226  0.1459385  -3.592 0.000328 ***
-FacMotivationTRUE                    -0.0680283  0.1526542  -0.446 0.655860    
-Power                                 1.1824780  0.1817777   6.505 7.77e-11 ***
-Provinceequateur                     -1.4138749  0.1856179  -7.617 2.59e-14 ***
-Provincekatanga                      -1.7030420  0.1782332  -9.555  < 2e-16 ***
-Provincesud_kivu                     -1.2870098  0.1761969  -7.304 2.79e-13 ***
+(Intercept)                          -0.9458571  0.5269604  -1.795 0.072665 .  
+SexHomme                              0.6283386  0.1278886   4.913 8.96e-07 ***
+Age                                   0.0002964  0.0009675   0.306 0.759330    
+LastEducationa3                       0.0850282  0.1646713   0.516 0.605609    
+LastEducationautre                    0.4499768  0.2546520   1.767 0.077224 .  
+LastEducationmedecin-pharma-etudesup  0.1645671  0.5561586   0.296 0.767307    
+Roleautre                             0.4857811  0.3428161   1.417 0.156474    
+Roleinfirmier                         1.1810359  0.3745908   3.153 0.001617 ** 
+Rolelabo                              1.0404380  0.4079070   2.551 0.010751 *  
+Rolemedecin                           0.0823117  0.6600058   0.125 0.900750    
+Rolepharmacien                        0.7546592  0.4217755   1.789 0.073576 .  
+FacLevelcsr                          -0.1416568  0.1558375  -0.909 0.363348    
+FacLevelhgr                          -1.0130026  0.1569446  -6.455 1.09e-10 ***
+FacOwnershipprivee                   -0.0209452  0.2740769  -0.076 0.939084    
+FacOwnershippublique                  0.2636790  0.1435432   1.837 0.066220 .  
+FacRurbanurbain                      -0.5404545  0.1474349  -3.666 0.000247 ***
+FacMotivationTRUE                    -0.0730518  0.1546188  -0.472 0.636596    
+Power                                 1.2555100  0.1887386   6.652 2.89e-11 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 2147.5  on 1603  degrees of freedom
-Residual deviance: 1730.9  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 1772.9
-
-Number of Fisher Scoring iterations: 5
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.193                                                                                                            
+Age         -0.060 -0.037                                                                                                     
+LastEductn3 -0.116  0.042 -0.068                                                                                              
+LastEdctntr -0.422  0.021 -0.018  0.179                                                                                       
+LstEdctnm-- -0.131  0.017 -0.003  0.073  0.207                                                                                
+Roleautre   -0.537  0.051 -0.019  0.009  0.121  0.054                                                                         
+Roleinfirmr -0.697  0.101 -0.014  0.002  0.557  0.168  0.753                                                                  
+Rolelabo    -0.585 -0.017 -0.008  0.038  0.427  0.133  0.677  0.811                                                           
+Rolemedecin -0.259 -0.012  0.003 -0.032  0.134 -0.740  0.368  0.397  0.341                                                    
+Rolepharmcn -0.525  0.081 -0.002  0.013  0.249 -0.053  0.631  0.695  0.607  0.424                                             
+FacLevelcsr -0.151  0.008 -0.004  0.034 -0.023  0.035  0.019  0.034  0.029 -0.035  0.040                                      
+FacLevelhgr -0.187 -0.030  0.001  0.086  0.106 -0.010  0.142  0.126  0.128 -0.001  0.109  0.295                               
+FcOwnrshppr -0.103  0.034 -0.007  0.021  0.011 -0.009 -0.029  0.011 -0.026  0.010  0.029  0.115  0.064                        
+FcOwnrshppb -0.176  0.026  0.009 -0.001 -0.079 -0.007 -0.079 -0.063 -0.028 -0.036  0.000  0.155 -0.016  0.339                 
+FacRurbnrbn -0.198  0.093 -0.017  0.156  0.084 -0.023  0.013  0.047  0.004  0.014  0.074  0.143  0.058 -0.086       0.168     
+FcMtvtnTRUE -0.045  0.008 -0.039 -0.012 -0.047  0.005 -0.039 -0.017 -0.063 -0.009  0.021 -0.065 -0.130  0.030       0.035     
+Power       -0.017 -0.179  0.003  0.190  0.044  0.014  0.003 -0.087  0.032 -0.166  0.007  0.004  0.142 -0.063       0.032     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.127       
+Power        0.043  0.004
 [1] "Running model for  Informel in ecz"
 
 Call:
@@ -377,80 +547,114 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
 
 Deviance Residuals: 
      Min        1Q    Median        3Q       Max  
--3.01766   0.06177   0.20570   0.36313   1.27110  
+-1.79813   0.00000   0.00001   0.25357   2.17755  
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)  
-(Intercept)                           1.800e+00  2.711e+00   0.664   0.5068  
-SexHomme                              3.029e-01  1.086e+00   0.279   0.7803  
-Age                                  -6.593e-04  3.760e-04  -1.754   0.0795 .
-LastEducationautre                    5.175e-01  1.810e+00   0.286   0.7750  
-LastEducationmedecin-pharma-etudesup  1.699e+01  4.141e+03   0.004   0.9967  
-Roleautre                             1.779e+00  1.388e+00   1.282   0.1998  
-Roleinfirmier_superviseur             1.974e+00  1.803e+00   1.095   0.2735  
-Rolemedecin_chef_zone                -1.583e+01  4.141e+03  -0.004   0.9970  
-FacRurbanurbain                      -1.658e+00  1.025e+00  -1.617   0.1059  
-FacMotivationTRUE                     1.304e+00  1.699e+00   0.767   0.4429  
-Provinceequateur                     -1.353e+00  1.438e+00  -0.941   0.3467  
-Provincekatanga                       1.623e+01  2.384e+03   0.007   0.9946  
-Provincesud_kivu                     -2.463e+00  1.372e+00  -1.795   0.0727 .
+(Intercept)                           4.897e+00  4.316e+00   1.135   0.2565  
+SexHomme                             -6.685e-01  1.408e+00  -0.475   0.6350  
+Age                                  -1.683e-02  7.058e-02  -0.238   0.8116  
+LastEducationautre                    4.682e-01  2.047e+00   0.229   0.8191  
+LastEducationmedecin-pharma-etudesup  1.883e+01  1.088e+04   0.002   0.9986  
+Roleautre                             2.270e+00  1.654e+00   1.373   0.1699  
+Roleinfirmier_superviseur             2.238e+00  2.041e+00   1.096   0.2729  
+Rolemedecin_chef_zone                 8.371e+00  9.664e+04   0.000   0.9999  
+FacRurbanurbain                      -3.685e+00  1.749e+00  -2.107   0.0351 *
+FacMotivationTRUE                     1.231e+02  3.189e+03   0.039   0.9692  
+Provinceequateur                     -1.242e+02  3.189e+03  -0.039   0.9689  
+Provincekatanga                      -1.041e+02  6.867e+03  -0.015   0.9879  
+Provincesud_kivu                     -1.258e+02  3.189e+03  -0.039   0.9685  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 57.639  on 111  degrees of freedom
-Residual deviance: 42.725  on  99  degrees of freedom
+    Null deviance: 52.240  on 110  degrees of freedom
+Residual deviance: 25.557  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 68.725
+AIC: 51.557
 
-Number of Fisher Scoring iterations: 18
+Number of Fisher Scoring iterations: 20
 
 [1] "Running model for  PerDiem in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: PerDiem ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+  1819.1   1921.1   -890.5   1781.1     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.1402  -0.8147  -0.5837   0.9917   2.4908  
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.0523 -0.6342 -0.4322  0.7930  4.6685 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.645    0.8032  
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                          -1.7500154  0.4270243  -4.098 4.16e-05 ***
-SexHomme                              0.1362366  0.1261883   1.080 0.280307    
-Age                                  -0.0004968  0.0007383  -0.673 0.501022    
-LastEducationa3                      -0.1032926  0.1626797  -0.635 0.525465    
-LastEducationautre                   -0.2920499  0.2483858  -1.176 0.239678    
-LastEducationmedecin-pharma-etudesup  0.2607487  0.5534507   0.471 0.637546    
-Roleautre                             0.0173389  0.3517729   0.049 0.960688    
-Roleinfirmier                         0.1798122  0.3795010   0.474 0.635634    
-Rolelabo                              0.2998222  0.4133945   0.725 0.468287    
-Rolemedecin                          -0.5154207  0.6590446  -0.782 0.434172    
-Rolepharmacien                       -0.2644226  0.4415062  -0.599 0.549233    
-FacLevelcsr                          -0.2193236  0.1544992  -1.420 0.155731    
-FacLevelhgr                           0.1316408  0.1592877   0.826 0.408558    
-FacOwnershipprivee                    0.7657168  0.3027328   2.529 0.011427 *  
-FacOwnershippublique                  0.6192086  0.1491957   4.150 3.32e-05 ***
-FacRurbanurbain                      -0.5041691  0.1530396  -3.294 0.000986 ***
-FacMotivationTRUE                     1.1562610  0.1518358   7.615 2.63e-14 ***
-Power                                 0.2392953  0.1594886   1.500 0.133513    
-Provinceequateur                      1.6204423  0.1724221   9.398  < 2e-16 ***
-Provincekatanga                      -0.2997976  0.1856496  -1.615 0.106342    
-Provincesud_kivu                      1.2498167  0.1628298   7.676 1.65e-14 ***
+(Intercept)                          -1.1011040  0.5763646  -1.910 0.056078 .  
+SexHomme                              0.1482012  0.1266343   1.170 0.241877    
+Age                                  -0.0005115  0.0007522  -0.680 0.496481    
+LastEducationa3                      -0.1160347  0.1630366  -0.712 0.476645    
+LastEducationautre                   -0.2934735  0.2482696  -1.182 0.237176    
+LastEducationmedecin-pharma-etudesup  0.4315063  0.5736918   0.752 0.451957    
+Roleautre                             0.0147180  0.3528714   0.042 0.966731    
+Roleinfirmier                         0.1933097  0.3802722   0.508 0.611211    
+Rolelabo                              0.2872757  0.4142931   0.693 0.488051    
+Rolemedecin                          -0.6973369  0.6768735  -1.030 0.302901    
+Rolepharmacien                       -0.3013574  0.4428811  -0.680 0.496221    
+FacLevelcsr                          -0.2461088  0.1548405  -1.589 0.111962    
+FacLevelhgr                           0.1171714  0.1600272   0.732 0.464048    
+FacOwnershipprivee                    0.7813212  0.3042650   2.568 0.010232 *  
+FacOwnershippublique                  0.6335693  0.1494444   4.239 2.24e-05 ***
+FacRurbanurbain                      -0.5066716  0.1531360  -3.309 0.000938 ***
+FacMotivationTRUE                     1.1645596  0.1531380   7.605 2.86e-14 ***
+Power                                 0.2610941  0.1606403   1.625 0.104091    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 2137.5  on 1603  degrees of freedom
-Residual deviance: 1784.7  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 1826.7
-
-Number of Fisher Scoring iterations: 5
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.163                                                                                                            
+Age         -0.044 -0.038                                                                                                     
+LastEductn3 -0.086  0.005 -0.059                                                                                              
+LastEdctntr -0.352  0.000 -0.001  0.159                                                                                       
+LstEdctnm-- -0.116  0.005 -0.002  0.056  0.191                                                                                
+Roleautre   -0.493  0.028 -0.009  0.009  0.082  0.068                                                                         
+Roleinfirmr -0.636  0.075 -0.004 -0.016  0.530  0.171  0.752                                                                  
+Rolelabo    -0.529 -0.036 -0.001  0.026  0.380  0.133  0.679  0.800                                                           
+Rolemedecin -0.232 -0.006  0.006 -0.025  0.133 -0.740  0.347  0.385  0.328                                                    
+Rolepharmcn -0.453  0.061  0.000  0.006  0.191 -0.060  0.609  0.657  0.574  0.403                                             
+FacLevelcsr -0.103  0.011 -0.012  0.034 -0.103  0.018 -0.001 -0.006  0.002 -0.049  0.037                                      
+FacLevelhgr -0.178  0.011  0.003  0.088  0.088 -0.014  0.140  0.134  0.132 -0.020  0.111  0.261                               
+FcOwnrshppr -0.096  0.018 -0.001  0.021 -0.021 -0.009 -0.031 -0.006 -0.036 -0.009  0.009  0.124  0.077                        
+FcOwnrshppb -0.170  0.000 -0.001 -0.011 -0.108 -0.012 -0.065 -0.072 -0.031 -0.040 -0.023  0.164  0.015  0.368                 
+FacRurbnrbn -0.166  0.114 -0.014  0.130  0.076 -0.057  0.015  0.046 -0.002  0.042  0.075  0.087 -0.006 -0.101       0.145     
+FcMtvtnTRUE -0.050  0.021 -0.037 -0.024 -0.063  0.008 -0.052 -0.013 -0.051 -0.013  0.010 -0.091 -0.096  0.048       0.097     
+Power       -0.010 -0.257  0.000  0.217  0.036 -0.006  0.015 -0.115  0.031 -0.117  0.010  0.011  0.200 -0.023       0.024     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.106       
+Power        0.067  0.017
 [1] "Running model for  PerDiem in ecz"
 
 Call:
@@ -459,80 +663,114 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--2.6449  -0.6781   0.1474   0.5688   1.8272  
+-2.6894  -0.6880   0.1759   0.5740   1.8383  
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                             0.05618    1.97435   0.028 0.977300    
-SexHomme                               -1.96970    0.81808  -2.408 0.016053 *  
-Age                                    -0.01835    0.03134  -0.586 0.558172    
-LastEducationautre                     -0.26220    1.07269  -0.244 0.806899    
-LastEducationmedecin-pharma-etudesup   17.35881 1572.07691   0.011 0.991190    
-Roleautre                               0.17355    0.84909   0.204 0.838046    
-Roleinfirmier_superviseur               1.88728    1.20702   1.564 0.117914    
-Rolemedecin_chef_zone                 -15.97258 1572.07681  -0.010 0.991893    
-FacRurbanurbain                         1.36733    0.68144   2.007 0.044802 *  
-FacMotivationTRUE                       0.38599    1.10272   0.350 0.726309    
-Provinceequateur                        4.47062    1.18245   3.781 0.000156 ***
-Provincekatanga                        -0.38619    0.82469  -0.468 0.639582    
-Provincesud_kivu                        2.10375    0.72072   2.919 0.003512 ** 
+(Intercept)                             0.08193    1.96993   0.042 0.966824    
+SexHomme                               -1.97537    0.81429  -2.426 0.015271 *  
+Age                                    -0.01874    0.03125  -0.600 0.548732    
+LastEducationautre                     -0.23018    1.06741  -0.216 0.829265    
+LastEducationmedecin-pharma-etudesup   17.43007 1568.26496   0.011 0.991132    
+Roleautre                               0.16124    0.84537   0.191 0.848735    
+Roleinfirmier_superviseur               1.89952    1.20231   1.580 0.114132    
+Rolemedecin_chef_zone                 -15.87775 1568.26486  -0.010 0.991922    
+FacRurbanurbain                         1.32002    0.68093   1.939 0.052556 .  
+FacMotivationTRUE                       0.42110    1.10100   0.382 0.702109    
+Provinceequateur                        4.38976    1.18539   3.703 0.000213 ***
+Provincekatanga                        -0.45788    0.82751  -0.553 0.580043    
+Provincesud_kivu                        2.02552    0.72423   2.797 0.005161 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 150.915  on 111  degrees of freedom
-Residual deviance:  90.211  on  99  degrees of freedom
+    Null deviance: 149.078  on 110  degrees of freedom
+Residual deviance:  89.442  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 116.21
+AIC: 115.44
 
 Number of Fisher Scoring iterations: 16
 
 [1] "Running model for  PrimeRisque in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: PrimeRisque ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+  2023.4   2125.4   -992.7   1985.4     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.0242  -1.0191  -0.6824   1.0963   2.1067  
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.5595 -0.8157 -0.5026  0.8978  2.8120 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.08799  0.2966  
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                          -8.568e-01  3.835e-01  -2.234 0.025463 *  
-SexHomme                             -8.354e-02  1.176e-01  -0.711 0.477315    
-Age                                  -9.438e-05  3.077e-04  -0.307 0.759029    
-LastEducationa3                       1.339e+00  1.559e-01   8.586  < 2e-16 ***
-LastEducationautre                    3.878e-01  2.284e-01   1.698 0.089433 .  
-LastEducationmedecin-pharma-etudesup  1.264e-01  4.911e-01   0.257 0.796864    
-Roleautre                            -4.752e-01  3.202e-01  -1.484 0.137735    
-Roleinfirmier                         1.000e-01  3.407e-01   0.294 0.769101    
-Rolelabo                             -7.450e-02  3.783e-01  -0.197 0.843872    
-Rolemedecin                           6.064e-01  5.891e-01   1.029 0.303300    
-Rolepharmacien                        5.848e-02  3.916e-01   0.149 0.881285    
-FacLevelcsr                          -2.596e-01  1.423e-01  -1.824 0.068185 .  
-FacLevelhgr                           8.371e-01  1.490e-01   5.616 1.95e-08 ***
-FacOwnershipprivee                   -9.552e-01  2.793e-01  -3.420 0.000627 ***
-FacOwnershippublique                  9.742e-02  1.344e-01   0.725 0.468435    
-FacRurbanurbain                       4.807e-01  1.424e-01   3.377 0.000734 ***
-FacMotivationTRUE                    -1.169e-01  1.428e-01  -0.818 0.413225    
-Power                                 7.843e-01  1.502e-01   5.222 1.77e-07 ***
-Provinceequateur                     -2.344e-01  1.641e-01  -1.428 0.153355    
-Provincekatanga                      -3.775e-01  1.628e-01  -2.320 0.020364 *  
-Provincesud_kivu                      4.810e-01  1.564e-01   3.076 0.002098 ** 
+(Intercept)                          -8.924e-01  4.030e-01  -2.214 0.026825 *  
+SexHomme                             -8.189e-02  1.182e-01  -0.693 0.488243    
+Age                                  -9.528e-05  3.106e-04  -0.307 0.759028    
+LastEducationa3                       1.331e+00  1.571e-01   8.469  < 2e-16 ***
+LastEducationautre                    4.237e-01  2.294e-01   1.847 0.064719 .  
+LastEducationmedecin-pharma-etudesup  2.982e-01  5.137e-01   0.580 0.561641    
+Roleautre                            -4.643e-01  3.212e-01  -1.446 0.148275    
+Roleinfirmier                         1.440e-01  3.421e-01   0.421 0.673850    
+Rolelabo                             -5.480e-02  3.795e-01  -0.144 0.885185    
+Rolemedecin                           4.560e-01  6.088e-01   0.749 0.453901    
+Rolepharmacien                        4.246e-02  3.931e-01   0.108 0.913970    
+FacLevelcsr                          -2.949e-01  1.438e-01  -2.051 0.040280 *  
+FacLevelhgr                           8.510e-01  1.503e-01   5.663 1.49e-08 ***
+FacOwnershipprivee                   -9.641e-01  2.818e-01  -3.421 0.000623 ***
+FacOwnershippublique                  8.882e-02  1.357e-01   0.655 0.512742    
+FacRurbanurbain                       4.562e-01  1.442e-01   3.163 0.001563 ** 
+FacMotivationTRUE                    -1.061e-01  1.438e-01  -0.738 0.460687    
+Power                                 8.219e-01  1.517e-01   5.419 6.00e-08 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 2215.2  on 1603  degrees of freedom
-Residual deviance: 2002.1  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 2044.1
-
-Number of Fisher Scoring iterations: 4
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.222                                                                                                            
+Age         -0.008 -0.041                                                                                                     
+LastEductn3 -0.155  0.019 -0.066                                                                                              
+LastEdctntr -0.468  0.009  0.002  0.181                                                                                       
+LstEdctnm-- -0.137  0.014 -0.004  0.064  0.197                                                                                
+Roleautre   -0.621  0.035  0.003  0.004  0.082  0.040                                                                         
+Roleinfirmr -0.819  0.080 -0.005  0.005  0.534  0.157  0.739                                                                  
+Rolelabo    -0.667 -0.039  0.004  0.034  0.385  0.115  0.654  0.788                                                           
+Rolemedecin -0.312 -0.027  0.004 -0.022  0.126 -0.744  0.365  0.395  0.340                                                    
+Rolepharmcn -0.606  0.065 -0.003  0.014  0.222 -0.075  0.612  0.679  0.583  0.430                                             
+FacLevelcsr -0.147  0.029 -0.042  0.027 -0.113  0.017  0.002 -0.006  0.000 -0.043  0.019                                      
+FacLevelhgr -0.241  0.010  0.001  0.154  0.092 -0.016  0.139  0.134  0.129  0.008  0.107  0.261                               
+FcOwnrshppr -0.092  0.022 -0.011 -0.009 -0.030 -0.015 -0.028 -0.014 -0.051 -0.014  0.014  0.122  0.039                        
+FcOwnrshppb -0.212  0.007 -0.021  0.016 -0.106 -0.021 -0.085 -0.085 -0.049 -0.024 -0.014  0.200  0.005  0.326                 
+FacRurbnrbn -0.254  0.119 -0.020  0.187  0.072 -0.042  0.004  0.047 -0.006  0.027  0.067  0.136  0.057 -0.086       0.202     
+FcMtvtnTRUE -0.054  0.009 -0.062 -0.021 -0.036  0.002 -0.042 -0.013 -0.054 -0.007  0.020 -0.085 -0.130  0.014       0.037     
+Power       -0.029 -0.251  0.011  0.255  0.057 -0.005  0.015 -0.105  0.039 -0.098  0.011 -0.012  0.225 -0.060       0.011     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.109       
+Power        0.095  0.000
 [1] "Running model for  PrimeRisque in ecz"
 
 Call:
@@ -540,81 +778,115 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
     data = modelData[modelData$FacLevel == "ecz", ])
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--2.68837   0.00006   0.07489   0.32620   1.64749  
+    Min       1Q   Median       3Q      Max  
+-1.7534   0.0000   0.0078   0.1406   1.8511  
 
 Coefficients:
-                                       Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                            -2.64932    3.11644  -0.850 0.395264    
-SexHomme                               -0.83125    0.95799  -0.868 0.385561    
-Age                                     0.24165    0.07257   3.330 0.000869 ***
-LastEducationautre                     -2.07500    1.46328  -1.418 0.156178    
-LastEducationmedecin-pharma-etudesup   16.28434 3698.29633   0.004 0.996487    
-Roleautre                              -0.43222    1.04214  -0.415 0.678327    
-Roleinfirmier_superviseur              -1.17119    1.50072  -0.780 0.435145    
-Rolemedecin_chef_zone                 -16.87826 3698.29643  -0.005 0.996359    
-FacRurbanurbain                        -2.30447    1.06194  -2.170 0.030002 *  
-FacMotivationTRUE                      -1.76349    1.51572  -1.163 0.244641    
-Provinceequateur                        0.88594    1.05552   0.839 0.401279    
-Provincekatanga                        16.72888 1870.76299   0.009 0.992865    
-Provincesud_kivu                       -1.13202    1.04965  -1.078 0.280820    
+                                      Estimate Std. Error z value Pr(>|z|)   
+(Intercept)                            -2.9337     3.6726  -0.799  0.42440   
+SexHomme                               -1.4760     1.1188  -1.319  0.18708   
+Age                                     0.3490     0.1134   3.078  0.00208 **
+LastEducationautre                     -2.6405     1.7017  -1.552  0.12073   
+LastEducationmedecin-pharma-etudesup   17.5453  5852.5048   0.003  0.99761   
+Roleautre                              -0.9764     1.1717  -0.833  0.40470   
+Roleinfirmier_superviseur              -1.5902     1.7071  -0.932  0.35156   
+Rolemedecin_chef_zone                   0.6198  6534.5140   0.000  0.99992   
+FacRurbanurbain                        -4.6344     1.7622  -2.630  0.00854 **
+FacMotivationTRUE                      -2.4739     1.8034  -1.372  0.17013   
+Provinceequateur                        0.4486     1.2681   0.354  0.72353   
+Provincekatanga                        17.0967  2815.5935   0.006  0.99516   
+Provincesud_kivu                       -3.2332     1.5517  -2.084  0.03719 * 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 91.866  on 111  degrees of freedom
-Residual deviance: 48.980  on  99  degrees of freedom
+    Null deviance: 87.919  on 110  degrees of freedom
+Residual deviance: 36.703  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 74.98
+AIC: 62.703
 
-Number of Fisher Scoring iterations: 18
+Number of Fisher Scoring iterations: 19
 
 [1] "Running model for  PrimesPartenaires in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: PrimesPartenaires ~ Sex + Age + LastEducation + Role + FacLevel +  
+    FacOwnership + FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+   736.2    838.1   -349.1    698.2     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--3.0667   0.1882   0.2428   0.4126   1.3954  
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-11.6712   0.1063   0.1465   0.2635   1.3450 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.359    0.5992  
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                           3.712e+00  7.005e-01   5.299 1.16e-07 ***
-SexHomme                             -1.754e-01  2.026e-01  -0.866   0.3867    
-Age                                  -5.736e-06  7.027e-04  -0.008   0.9935    
-LastEducationa3                      -1.104e-01  2.571e-01  -0.429   0.6676    
-LastEducationautre                    7.052e-01  4.253e-01   1.658   0.0973 .  
-LastEducationmedecin-pharma-etudesup  5.284e-02  6.212e-01   0.085   0.9322    
-Roleautre                             1.162e-01  5.724e-01   0.203   0.8392    
-Roleinfirmier                         4.079e-01  5.665e-01   0.720   0.4715    
-Rolelabo                             -1.546e-01  6.073e-01  -0.255   0.7990    
-Rolemedecin                           3.467e-01  7.840e-01   0.442   0.6584    
-Rolepharmacien                       -4.395e-01  6.332e-01  -0.694   0.4877    
-FacLevelcsr                          -9.268e-01  2.236e-01  -4.144 3.41e-05 ***
-FacLevelhgr                           3.588e-01  2.841e-01   1.263   0.2065    
-FacOwnershipprivee                   -6.617e-01  3.153e-01  -2.099   0.0358 *  
-FacOwnershippublique                 -9.534e-02  2.422e-01  -0.394   0.6938    
-FacRurbanurbain                      -1.337e+00  2.366e-01  -5.651 1.59e-08 ***
-FacMotivationTRUE                     2.553e-01  2.894e-01   0.882   0.3777    
-Power                                 4.897e-01  2.840e-01   1.724   0.0847 .  
-Provinceequateur                     -6.366e-01  3.629e-01  -1.754   0.0794 .  
-Provincekatanga                      -1.518e+00  2.980e-01  -5.095 3.50e-07 ***
-Provincesud_kivu                     -5.972e-01  3.809e-01  -1.568   0.1169    
+(Intercept)                           3.206e+00  7.622e-01   4.206 2.60e-05 ***
+SexHomme                             -1.582e-01  2.195e-01  -0.721   0.4712    
+Age                                  -5.642e-05  6.633e-04  -0.085   0.9322    
+LastEducationa3                      -2.248e-01  2.751e-01  -0.817   0.4140    
+LastEducationautre                    6.834e-01  4.510e-01   1.516   0.1296    
+LastEducationmedecin-pharma-etudesup  1.041e+00  8.506e-01   1.224   0.2211    
+Roleautre                             1.800e-01  6.128e-01   0.294   0.7690    
+Roleinfirmier                         5.878e-01  6.037e-01   0.974   0.3303    
+Rolelabo                             -1.281e-01  6.464e-01  -0.198   0.8429    
+Rolemedecin                          -6.468e-01  9.913e-01  -0.653   0.5141    
+Rolepharmacien                       -6.253e-01  6.733e-01  -0.929   0.3531    
+FacLevelcsr                          -1.110e+00  2.401e-01  -4.623 3.79e-06 ***
+FacLevelhgr                           3.752e-01  3.131e-01   1.198   0.2308    
+FacOwnershipprivee                   -6.132e-01  3.344e-01  -1.834   0.0667 .  
+FacOwnershippublique                  3.869e-02  2.560e-01   0.151   0.8799    
+FacRurbanurbain                      -1.576e+00  2.618e-01  -6.021 1.73e-09 ***
+FacMotivationTRUE                     3.167e-01  3.200e-01   0.989   0.3224    
+Power                                 7.486e-01  3.288e-01   2.276   0.0228 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 1023.40  on 1603  degrees of freedom
-Residual deviance:  808.81  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 850.81
-
-Number of Fisher Scoring iterations: 6
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.241                                                                                                            
+Age         -0.013 -0.031                                                                                                     
+LastEductn3 -0.162  0.098 -0.063                                                                                              
+LastEdctntr -0.397  0.065 -0.024  0.175                                                                                       
+LstEdctnm-- -0.186  0.015 -0.009  0.074  0.163                                                                                
+Roleautre   -0.640 -0.002 -0.009 -0.022  0.148  0.143                                                                         
+Roleinfirmr -0.768  0.053 -0.014 -0.022  0.422  0.214  0.809                                                                  
+Rolelabo    -0.687 -0.051 -0.004  0.019  0.354  0.199  0.750  0.856                                                           
+Rolemedecin -0.278 -0.071  0.003 -0.046  0.107 -0.720  0.364  0.395  0.353                                                    
+Rolepharmcn -0.655  0.084 -0.004  0.007  0.250  0.016  0.684  0.766  0.694  0.442                                             
+FacLevelcsr -0.269  0.059 -0.011  0.080 -0.021  0.059  0.050  0.034  0.055 -0.032  0.044                                      
+FacLevelhgr -0.102  0.007  0.000  0.084  0.015 -0.008  0.069  0.025  0.035 -0.053  0.019  0.266                               
+FcOwnrshppr -0.179  0.069 -0.025  0.039  0.000 -0.049 -0.039  0.019 -0.022  0.059  0.069  0.172 -0.034                        
+FcOwnrshppb -0.273  0.074 -0.011  0.018 -0.048  0.001 -0.062 -0.025  0.003 -0.005  0.028  0.217 -0.136  0.478                 
+FacRurbnrbn -0.356  0.157 -0.013  0.245  0.094  0.012  0.027  0.028  0.008 -0.024  0.088  0.286  0.022  0.029       0.261     
+FcMtvtnTRUE -0.066  0.005 -0.084 -0.032 -0.004  0.015 -0.007  0.011 -0.053  0.001  0.027 -0.089 -0.005  0.146       0.043     
+Power        0.003 -0.159  0.009  0.165  0.014  0.009  0.003 -0.104  0.015 -0.154 -0.017 -0.031  0.153 -0.108       0.004     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.069       
+Power        0.072 -0.014
 [1] "Running model for  PrimesPartenaires in ecz"
 
 Call:
@@ -622,81 +894,113 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
     data = modelData[modelData$FacLevel == "ecz", ])
 
 Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.7466  -0.4018   0.2229   0.5221   1.5792  
+     Min        1Q    Median        3Q       Max  
+-2.31522  -0.28149   0.00009   0.41111   1.60347  
 
 Coefficients:
-                                       Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                            14.99589 1284.38457   0.012 0.990684    
-SexHomme                                0.81628    0.90743   0.900 0.368360    
-Age                                     0.01845    0.03230   0.571 0.567796    
-LastEducationautre                      0.28671    1.15230   0.249 0.803506    
-LastEducationmedecin-pharma-etudesup   -1.66885    1.81013  -0.922 0.356553    
-Roleautre                               0.07942    0.88015   0.090 0.928098    
-Roleinfirmier_superviseur               0.29215    1.34898   0.217 0.828540    
-Rolemedecin_chef_zone                   2.49356    1.84780   1.349 0.177184    
-FacRurbanurbain                         1.10005    0.79464   1.384 0.166256    
-FacMotivationTRUE                     -13.60783 1284.38358  -0.011 0.991547    
-Provinceequateur                       -3.06519    1.14521  -2.677 0.007439 ** 
-Provincekatanga                        -0.75685    1.59782  -0.474 0.635733    
-Provincesud_kivu                       -4.02655    1.13784  -3.539 0.000402 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+                                       Estimate Std. Error z value Pr(>|z|)
+(Intercept)                            16.85308 3487.75328   0.005    0.996
+SexHomme                                0.92528    1.01052   0.916    0.360
+Age                                     0.01863    0.03497   0.533    0.594
+LastEducationautre                      0.34401    1.22465   0.281    0.779
+LastEducationmedecin-pharma-etudesup   -1.53519    1.85203  -0.829    0.407
+Roleautre                               0.01231    0.93582   0.013    0.990
+Roleinfirmier_superviseur               0.33941    1.39948   0.243    0.808
+Rolemedecin_chef_zone                   2.89535    1.91060   1.515    0.130
+FacRurbanurbain                         1.08969    0.86653   1.258    0.209
+FacMotivationTRUE                       0.41794 3910.84500   0.000    1.000
+Provinceequateur                      -19.18758 1769.26272  -0.011    0.991
+Provincekatanga                       -16.82104 1769.26308  -0.010    0.992
+Provincesud_kivu                      -20.13579 1769.26272  -0.011    0.991
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 130.170  on 111  degrees of freedom
-Residual deviance:  79.714  on  99  degrees of freedom
+    Null deviance: 127.511  on 110  degrees of freedom
+Residual deviance:  69.651  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 105.71
+AIC: 95.651
 
-Number of Fisher Scoring iterations: 16
+Number of Fisher Scoring iterations: 18
 
 [1] "Running model for  Salaire in facilities"
+Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+ Family: binomial  ( logit )
+Formula: Salaire ~ Sex + Age + LastEducation + Role + FacLevel + FacOwnership +  
+    FacRurban + FacMotivation + Power + (1 | Province)
+   Data: modelData[modelData$FacLevel != "ecz", ]
 
-Call:
-glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
-    data = modelData[modelData$FacLevel != "ecz", ])
+     AIC      BIC   logLik deviance df.resid 
+    1320     1422     -641     1282     1563 
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.6805  -0.6255  -0.4083  -0.2098   2.7649  
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.7067 -0.4635 -0.2978 -0.1587  6.2049 
 
-Coefficients:
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Province (Intercept) 0.527    0.726   
+Number of obs: 1582, groups:  Province, 4
+
+Fixed effects:
                                        Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                          -2.522e+00  5.266e-01  -4.788 1.68e-06 ***
-SexHomme                              4.316e-01  1.576e-01   2.738  0.00619 ** 
-Age                                  -1.655e-05  4.197e-04  -0.039  0.96855    
-LastEducationa3                       1.047e+00  1.872e-01   5.594 2.21e-08 ***
-LastEducationautre                    1.593e-01  3.342e-01   0.477  0.63360    
-LastEducationmedecin-pharma-etudesup -5.834e-01  6.161e-01  -0.947  0.34369    
-Roleautre                             1.174e-01  4.372e-01   0.269  0.78824    
-Roleinfirmier                         4.703e-02  4.601e-01   0.102  0.91860    
-Rolelabo                              1.685e-01  5.058e-01   0.333  0.73901    
-Rolemedecin                           3.311e-01  7.204e-01   0.460  0.64582    
-Rolepharmacien                        2.071e-01  5.492e-01   0.377  0.70603    
-FacLevelcsr                          -7.896e-02  1.843e-01  -0.428  0.66833    
-FacLevelhgr                           4.880e-01  1.883e-01   2.591  0.00957 ** 
-FacOwnershipprivee                   -1.362e-01  2.781e-01  -0.490  0.62428    
-FacOwnershippublique                 -3.991e-01  1.790e-01  -2.229  0.02581 *  
-FacRurbanurbain                       1.461e+00  1.699e-01   8.598  < 2e-16 ***
-FacMotivationTRUE                    -1.452e-01  2.097e-01  -0.692  0.48875    
-Power                                 3.395e-01  1.973e-01   1.720  0.08538 .  
-Provinceequateur                      3.078e-01  2.075e-01   1.483  0.13795    
-Provincekatanga                       5.080e-01  1.919e-01   2.648  0.00810 ** 
-Provincesud_kivu                     -1.469e+00  2.962e-01  -4.960 7.03e-07 ***
+(Intercept)                          -2.716e+00  6.269e-01  -4.332 1.48e-05 ***
+SexHomme                              4.424e-01  1.580e-01   2.799  0.00512 ** 
+Age                                  -2.653e-05  4.199e-04  -0.063  0.94962    
+LastEducationa3                       1.057e+00  1.873e-01   5.644 1.66e-08 ***
+LastEducationautre                    1.352e-01  3.333e-01   0.406  0.68501    
+LastEducationmedecin-pharma-etudesup -3.347e-01  6.330e-01  -0.529  0.59700    
+Roleautre                             9.706e-02  4.382e-01   0.221  0.82471    
+Roleinfirmier                         4.173e-02  4.607e-01   0.091  0.92783    
+Rolelabo                              1.536e-01  5.063e-01   0.303  0.76158    
+Rolemedecin                           4.465e-02  7.422e-01   0.060  0.95202    
+Rolepharmacien                        1.455e-01  5.504e-01   0.264  0.79144    
+FacLevelcsr                          -3.453e-02  1.852e-01  -0.186  0.85211    
+FacLevelhgr                           5.043e-01  1.890e-01   2.668  0.00763 ** 
+FacOwnershipprivee                   -1.073e-02  2.815e-01  -0.038  0.96959    
+FacOwnershippublique                 -3.433e-01  1.796e-01  -1.912  0.05590 .  
+FacRurbanurbain                       1.489e+00  1.701e-01   8.754  < 2e-16 ***
+FacMotivationTRUE                    -1.476e-01  2.097e-01  -0.704  0.48143    
+Power                                 3.438e-01  1.980e-01   1.736  0.08256 .  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 1537.1  on 1603  degrees of freedom
-Residual deviance: 1277.8  on 1583  degrees of freedom
-  (35 observations deleted due to missingness)
-AIC: 1319.8
-
-Number of Fisher Scoring iterations: 5
-
+Correlation of Fixed Effects:
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
+SexHomme    -0.223                                                                                                            
+Age         -0.008 -0.032                                                                                                     
+LastEductn3 -0.169  0.094 -0.057                                                                                              
+LastEdctntr -0.412  0.043 -0.005  0.211                                                                                       
+LstEdctnm-- -0.158  0.012 -0.007  0.076  0.200                                                                                
+Roleautre   -0.559  0.011 -0.001  0.002  0.135  0.101                                                                         
+Roleinfirmr -0.713  0.067 -0.010  0.002  0.521  0.208  0.771                                                                  
+Rolelabo    -0.610 -0.033 -0.001  0.040  0.424  0.176  0.695  0.828                                                           
+Rolemedecin -0.275 -0.042  0.003 -0.037  0.148 -0.715  0.380  0.412  0.361                                                    
+Rolepharmcn -0.539  0.092 -0.003  0.022  0.283 -0.036  0.606  0.694  0.607  0.448                                             
+FacLevelcsr -0.125  0.039 -0.036  0.055 -0.115  0.040  0.010 -0.012 -0.002 -0.062 -0.011                                      
+FacLevelhgr -0.164  0.028  0.005  0.116  0.005  0.008  0.122  0.090  0.094 -0.037  0.072  0.289                               
+FcOwnrshppr -0.116  0.043 -0.020  0.021 -0.004 -0.034 -0.030  0.011 -0.026  0.032  0.049  0.139  0.035                        
+FcOwnrshppb -0.162  0.035 -0.016 -0.016 -0.093 -0.038 -0.083 -0.068 -0.035 -0.001 -0.004  0.194 -0.070  0.423                 
+FacRurbnrbn -0.247  0.200 -0.015  0.273  0.093 -0.015 -0.002  0.041 -0.005 -0.009  0.060  0.131  0.020 -0.065       0.142     
+FcMtvtnTRUE -0.034 -0.013 -0.072 -0.029 -0.058  0.016 -0.052 -0.014 -0.058 -0.010  0.009 -0.069 -0.124  0.071       0.036     
+Power       -0.024 -0.185  0.014  0.247  0.027 -0.007  0.011 -0.112  0.020 -0.122 -0.008  0.014  0.196 -0.061      -0.021     
+            FcRrbn FMTRUE
+SexHomme                 
+Age                      
+LastEductn3              
+LastEdctntr              
+LstEdctnm--              
+Roleautre                
+Roleinfirmr              
+Rolelabo                 
+Rolemedecin              
+Rolepharmcn              
+FacLevelcsr              
+FacLevelhgr              
+FcOwnrshppr              
+FcOwnrshppb              
+FacRurbnrbn              
+FcMtvtnTRUE  0.094       
+Power        0.099 -0.020
 [1] "Running model for  Salaire in ecz"
 
 Call:
@@ -705,30 +1009,30 @@ glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"),
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--1.5387  -0.8054  -0.5221   0.8471   2.3303  
+-1.5352  -0.7983  -0.5232   0.9341   2.3421  
 
 Coefficients:
                                        Estimate Std. Error z value Pr(>|z|)
-(Intercept)                          -2.8267805  1.9889266  -1.421    0.155
-SexHomme                              1.6614683  1.1152865   1.490    0.136
-Age                                   0.0003794  0.0002999   1.265    0.206
-LastEducationautre                   -0.5702386  0.9424920  -0.605    0.545
-LastEducationmedecin-pharma-etudesup  0.7754232  1.3043668   0.594    0.552
-Roleautre                             0.2883595  0.8635739   0.334    0.738
-Roleinfirmier_superviseur             1.1230442  1.0351886   1.085    0.278
-Rolemedecin_chef_zone                -0.4277826  1.3388457  -0.320    0.749
-FacRurbanurbain                      -0.1748894  0.5899093  -0.296    0.767
-FacMotivationTRUE                    -0.0290387  1.1032740  -0.026    0.979
-Provinceequateur                      0.2411366  0.6355416   0.379    0.704
-Provincekatanga                       0.2739533  0.8115412   0.338    0.736
-Provincesud_kivu                     -0.9024637  0.7377777  -1.223    0.221
+(Intercept)                          -2.7922617  1.9837056  -1.408    0.159
+SexHomme                              1.6378743  1.1135864   1.471    0.141
+Age                                   0.0003672  0.0002988   1.229    0.219
+LastEducationautre                   -0.5654224  0.9425245  -0.600    0.549
+LastEducationmedecin-pharma-etudesup  0.8199275  1.3054850   0.628    0.530
+Roleautre                             0.2913734  0.8624922   0.338    0.735
+Roleinfirmier_superviseur             1.1373477  1.0349695   1.099    0.272
+Rolemedecin_chef_zone                -0.3588923  1.3380110  -0.268    0.789
+FacRurbanurbain                      -0.2114195  0.5906109  -0.358    0.720
+FacMotivationTRUE                     0.0076780  1.1035131   0.007    0.994
+Provinceequateur                      0.1563883  0.6441444   0.243    0.808
+Provincekatanga                       0.1968402  0.8157665   0.241    0.809
+Provincesud_kivu                     -0.9839305  0.7451599  -1.320    0.187
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 128.11  on 111  degrees of freedom
-Residual deviance: 108.49  on  99  degrees of freedom
+    Null deviance: 127.51  on 110  degrees of freedom
+Residual deviance: 107.71  on  98  degrees of freedom
   (10 observations deleted due to missingness)
-AIC: 134.49
+AIC: 133.71
 
 Number of Fisher Scoring iterations: 5
 

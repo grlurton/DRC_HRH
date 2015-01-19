@@ -199,7 +199,8 @@ distrib_data <- ddply(total_revenu , .(Role, instanceID) ,
                         out
                         })
 
-exclude <- distrib_data_explode$instanceID[distrib_data_explode$RevenueEntry == 'Informel' & distrib_data_explode$V1 == 1]
+exclude <- distrib_data$instanceID[distrib_data$RevenueEntry == 'Informel' & 
+                                             distrib_data$V1 == 1]
 
 total_revenu <- subset(total_revenu , !(instanceID %in% exclude))
 
@@ -241,11 +242,6 @@ distrib_data_explode <- merge(distrib_data_explode , revenue_median ,
                               by = 'Role' , all.x = TRUE)
 
 distrib_data_explode$amount <- distrib_data_explode$V1 * distrib_data_explode$median
-
-distrib_data_explode_tt <- subset(distrib_data_explode , instanceID %in% zz)
-
-distrib_data_explode <- subset(distrib_data_explode , !(distrib_data_explode$RevenueEntry == 'Informel' & V1 == 1))
-
 
 dist_role <- ddply(distrib_data_explode , .(Role , RevenueEntry) , 
                    function(x) mean(x$amount))
@@ -325,7 +321,6 @@ heat_complete <- data.frame(Province = character() , FacilityType = character() 
 pdf('output/graphs/revenue_heatmap.pdf', width = 14)
 for(i in 1:length(orderedIncome)){
   heat <- make_heat_revenue(total_revenu , orderedIncome[i])
-  print(heat[[2]])
   heat_complete <- rbind(heat_complete , heat[[1]])
   provs <- unique(heat_complete$Province)
 }
@@ -398,7 +393,7 @@ make_formula <- function(y , covariates){
 }
 
 covs_indiv <- "Sex + Age + LastEducation + Role" 
-covs_hgrcs <-  "FacLevel + FacOwnership + FacRurban + FacMotivation + Power + Province"
+covs_hgrcs <-  "FacLevel + FacOwnership + FacRurban + FacMotivation + Power + (1|Province)"
 covs_ecz <- "FacRurban + FacMotivation + Province"
 
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = "+")
@@ -409,12 +404,13 @@ covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
 models_ecz <- list()
 models_fac <- list()
 
+modelData$Province <- as.character(modelData$Province)
 
 sink('output/models_logistics.txt')
 for(i in 1:length(revs)){
   rev <- revs[i]
   print(paste('Running model for ' , rev , 'in facilities'))
-  model_fit_fac <- glm(make_formula(rev , covs_hgrcs) ,
+  model_fit_fac <- glmer(make_formula(rev , covs_hgrcs) ,
                      family = binomial(link = 'logit') , 
                      data = modelData[modelData$FacLevel != 'ecz' , ])
   print(summary(model_fit_fac))
@@ -464,7 +460,7 @@ for(i in 1:length(revs)){
   }
   logging <- paste('log(' , rev , ')' , sep = '')
   print(paste('Running model for ' , rev , 'in facilities'))
-  model_fit_fac <- lm(make_formula(logging , covs_hgrcs) ,
+  model_fit_fac <- lmer(make_formula(logging , covs_hgrcs) ,
                        data = data_amount[data_amount$FacLevel != 'ecz' , ])
   print(summary(model_fit_fac))
   models_fac2[[rev]] <- model_fit_fac
@@ -493,7 +489,7 @@ colnames(data_total_revenu)[ncol(data_total_revenu)] <- 'revenue'
 
 sink('output/models_total.txt')
 print('Running model for facilities')
-model_fit_fac <- lm(make_formula('revenue' , covs_hgrcs) ,
+model_fit_fac <- lmer(make_formula('revenue' , covs_hgrcs) ,
                     data = data_total_revenu[data_total_revenu$FacLevel != 'ecz' , ])
 print(summary(model_fit_fac))
   
@@ -522,7 +518,7 @@ count_perdiem$Number[is.na(count_perdiem$Number)] <- 0
 
 sink('output/models_count_perdiem.txt')
 print('Running PerDiem model for facilities')
-model_fit_fac <- glm(make_formula('Number' , covs_hgrcs ) , family = poisson ,
+model_fit_fac <- glmer(make_formula('Number' , covs_hgrcs ) , family = poisson ,
                     data = count_perdiem[count_perdiem$FacLevel != 'ecz' , ])
 print(summary(model_fit_fac))
 
@@ -540,7 +536,7 @@ count_prim_part$Number[is.na(count_prim_part$Number)] <- 0
 
 sink('output/models_count_prime_partenaire.txt')
 print('Running Prime Partenaire model for facilities')
-model_fit_fac <- glm(make_formula('Number' , covs_hgrcs ) , family = poisson ,
+model_fit_fac <- glmer(make_formula('Number' , covs_hgrcs ) , family = poisson ,
                      data = count_prim_part[count_prim_part$FacLevel != 'ecz' , ])
 print(summary(model_fit_fac))
 
@@ -563,12 +559,10 @@ output.table(tab_prim_part , 'distribution_prime_partenaire')
 
 
 
-
-
-
-
+#### Counterfactual Analysis
 
 library(arm)
+
 
 compute_link <- function(data , betas){
   adm.ecz <- data$administrateur_gestionnaire*data$ecz
