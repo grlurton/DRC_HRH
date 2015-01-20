@@ -83,7 +83,45 @@ output.table(data_out , 'joint_report_table3')
 ### Table 4
 
 
+tab4 <- ddply(data  , .(instanceID , Role , Province) , 
+              function(data){
+                nrow(data[data$variable == 'Per Diem' , ])
+              })
+
+tab4 <- dcast(tab4 , Role ~ Province + V1)
+output.table(tab4 , 'joint_report_table4')
+
+### Table 5
+
+tab5 <- ddply(data  , .(instanceID , Province , Role) , 
+              function(data){
+                nrow(data[data$variable == 'Prime Partenaire' , ])
+              })
+tab5 <- dcast(tab5 , Role ~ Province + V1)
+output.table(tab5 , 'joint_report_table5')
+
+
+#Table 6
+
+iga <- read.csv('data/questionnaires_analysis/loop_activ_non_sante_select.csv')
+
+iga <- merge(indiv , iga , by.x = 'instanceID' , by.y = 'PARENT_KEY' , all = TRUE)
+
+iga <- subset(iga , instanceID %in% data$instanceID)
+
+iga$ActNonSanteType <- as.character(iga$ActNonSanteType)
+
+iga$ActNonSanteType[iga$ActNonSanteType %in% c('Agriculture-elevage-peche-chasse' ,
+                                               'agriculture_elevage')] <- 'Agriculture, élevage, chasse'
+iga$ActNonSanteType[iga$ActNonSanteType %in% c('autre', 'Autres')] <- 'Autre'
+iga$ActNonSanteType[iga$ActNonSanteType %in% c('location maison', 'location_maison')] <- 
+  'location maison'
+iga$ActNonSanteType[iga$ActNonSanteType %in% c('negoce-commerce', 'negoce_commerce')] <- 
+  'Négoce, Commerce'
+iga$ActNonSanteType[iga$ActNonSanteType %in% c('location moyens de transport', 'taxi')] <- 
+  'Taxi'
 
 
 
-
+tab6 <- as.data.frame(table(iga$ActNonSanteType))
+output.table(tab6 , 'joint_report_table6')
