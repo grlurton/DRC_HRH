@@ -95,7 +95,7 @@ output.table(tab4 , 'joint_report_table4')
 
 tab5 <- ddply(data  , .(instanceID , Province , Role) , 
               function(data){
-                nrow(data[data$variable == 'Prime Partenaire' , ])
+                nrow(data[data$variable == 'Prime de Partenaire' , ])
               })
 tab5 <- dcast(tab5 , Role ~ Province + V1)
 output.table(tab5 , 'joint_report_table5')
