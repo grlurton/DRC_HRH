@@ -360,7 +360,7 @@ output.table(heat_complete , 'revenue_type_prevalence')
 
 
 
-### Modelling
+### Modelling #####
 
 modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + FacOwnership + 
              FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + RoleInit + 
@@ -370,8 +370,8 @@ modelData <- dcast(total_revenu , formula = instanceID + Structure + FacLevel + 
              )
 
 
-revs <- c("ActNonSante" , "ActPrivee" , "AutreRevenu" , "Honoraire" , "Informel" , "PerDiem"  ,  
-          "PrimeRisque" , "PrimesPartenaires" , "Salaire")
+revs <- c("ActPrivee" , "ActNonSante" , "HeureSup" , "Informel" , "PerDiem"  , "PrimesPartenaires" ,  
+          "PrimeRisque"  , "PrimeLocale" , "Salaire"  )
 
 colnames(modelData) <- c("instanceID" , "Structure" , "FacLevel" , "FacOwnership" ,
                          "FacAppui" , "FacRurban" , "EczAppui" , "Province" , 
@@ -403,8 +403,6 @@ covs_ecz <- paste(covs_indiv , covs_ecz ,  sep = "+")
 
 models_ecz <- list()
 models_fac <- list()
-
-modelData$Province <- as.character(modelData$Province)
 
 sink('output/models_logistics.txt')
 for(i in 1:length(revs)){
@@ -531,9 +529,11 @@ sink()
 
 
 count_prim_part <- subset(count_rev , RevenueEntry == 'Prime de Partenaire')
-count_prim_part <- merge(count_prim_part  ,dumm , all.y = TRUE)
+count_prim_part <- merge(count_prim_part  , dumm , all.y = TRUE)
 count_prim_part$Number[is.na(count_prim_part$Number)] <- 0
 
+
+  
 sink('output/models_count_prime_partenaire.txt')
 print('Running Prime Partenaire model for facilities')
 model_fit_fac <- glmer(make_formula('Number' , covs_hgrcs ) , family = poisson ,
@@ -559,39 +559,36 @@ output.table(tab_prim_part , 'distribution_prime_partenaire')
 
 
 
-#### Counterfactual Analysis
+#### Counterfactual Analysis #####
 
 library(arm)
 
 
-compute_link <- function(data , betas){
-  adm.ecz <- data$administrateur_gestionnaire*data$ecz
-  ecz.autre <- data$autre*data$ecz
-  infirmier.hgrcs <- data$infirmier*data$hgrcs
-  infirmier_sup.ecz <- data$ecz*data$infirmier_superviseur
-  hgrcs.labo <- data$hgrcs*data$labo
-  hgrcs.medecin <- data$hgrcs*data$medecin
-  ecz.mcz <- data$ecz*data$mcz
-  hgrcs.pharmacien <- data$hgrcs*data$pharmacien
-  hgrcs.administrateur <- data$hgrcs*data$administrateur
-  hgrcs.autre <- data$hgrcs*data$autre
+
+compute_link <- function(data , betas, hierarchic){
   fix <- betas[[1]]
   rand <- betas[[2]]
-  out <-  fix[,1] + 
-    fix[,2]*(data$GroupDemographics.IndivSex == 'Homme') + fix[,3]*data$GroupDemographics.IndivAge +
-    fix[,4]*(data$FacRurban == 'urbain') + fix[,5]*(data$FacAppui == 'oui') +   
-    fix[,6]*(data$LastEducation == 'a3') + fix[,7]*(data$LastEducation == 'autre') +
-    fix[,8]*(data$LastEducation == 'medecin-pharma-etudesup') + 
-    fix[,9]*(data$FacLevel == 'ecz') + fix[,10]*(data$FacLevel == 'hgr') + 
-    fix[,11]*data$Power +
-    fix[,12]*hgrcs.administrateur + fix[,13]*hgrcs.autre + fix[,14]*infirmier.hgrcs +
-    fix[,15]*hgrcs.labo + fix[,16]*hgrcs.medecin + fix[,17]*hgrcs.pharmacien
-  fix[,18]*adm.ecz + fix[,19]*ecz.autre + 
-    fix[,20]*infirmier_sup.ecz + fix[,21]*ecz.mcz + 
-    rand[,2]*(data$Province == 'bandundu') +
-    rand[,3]*(data$Province == 'equateur') +
-    rand[,4]*(data$Province == 'katanga') +
-    rand[,5]*(data$Province == 'sud_kivu')
+  randeffect <- 0
+  fixeffect <-  fix[,1] + 
+    fix[,2]*(data$Sex == 'Homme') + fix[,3]*data$Age + 
+    fix[,4]*(data$LastEducation == 'a3') + fix[,5]*(data$LastEducation == 'autre') + 
+    fix[,6]*(data$LastEducation == 'medecin-pharma-etudesup') +
+    fix[,7]*(data$Role == 'autre') + fix[,8]*(data$Role == 'infirmier') +
+    fix[,9]*(data$Role == 'labo') + fix[,10]*(data$Role == 'medecin') +
+    fix[,11]*(data$Role == 'pharmacien') + 
+    fix[,12]*(data$FacLevel == 'csr') + fix[,13]*(data$FacLevel == 'hgr') +
+    fix[,14]*(data$FacOwnership == 'privee') + fix[,15]*(data$FacOwnership == 'publique') +
+    fix[,15]*(data$FacRurban == 'urbain') + 
+    fix[,16]*data$FacMotivation +
+    fix[,17]*data$Power
+  
+  if(hierarchic == TRUE){
+    randeffect <- rand[,2]*(data$Province == 'bandundu') +
+      rand[,3]*(data$Province == 'equateur') +
+      rand[,4]*(data$Province == 'katanga') +
+      rand[,5]*(data$Province == 'sud_kivu')
+  }
+  out <- fixeffect + randeffect
   out
 }
 
@@ -609,28 +606,26 @@ generate_betas <- function(result_model , n){
   list(betas_fix , betas_rand)
 }
 
-
-compute_generated_links <- function(result_model , n , data){
+compute_generated_links <- function(result_model , n , data , hierarc){
   aa <- generate_betas(result_model , n)
-  compute_link(data , aa)  
+  compute_link(data , aa , hierarc)  
 }
 
-
-simulateLogit <- function(result_model , n , data){
-  invlogit(compute_generated_links(result_model , n , data)  )
+simulateLogit <- function(result_model , n , data , hierarc){
+  invlogit(compute_generated_links(result_model , n , data , hierarc)  )
 }
 
-amount_predict <- function(result_model , n , data){
-  exp(compute_generated_links(result_model , n , data))
+amount_predict <- function(result_model , n , data , hierarc){
+  exp(compute_generated_links(result_model , n , data , hierarc))
 }
 
-```
-
-
-```{r}
 quantile_to_plot <- function(outputs){
   quantile(outputs , probs = c(0.025 , 0.5 , 0.975))  
 }
+
+
+
+######### Make Counterfactuals ###########
 
 counterfac_by_province <- function(counterfac){
   list(bandundu = data.frame(counterfac , Province = 'bandundu') ,
@@ -640,33 +635,41 @@ counterfac_by_province <- function(counterfac){
   )
 }
 
+###Create base scenario
 
-```
-
-
-
-```{r ,warning=FALSE}
-
-###Create scenarios
-
-scenario_0_cs <-data.frame(administrateur_gestionnaire = 0 ,
-                           autre = 0 , 
-                           infirmier = 0 ,
-                           labo = 0 ,
-                           medecin = 0 ,
-                           mcz = 0 ,
-                           pharmacien = 0 ,
-                           FacRurban = 'rural' , 
-                           FacAppui = 'non' ,
-                           infirmier_superviseur = 0 ,
+scenario_0_cs <-data.frame(Role = 'administrateur' ,
+                           FacRurban = 'rural' ,
                            Power = 0,
-                           GroupDemographics.IndivSex = 'Homme' ,
-                           GroupDemographics.IndivAge = 40 , 
+                           Sex = 'Homme' ,
+                           Age = 40 , 
                            LastEducation = 'autre' , 
-                           FacLevel = 'cs'  , 
-                           ecz = 0 ,
-                           hgrcs = 1 ,
-                           post = 'administrateur')
+                           FacLevel = 'cs' ,
+                           FacOwnership = 'publique' ,
+                           FacMotivation = 0)
+
+
+simulateLogit(model_fit_fac , 1000 , scenario_0_cs , TRUE)
+
+
+scenario_0_cs <-data.frame(Role = 'administrateur' ,
+                           FacRurban = 'rural' ,
+                           Power = 0,
+                           Sex = '' ,
+                           Age = 40 , 
+                           LastEducation = 'autre' , 
+                           FacLevel = 'cs' ,
+                           FacOwnership = 'publique' ,
+                           FacMotivation = 0 , 
+                           Province = 'bandundu')
+
+
+qplot(simulateLogit(model_fit_fac , 1000 , scenario_0_cs , TRUE))
+
+
+
+
+
+
 
 scenario_0_hgr <- scenario_0_cs
 scenario_0_hgr$FacLevel <- 'hgr'
@@ -675,6 +678,10 @@ scenario_0_ecz <- scenario_0_cs
 scenario_0_ecz$FacLevel <- 'ecz'
 scenario_0_ecz$ecz <- 1
 scenario_0_ecz$hgrcs <- 0
+
+
+
+
 
 ###
 
@@ -817,76 +824,3 @@ plot_df_Salaire_prob <- make_plot_df(counterfacts_province , simulateLogit , pro
 plot_df_pdr_prob <- make_plot_df(counterfacts_province , simulateLogit , prob_pdr , 10000 , 'prime de risque')
 plot_df_hon_amount <- make_plot_df(counterfacts_province , amount_predict , amount_honoraire , 10000 , 'honoraire')
 plot_df_primePart_amount <- make_plot_df(counterfacts_province , amount_predict , amount_prime , 10000 , 'top up')
-```
-
-
-```{r, fig.width=10}  
-
-plot1 <- subset(plot_df_Salaire_prob , FacAppui == 'non')
-ggplot(plot1, aes(x=mean, y =  post , col = factor(autorite))) +
-  geom_point() + geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .2)) +
-  xlim(c(0,1)) + theme_bw() +
-  xlab("Probabilité qu'un agent recoive un salaire") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free_y'  )
-
-plot2 <- subset(plot_df_Salaire_prob , autorite == 0)
-ggplot(plot2, aes(x=mean, y =  post , col = factor(FacAppui))) +
-  geom_point() + geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .2)) +
-  xlim(c(0,1)) + theme_bw() +
-  xlab("Probabilité qu'un agent recoive un salaire") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free_y'  )
-
-plot3 <- subset(plot_df_pdr_prob , FacAppui == 'non')
-ggplot(plot3, aes(x=mean, y =  post , col = factor(autorite)))+
-  geom_point() +
-  geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .1)) +
-  xlim(c(0,1)) + theme_bw() +
-  xlab("Probabilité qu'un agent recoive une prime de risque") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free_y'  )
-
-plot4 <- subset(plot_df_pdr_prob , autorite == 0)
-ggplot(plot4, aes(x=mean, y =  post , col = factor(FacAppui))) +
-  geom_point() + geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .2)) +
-  xlim(c(0,1)) + theme_bw() +
-  xlab("Probabilité qu'un agent recoive un salaire") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free_y'  )
-
-
-plot5 <- subset(plot_df_hon_amount , FacAppui == 'non' & autorite == 0)
-ggplot(plot5, aes(x=mean, y =  post)) +
-  geom_point() +
-  geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .1)) +
-  theme_bw() +
-  xlab("Montant d'honoraire recu") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free'  )
-
-plot6 <- subset(plot_df_hon_amount , autorite == 0)
-ggplot(plot6, aes(x=mean, y =  post , col = factor(FacAppui))) +
-  geom_point() + geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .2)) +
-  theme_bw() +
-  xlab("Montant d'honoraire recu") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free'  )
-
-
-plot7 <- subset(plot_df_primePart_amount , FacAppui == 'non' & autorite == 0)
-ggplot(plot5, aes(x=mean, y =  post)) +
-  geom_point() +
-  geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .1)) +
-  theme_bw() +
-  xlab("Montant de prime partenaires recus") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free'  )
-
-plot8 <- subset(plot_df_primePart_amount , autorite == 0)
-ggplot(plot6, aes(x=mean, y =  post , col = factor(FacAppui))) +
-  geom_point() + geom_errorbarh(aes(xmax = q1, xmin = q9 , height = .2)) +
-  theme_bw() +
-  xlab("Montant de prime partenaires recus") +
-  ylab("") +
-  facet_grid(prov ~ facility , scales = 'free'  )
