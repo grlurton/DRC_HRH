@@ -1,7 +1,7 @@
 "","Role","bandundu_Femme","bandundu_Homme","equateur_Femme","equateur_Homme","katanga_Femme","katanga_Homme","sud_kivu_Femme","sud_kivu_Homme"
-"1","administrateur",2,7,3,1,5,6,5,7
-"2","autre",33,60,4,7,21,18,22,19
-"3","infirmier",152,175,45,117,100,90,76,125
-"4","labo",6,16,1,7,10,18,2,26
-"5","medecin",0,6,1,4,1,20,1,2
-"6","pharmacien",4,2,9,1,9,6,3,16
+"1","administrateur",2,7,3,1,4,3,5,7
+"2","autre",31,57,4,7,17,11,21,18
+"3","infirmier",143,171,45,117,82,75,75,123
+"4","labo",5,14,1,7,5,16,2,24
+"5","medecin",0,6,1,4,1,15,1,2
+"6","pharmacien",3,2,9,1,8,6,3,16
