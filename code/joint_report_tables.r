@@ -5,10 +5,18 @@ stage <- 'modelisation'
 source('code/useful_functions.r')
 
 
-data <- subset(total_revenu , FacilityType %in% c('cs' , 'csr') & !(FacOwnership == 'privee'))
+data <- subset(total_revenu , FacilityType %in% c('cs' , 'csr')
+               & !(FacOwnership == 'privee')
+               )
 
 data$variable[data$variable %in% c("Activité non santé" , "Autres revenus")] <- "Autres revenus"
 data$variable[data$variable %in% c('Cadeau'  , 'Vente de Medicament')] <- 'Informel'
+
+
+facil_data <- subset(facilities , Structure %in% data$Structure & FacLevel != 'hgr')
+
+facsDesc <- ddply(facil_data , .(Province , FacLevel) ,
+                  function(x) table(x$FacRurban))
 
 ##### Table 1
 
