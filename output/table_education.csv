@@ -1,0 +1,15 @@
+,Var1,,administrateur,administrateur_gestionnaire,autre,infirmier,infirmier_superviseur,labo,medecin,medecin_chef_zone,pharmacien
+1,,0,0,1,1,10,0,0,1,0,1
+2,autre,1,13,0,170,28,6,18,0,0,23
+3,diplome_etudes_superieures,0,2,1,6,2,1,1,1,4,2
+4,gestion_administration,0,37,29,3,1,0,0,0,0,0
+5,gestion_administration autre,0,0,1,0,0,0,0,0,0,0
+6,infirmiere_a1,5,3,1,19,393,18,17,0,0,14
+7,infirmiere_a2,2,4,2,15,373,8,14,0,0,9
+8,infirmiere_a3,1,1,0,16,247,0,15,0,0,6
+9,infirmiere_ao,1,1,0,6,30,7,1,0,0,2
+10,medecin_generaliste,7,1,0,0,1,0,0,85,16,0
+11,medecin_generaliste medecin_specialiste,0,0,0,0,0,0,0,1,0,0
+12,medecin_specialiste,1,1,0,1,0,0,0,8,2,0
+13,pharmacien,1,0,0,1,1,1,0,0,0,7
+14,technicien_labo,0,0,0,0,0,0,41,0,0,0

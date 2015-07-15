@@ -1,10 +1,8 @@
-"","Role","Salaire","Prime de Risque","Prime de Partenaire","Per Diem","Prime Locale","Heures supplémentaires","Activité  Privée","Activité non santé","Informel"
-"1","medecin",70.718008412625,282.19172602706,27.9248825510505,31.9512514035262,215.450188357755,10.4403718231356,46.9898333992556,73.6511754080546,28.1226131773062
-"2","infirmier",8.98591299867121,9.25116449205309,8.77689880008305,8.0380351132873,34.8725576030935,0.413058543351478,2.47130920186197,20.2208814935708,7.72857828707211
-"3","pharmacien",13.2530899286246,11.4561139389188,7.03766245423834,5.61696474501795,40.8910108902384,0.558020253847695,1.98820501018125,26.9905842879319,3.00466485069779
-"4","labo",18.0161894607257,8.43939097697325,10.7513181064605,7.05183439157504,45.6210348691328,0.675302927132666,3.30821685448684,20.8797147278096,7.3499915463029
-"5","administrateur",14.2123723172155,14.5026445982623,11.2156123554559,5.56052496398163,78.6523698630085,0.906241029057173,2.5598122405037,30.5545316357611,8.21183899242051
-"6","medecin_chef_zone",21.8468928706197,464.798248639148,83.5980037663433,60.9073737157716,70.1357455870618,5.54484034063056,18.6602929988082,92.8567571480909,49.456106399759
-"7","infirmier_superviseur",27.3907679066295,30.425059864162,50.1389316470646,33.9542660858292,30.1825553472686,0,7.17675649521531,38.1933435420923,10.9216705021322
-"8","administrateur_gestionnaire",6.18274871408191,21.3910480333426,34.142896508164,20.6993452036825,45.1676296368782,0,0.938751817585675,30.8821950793767,8.01864250056834
-"9","autre",6.58525787902189,6.44144581353369,7.76675855988122,6.24815582771017,30.873206693584,0.118243737729181,0.937279419559977,23.8277285996809,7.0150328950844
+"","Role","Salaire","Prime de Risque","Prime de Partenaire","Per Diem","Prime Locale","Activité  Privée","Activité non santé","Informel"
+"1","",NA,NA,NA,NA,NA,NA,NA,NA
+"2","administrateur","Admin (FoSa)","Admin (FoSa)","Admin (FoSa)","Admin (FoSa)","Admin (FoSa)","Admin (FoSa)","Admin (FoSa)","Admin (FoSa)"
+"3","autre","Autre","Autre","Autre","Autre","Autre","Autre","Autre","Autre"
+"4","infirmier","Infirmier (Fosa)","Infirmier (Fosa)","Infirmier (Fosa)","Infirmier (Fosa)","Infirmier (Fosa)","Infirmier (Fosa)","Infirmier (Fosa)","Infirmier (Fosa)"
+"5","labo","Tech Labo","Tech Labo","Tech Labo","Tech Labo","Tech Labo","Tech Labo","Tech Labo","Tech Labo"
+"6","medecin","Médecin (FoSa)","Médecin (FoSa)","Médecin (FoSa)","Médecin (FoSa)","Médecin (FoSa)","Médecin (FoSa)","Médecin (FoSa)","Médecin (FoSa)"
+"7","pharmacien","Pharm. / prep Pharm.","Pharm. / prep Pharm.","Pharm. / prep Pharm.","Pharm. / prep Pharm.","Pharm. / prep Pharm.","Pharm. / prep Pharm.","Pharm. / prep Pharm.","Pharm. / prep Pharm."
