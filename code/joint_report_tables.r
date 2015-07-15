@@ -6,7 +6,7 @@ source('code/useful_functions.r')
 
 
 data <- subset(total_revenu , FacilityType %in% c('cs' , 'csr')
-               & !(FacOwnership == 'privee')
+               & !(FacOwnership == 'privee' & variable != "Heures supplémentaires")
                )
 
 data$variable[data$variable %in% c("Activité non santé" , "Autres revenus")] <- "Autres revenus"
@@ -147,3 +147,139 @@ iga$ActNonSanteType[iga$ActNonSanteType %in% c('location moyens de transport', '
 
 tab6 <- as.data.frame(table(iga$ActNonSanteType))
 output.table(tab6 , 'joint_report_table6')
+
+
+
+### Additional Graphs #####
+
+##Ordering Revenues
+rev_type <- read.csv('data/revenues_entry.csv')
+rev_type <- subset(rev_type , select = c(RevenueLabel , RevenueEntry))
+rev_type$RevenueLabel <- as.character(rev_type$RevenueLabel)
+rev_type$RevenueEntry <- as.character(rev_type$RevenueEntry)
+
+rev_type$RevenueEntry <- substr(rev_type$RevenueEntry , 1 , nchar(rev_type$RevenueEntry) - 2)
+
+
+total_revenu <- merge(data , rev_type , 
+                      by.x = 'variable' , by.y = 'RevenueLabel' , all.x = TRUE)
+
+
+total_revenu$RevenueEntry <- total_revenu$variable
+total_revenu$RevenueEntry[total_revenu$variable %in% c('Cadeau' , 'Vente de Medicament')] <- 'Informel' 
+total_revenu$RevenueEntry[total_revenu$variable %in% c("Autres revenus")] <- 'Activité non santé' 
+
+
+
+orderedIncome <- c('Salaire' , 'Prime de Risque' , 'Prime de Partenaire' , 'Per Diem' , 
+                   'Prime Locale' , 'Activité  Privée' , 
+                   'Activité non santé' , "Informel")
+
+
+percent_revenu <- function(data , total){
+  sum(data$value) / total
+}
+
+distrib_data <- ddply(total_revenu , .(Role, instanceID) , 
+                      function(data){
+                        total <- sum(data$value)
+                        out <- ddply(data , .(RevenueEntry) ,
+                                     function(x) percent_revenu(x , total))
+                        out
+                      })
+
+exclude <- distrib_data$instanceID[distrib_data$RevenueEntry == 'Informel' & 
+                                     distrib_data$V1 == 1]
+
+total_revenu <- subset(total_revenu , !(instanceID %in% exclude))
+
+
+distrib_data$RevenueEntry <- factor(distrib_data$RevenueEntry ,
+                                    levels = orderedIncome , 
+                                    ordered = TRUE )
+
+revenue_median <- ddply(total_revenu , .(Role) , 
+                        function(x){
+                          total <- ddply(x , .(instanceID),
+                                         function(x){
+                                           sum(x$value)
+                                         }
+                          )
+                          median(total$V1)
+                        }
+)
+
+
+distrib_data <- subset(distrib_data , !is.na(Role))
+revenue_median <- subset(revenue_median , !is.na(Role))
+
+colnames(revenue_median) <- c('Role' , 'median')
+
+distrib_data_grid <- data.frame(RevenueEntry = orderedIncome , dumm = 'dummy')
+
+distrib_data_explode <- ddply(distrib_data , .(instanceID) ,
+                              function(x){
+                                out <- merge(x , distrib_data_grid , by = 'RevenueEntry' , all.y = TRUE)
+                                out$Role <- unique(x$Role)
+                                out
+                              }
+)
+
+distrib_data_explode$V1[is.na(distrib_data_explode$V1)] <- 0
+
+distrib_data_explode <- merge(distrib_data_explode , revenue_median ,
+                              by = 'Role' , all.x = TRUE)
+
+distrib_data_explode$amount <- distrib_data_explode$V1 * distrib_data_explode$median
+
+dist_role <- ddply(distrib_data_explode , .(Role , RevenueEntry) , 
+                   function(x) mean(x$amount))
+
+
+trans_frenc <- function(data){
+  data$Role_french_graph[data$Role == 'medecin_chef_zone'] <- 'Médecin (ECZ)'
+  data$Role_french_graph[data$Role == 'medecin'] <- 'Médecin (FoSa)'
+  data$Role_french_graph[data$Role == 'infirmier_superviseur'] <- 'Infirmier (ECZ)'
+  data$Role_french_graph[data$Role == 'administrateur_gestionnaire'] <- 'Admin (ECZ)'
+  data$Role_french_graph[data$Role == 'administrateur'] <- 'Admin (FoSa)'
+  data$Role_french_graph[data$Role == 'labo'] <- 'Tech Labo'
+  data$Role_french_graph[data$Role == 'pharmacien'] <- 'Pharm. / prep Pharm.'
+  data$Role_french_graph[data$Role == 'infirmier'] <- 'Infirmier (Fosa)'
+  data$Role_french_graph[data$Role == 'autre'] <- 'Autre'
+  data
+}
+
+revenue_median <- trans_frenc(revenue_median)
+dist_role <- trans_frenc(dist_role)
+
+ord_st <- revenue_median$Role_french_graph[order(revenue_median$median)]
+dist_role$Role_french_graph <- factor(dist_role$Role_french_graph ,
+                                      levels = ord_st ,
+                                      ordered = TRUE)
+
+dist_role <- subset(dist_role , !is.na(dist_role$Role_french_graph))
+
+pdf('output/graphs/median_income_distribution_JR.pdf' , width = 14)
+qplot(data = dist_role , y = V1 , x = Role_french_graph , fill = RevenueEntry , 
+      geom = 'bar' , position = 'stack' ,
+      stat = 'identity') +
+  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type de revenu') + 
+  coord_flip() + 
+  xlab('') + ylab('Revenu median')
+
+qplot(data = dist_role , y = V1 , x = Role , fill = RevenueEntry , geom = 'bar' , position = 'stack' ,
+      stat = 'identity') +
+  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type de revenu') + 
+  xlab('') + ylab('Median Income') + 
+  labs(title = "Median income and average distribution") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+dev.off()
+
+dist_role_table <- dcast(dist_role , formula = Role_french_graph ~ RevenueEntry , value.var = 'V1')
+
+
+output.table(dist_role_table , 'median_revenue_composition_JR')
+
+
+
+
+#####

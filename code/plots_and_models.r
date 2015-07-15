@@ -6,7 +6,13 @@ source('code/useful_functions.r')
 
 
 total_revenu <- subset(total_revenu , Role != '' & variable != "Autres revenus")
-RevSum <- ddply(total_revenu , .(instanceID , variable , Role , FacilityType) ,  function(x) sum(x$value))
+
+total_revenu$FacSimple <- 'facility'
+total_revenu$FacSimple[total_revenu$FacilityType == 'ecz'] <- 'ecz'
+
+
+RevSum <- ddply(total_revenu , .(instanceID , variable , Role , FacilityType) ,  
+                function(x) sum(x$value))
 RevTot <- ddply(total_revenu , .(instanceID) ,  function(x) sum(x$value))
 
 ##Ordering Individuals
@@ -246,28 +252,39 @@ distrib_data_explode$amount <- distrib_data_explode$V1 * distrib_data_explode$me
 dist_role <- ddply(distrib_data_explode , .(Role , RevenueEntry) , 
                    function(x) mean(x$amount))
 
-ord_st <- revenue_median$Role[order(revenue_median$median)]
 
+trans_frenc <- function(data){
+  data$Role_french_graph[data$Role == 'medecin_chef_zone'] <- 'Médecin (ECZ)'
+  data$Role_french_graph[data$Role == 'medecin'] <- 'Médecin (FoSa)'
+  data$Role_french_graph[data$Role == 'infirmier_superviseur'] <- 'Infirmier (ECZ)'
+  data$Role_french_graph[data$Role == 'administrateur_gestionnaire'] <- 'Admin (ECZ)'
+  data$Role_french_graph[data$Role == 'administrateur'] <- 'Admin (FoSa)'
+  data$Role_french_graph[data$Role == 'labo'] <- 'Tech Labo'
+  data$Role_french_graph[data$Role == 'pharmacien'] <- 'Pharm. / prep Pharm.'
+  data$Role_french_graph[data$Role == 'infirmier'] <- 'Infirmier (Fosa)'
+  data$Role_french_graph[data$Role == 'autre'] <- 'Autre'
+  data
+  }
 
-dist_role$Role <- factor(dist_role$Role ,
-                         levels = ord_st , 
-                         ordered = TRUE)
+revenue_median <- trans_frenc(revenue_median)
+dist_role <- trans_frenc(dist_role)
+
+ord_st <- revenue_median$Role_french_graph[order(revenue_median$median)]
+dist_role$Role_french_graph <- factor(dist_role$Role_french_graph ,
+                                      levels = ord_st ,
+                                      ordered = TRUE)
 
 pdf('output/graphs/median_income_distribution.pdf' , width = 14)
-qplot(data = dist_role , y = V1 , x = Role , fill = RevenueEntry , geom = 'bar' , position = 'stack' ,
+qplot(data = dist_role , y = V1 , x = Role_french_graph , fill = RevenueEntry , 
+      geom = 'bar' , position = 'stack' ,
       stat = 'identity') +
-  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type of Income') + 
+  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type de revenu') + 
   coord_flip() + 
-  xlab('') + ylab('Median Income') + 
-  labs(title = "Median income and average distribution")
-
-dist_role$Role <- factor(dist_role$Role ,
-                         levels = rev(ordering_staff) , 
-                         ordered = TRUE)
+  xlab('') + ylab('Revenu median')
 
 qplot(data = dist_role , y = V1 , x = Role , fill = RevenueEntry , geom = 'bar' , position = 'stack' ,
       stat = 'identity') +
-  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type of Income') + 
+  theme_bw() + scale_fill_brewer(palette="Set1", name = 'Type de revenu') + 
   xlab('') + ylab('Median Income') + 
   labs(title = "Median income and average distribution") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 dev.off()
