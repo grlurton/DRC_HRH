@@ -38,42 +38,42 @@ FacMotivationTRUE                     0.2541248  0.3139819   0.809
 Power                                 0.0200259  0.2731345   0.073
 
 Correlation of Fixed Effects:
-            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
-SexHomme    -0.275                                                                                                            
-Age         -0.157 -0.076                                                                                                     
-LastEductn3 -0.036  0.098 -0.002                                                                                              
-LastEdctntr -0.041  0.028  0.040  0.067                                                                                       
-LstEdctnm-- -0.306 -0.046 -0.023 -0.037 -0.032                                                                                
-Roleautre   -0.750  0.039  0.009 -0.032 -0.320  0.325                                                                         
-Roleinfirmr -0.887  0.106 -0.001 -0.101 -0.023  0.353  0.833                                                                  
-Rolelabo    -0.728 -0.006 -0.135 -0.088 -0.136  0.344  0.770  0.849                                                           
-Rolemedecin -0.464  0.069  0.044 -0.039 -0.012 -0.554  0.425  0.515  0.423                                                    
-Rolepharmcn -0.533  0.179  0.005  0.042  0.031 -0.276  0.428  0.517  0.418  0.652                                             
-FacLevelcsr -0.203  0.041  0.114  0.024 -0.022  0.166  0.144  0.081  0.110 -0.035 -0.026                                      
-FacLevelhgr -0.020 -0.045  0.111  0.122  0.052  0.018 -0.066 -0.045 -0.055 -0.096 -0.025  0.198                               
-FcOwnrshppr -0.185 -0.073  0.145  0.002 -0.056 -0.033  0.036  0.065  0.040  0.128  0.023  0.116  0.084                        
-FcOwnrshppb -0.343  0.068  0.051 -0.008 -0.032  0.052  0.076  0.083  0.094  0.045  0.092  0.169 -0.120  0.461                 
-FacRurbnrbn -0.130  0.078 -0.074  0.212  0.237 -0.133 -0.103 -0.083 -0.160 -0.028  0.143 -0.052 -0.064 -0.155       0.166     
-FcMtvtnTRUE -0.016  0.004 -0.215 -0.020  0.133 -0.052 -0.136 -0.069 -0.115 -0.027  0.047 -0.175 -0.156  0.021       0.077     
-Power        0.058 -0.217 -0.020  0.225  0.052 -0.069 -0.066 -0.169 -0.058 -0.138  0.001  0.023  0.156 -0.100       0.049     
-            FcRrbn FMTRUE
-SexHomme                 
-Age                      
-LastEductn3              
-LastEdctntr              
-LstEdctnm--              
-Roleautre                
-Roleinfirmr              
-Rolelabo                 
-Rolemedecin              
-Rolepharmcn              
-FacLevelcsr              
-FacLevelhgr              
-FcOwnrshppr              
-FcOwnrshppb              
-FacRurbnrbn              
-FcMtvtnTRUE  0.354       
-Power        0.153  0.081
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr
+SexHomme    -0.275                                                                                                
+Age         -0.157 -0.076                                                                                         
+LastEductn3 -0.036  0.098 -0.002                                                                                  
+LastEdctntr -0.041  0.028  0.040  0.067                                                                           
+LstEdctnm-- -0.306 -0.046 -0.023 -0.037 -0.032                                                                    
+Roleautre   -0.750  0.039  0.009 -0.032 -0.320  0.325                                                             
+Roleinfirmr -0.887  0.106 -0.001 -0.101 -0.023  0.353  0.833                                                      
+Rolelabo    -0.728 -0.006 -0.135 -0.088 -0.136  0.344  0.770  0.849                                               
+Rolemedecin -0.464  0.069  0.044 -0.039 -0.012 -0.554  0.425  0.515  0.423                                        
+Rolepharmcn -0.533  0.179  0.005  0.042  0.031 -0.276  0.428  0.517  0.418  0.652                                 
+FacLevelcsr -0.203  0.041  0.114  0.024 -0.022  0.166  0.144  0.081  0.110 -0.035 -0.026                          
+FacLevelhgr -0.020 -0.045  0.111  0.122  0.052  0.018 -0.066 -0.045 -0.055 -0.096 -0.025  0.198                   
+FcOwnrshppr -0.185 -0.073  0.145  0.002 -0.056 -0.033  0.036  0.065  0.040  0.128  0.023  0.116  0.084            
+FcOwnrshppb -0.343  0.068  0.051 -0.008 -0.032  0.052  0.076  0.083  0.094  0.045  0.092  0.169 -0.120  0.461     
+FacRurbnrbn -0.130  0.078 -0.074  0.212  0.237 -0.133 -0.103 -0.083 -0.160 -0.028  0.143 -0.052 -0.064 -0.155     
+FcMtvtnTRUE -0.016  0.004 -0.215 -0.020  0.133 -0.052 -0.136 -0.069 -0.115 -0.027  0.047 -0.175 -0.156  0.021     
+Power        0.058 -0.217 -0.020  0.225  0.052 -0.069 -0.066 -0.169 -0.058 -0.138  0.001  0.023  0.156 -0.100     
+            FcOwnrshppb FcRrbn FMTRUE
+SexHomme                             
+Age                                  
+LastEductn3                          
+LastEdctntr                          
+LstEdctnm--                          
+Roleautre                            
+Roleinfirmr                          
+Rolelabo                             
+Rolemedecin                          
+Rolepharmcn                          
+FacLevelcsr                          
+FacLevelhgr                          
+FcOwnrshppr                          
+FcOwnrshppb                          
+FacRurbnrbn  0.166                   
+FcMtvtnTRUE  0.077       0.354       
+Power        0.049       0.153  0.081
 [1] "Running model for  ActPrivee in ecz"
 [1] "Running model for  ActNonSante in facilities"
 Linear mixed model fit by REML ['lmerMod']
@@ -95,7 +95,7 @@ Number of obs: 701, groups:  Province, 4
 
 Fixed effects:
                                        Estimate Std. Error t value
-(Intercept)                           3.7173087  0.4334736   8.576
+(Intercept)                           3.7173087  0.4334737   8.576
 SexHomme                              0.1868098  0.1009399   1.851
 Age                                   0.0001456  0.0001822   0.799
 LastEducationa3                      -0.2129061  0.1238630  -1.719
@@ -115,42 +115,42 @@ FacMotivationTRUE                     0.0454209  0.1255421   0.362
 Power                                 0.2799284  0.1296635   2.159
 
 Correlation of Fixed Effects:
-            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
-SexHomme    -0.212                                                                                                            
-Age          0.004 -0.047                                                                                                     
-LastEductn3 -0.107 -0.015 -0.080                                                                                              
-LastEdctntr -0.326  0.004  0.022  0.172                                                                                       
-LstEdctnm-- -0.084 -0.042 -0.006  0.060  0.097                                                                                
-Roleautre   -0.547  0.023  0.015  0.021 -0.004  0.073                                                                         
-Roleinfirmr -0.700  0.112 -0.002  0.003  0.448  0.109  0.778                                                                  
-Rolelabo    -0.573  0.000  0.014  0.004  0.293  0.093  0.701  0.798                                                           
-Rolemedecin -0.244  0.043  0.005 -0.029  0.130 -0.792  0.303  0.368  0.302                                                    
-Rolepharmcn -0.573  0.112 -0.003  0.011  0.216 -0.016  0.666  0.751  0.641  0.365                                             
-FacLevelcsr -0.091  0.047 -0.063  0.051 -0.192 -0.002 -0.018 -0.046 -0.004 -0.043 -0.008                                      
-FacLevelhgr -0.189  0.061  0.009  0.142  0.061 -0.047  0.136  0.123  0.159  0.009  0.139  0.272                               
-FcOwnrshppr -0.042  0.011 -0.008 -0.005 -0.042  0.017 -0.072 -0.059 -0.053 -0.058 -0.025  0.113  0.072                        
-FcOwnrshppb -0.147  0.045 -0.031 -0.032 -0.121 -0.002 -0.109 -0.101 -0.073 -0.051 -0.017  0.181  0.028  0.349                 
-FacRurbnrbn -0.163  0.085 -0.027  0.198  0.072  0.041 -0.013  0.022 -0.032 -0.058  0.053  0.137  0.002 -0.160       0.186     
-FcMtvtnTRUE -0.017 -0.038 -0.102 -0.001 -0.053  0.036 -0.102 -0.028 -0.088 -0.028  0.005 -0.039 -0.164  0.000       0.020     
-Power        0.016 -0.280  0.011  0.213  0.006 -0.007  0.015 -0.120  0.012 -0.088 -0.004  0.028  0.163 -0.049      -0.042     
-            FcRrbn FMTRUE
-SexHomme                 
-Age                      
-LastEductn3              
-LastEdctntr              
-LstEdctnm--              
-Roleautre                
-Roleinfirmr              
-Rolelabo                 
-Rolemedecin              
-Rolepharmcn              
-FacLevelcsr              
-FacLevelhgr              
-FcOwnrshppr              
-FcOwnrshppb              
-FacRurbnrbn              
-FcMtvtnTRUE  0.065       
-Power        0.085  0.039
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr
+SexHomme    -0.212                                                                                                
+Age          0.004 -0.047                                                                                         
+LastEductn3 -0.107 -0.015 -0.080                                                                                  
+LastEdctntr -0.326  0.004  0.022  0.172                                                                           
+LstEdctnm-- -0.084 -0.042 -0.006  0.060  0.097                                                                    
+Roleautre   -0.547  0.023  0.015  0.021 -0.004  0.073                                                             
+Roleinfirmr -0.700  0.112 -0.002  0.003  0.448  0.109  0.778                                                      
+Rolelabo    -0.573  0.000  0.014  0.004  0.293  0.093  0.701  0.798                                               
+Rolemedecin -0.244  0.043  0.005 -0.029  0.130 -0.792  0.303  0.368  0.302                                        
+Rolepharmcn -0.573  0.112 -0.003  0.011  0.216 -0.016  0.666  0.751  0.641  0.365                                 
+FacLevelcsr -0.091  0.047 -0.063  0.051 -0.192 -0.002 -0.018 -0.046 -0.004 -0.043 -0.008                          
+FacLevelhgr -0.189  0.061  0.009  0.142  0.061 -0.047  0.136  0.123  0.159  0.009  0.139  0.272                   
+FcOwnrshppr -0.042  0.011 -0.008 -0.005 -0.042  0.017 -0.072 -0.059 -0.053 -0.058 -0.025  0.113  0.072            
+FcOwnrshppb -0.147  0.045 -0.031 -0.032 -0.121 -0.002 -0.109 -0.101 -0.073 -0.051 -0.017  0.181  0.028  0.349     
+FacRurbnrbn -0.163  0.085 -0.027  0.198  0.072  0.041 -0.013  0.022 -0.032 -0.058  0.053  0.137  0.002 -0.160     
+FcMtvtnTRUE -0.017 -0.038 -0.102 -0.001 -0.053  0.036 -0.102 -0.028 -0.088 -0.028  0.005 -0.039 -0.164  0.000     
+Power        0.016 -0.280  0.011  0.213  0.006 -0.007  0.015 -0.120  0.012 -0.088 -0.004  0.028  0.163 -0.049     
+            FcOwnrshppb FcRrbn FMTRUE
+SexHomme                             
+Age                                  
+LastEductn3                          
+LastEdctntr                          
+LstEdctnm--                          
+Roleautre                            
+Roleinfirmr                          
+Rolelabo                             
+Rolemedecin                          
+Rolepharmcn                          
+FacLevelcsr                          
+FacLevelhgr                          
+FcOwnrshppr                          
+FcOwnrshppb                          
+FacRurbnrbn  0.186                   
+FcMtvtnTRUE  0.020       0.065       
+Power       -0.042       0.085  0.039
 [1] "Running model for  ActNonSante in ecz"
 
 Call:
@@ -224,42 +224,42 @@ FacMotivationTRUE                     0.392942   0.288687   1.361
 Power                                 0.741059   0.284797   2.602
 
 Correlation of Fixed Effects:
-            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
-SexHomme    -0.034                                                                                                            
-Age         -0.523 -0.205                                                                                                     
-LastEductn3  0.232  0.224 -0.528                                                                                              
-LastEdctntr -0.363  0.045 -0.210  0.122                                                                                       
-LstEdctnm-- -0.375 -0.125  0.086 -0.012  0.391                                                                                
-Roleautre   -0.430 -0.075  0.184 -0.068 -0.051  0.181                                                                         
-Roleinfirmr -0.772  0.013  0.074 -0.069  0.583  0.426  0.525                                                                  
-Rolelabo    -0.693 -0.177  0.127 -0.088  0.499  0.478  0.514  0.871                                                           
-Rolemedecin -0.380 -0.036  0.072 -0.070  0.182 -0.479  0.359  0.515  0.411                                                    
-Rolepharmcn -0.508  0.188  0.005  0.036  0.152  0.100  0.476  0.640  0.552  0.476                                             
-FacLevelcsr -0.186  0.020 -0.103  0.046  0.326  0.103 -0.352  0.162  0.109 -0.001  0.033                                      
-FacLevelhgr -0.073  0.136 -0.158  0.167 -0.075 -0.025 -0.059  0.023 -0.092 -0.072  0.100  0.177                               
-FcOwnrshppr  0.090  0.010 -0.231  0.084  0.004 -0.442 -0.013 -0.002 -0.132  0.414 -0.003  0.061 -0.017                        
-FcOwnrshppb -0.257 -0.044  0.159 -0.180  0.025 -0.015 -0.118 -0.040  0.003 -0.020 -0.097  0.150 -0.114  0.148                 
-FacRurbnrbn -0.163  0.166 -0.056  0.051 -0.036 -0.027 -0.179 -0.112 -0.159 -0.194 -0.074  0.251  0.222 -0.011       0.425     
-FcMtvtnTRUE -0.071  0.025 -0.125  0.098 -0.051  0.040 -0.024 -0.018 -0.083 -0.115  0.033  0.017  0.149 -0.048       0.081     
-Power        0.079 -0.195 -0.168  0.243  0.005  0.100  0.010 -0.107  0.024 -0.192 -0.060 -0.059  0.112 -0.108       0.021     
-            FcRrbn FMTRUE
-SexHomme                 
-Age                      
-LastEductn3              
-LastEdctntr              
-LstEdctnm--              
-Roleautre                
-Roleinfirmr              
-Rolelabo                 
-Rolemedecin              
-Rolepharmcn              
-FacLevelcsr              
-FacLevelhgr              
-FcOwnrshppr              
-FcOwnrshppb              
-FacRurbnrbn              
-FcMtvtnTRUE  0.473       
-Power        0.100  0.088
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr
+SexHomme    -0.034                                                                                                
+Age         -0.523 -0.205                                                                                         
+LastEductn3  0.232  0.224 -0.528                                                                                  
+LastEdctntr -0.363  0.045 -0.210  0.122                                                                           
+LstEdctnm-- -0.375 -0.125  0.086 -0.012  0.391                                                                    
+Roleautre   -0.430 -0.075  0.184 -0.068 -0.051  0.181                                                             
+Roleinfirmr -0.772  0.013  0.074 -0.069  0.583  0.426  0.525                                                      
+Rolelabo    -0.693 -0.177  0.127 -0.088  0.499  0.478  0.514  0.871                                               
+Rolemedecin -0.380 -0.036  0.072 -0.070  0.182 -0.479  0.359  0.515  0.411                                        
+Rolepharmcn -0.508  0.188  0.005  0.036  0.152  0.100  0.476  0.640  0.552  0.476                                 
+FacLevelcsr -0.186  0.020 -0.103  0.046  0.326  0.103 -0.352  0.162  0.109 -0.001  0.033                          
+FacLevelhgr -0.073  0.136 -0.158  0.167 -0.075 -0.025 -0.059  0.023 -0.092 -0.072  0.100  0.177                   
+FcOwnrshppr  0.090  0.010 -0.231  0.084  0.004 -0.442 -0.013 -0.002 -0.132  0.414 -0.003  0.061 -0.017            
+FcOwnrshppb -0.257 -0.044  0.159 -0.180  0.025 -0.015 -0.118 -0.040  0.003 -0.020 -0.097  0.150 -0.114  0.148     
+FacRurbnrbn -0.163  0.166 -0.056  0.051 -0.036 -0.027 -0.179 -0.112 -0.159 -0.194 -0.074  0.251  0.222 -0.011     
+FcMtvtnTRUE -0.071  0.025 -0.125  0.098 -0.051  0.040 -0.024 -0.018 -0.083 -0.115  0.033  0.017  0.149 -0.048     
+Power        0.079 -0.195 -0.168  0.243  0.005  0.100  0.010 -0.107  0.024 -0.192 -0.060 -0.059  0.112 -0.108     
+            FcOwnrshppb FcRrbn FMTRUE
+SexHomme                             
+Age                                  
+LastEductn3                          
+LastEdctntr                          
+LstEdctnm--                          
+Roleautre                            
+Roleinfirmr                          
+Rolelabo                             
+Rolemedecin                          
+Rolepharmcn                          
+FacLevelcsr                          
+FacLevelhgr                          
+FcOwnrshppr                          
+FcOwnrshppb                          
+FacRurbnrbn  0.425                   
+FcMtvtnTRUE  0.081       0.473       
+Power        0.021       0.100  0.088
 [1] "Running model for  HeureSup in ecz"
 [1] "Running model for  Informel in facilities"
 Linear mixed model fit by REML ['lmerMod']
@@ -267,76 +267,76 @@ Formula: log(Informel) ~ Sex + Age + LastEducation + Role + FacLevel +
     FacOwnership + FacRurban + FacMotivation + Power + (1 | Province)
    Data: data_amount[data_amount$FacLevel != "ecz", ]
 
-REML criterion at convergence: 2428.7
+REML criterion at convergence: 2414
 
 Scaled residuals: 
     Min      1Q  Median      3Q     Max 
--5.1506 -0.5902  0.0650  0.6713  2.6099 
+-5.2162 -0.5991  0.0370  0.6820  2.5828 
 
 Random effects:
  Groups   Name        Variance Std.Dev.
- Province (Intercept) 0.1384   0.372   
- Residual             1.7082   1.307   
+ Province (Intercept) 0.1391   0.373   
+ Residual             1.6721   1.293   
 Number of obs: 711, groups:  Province, 4
 
 Fixed effects:
                                        Estimate Std. Error t value
-(Intercept)                           0.5763017  0.4376341   1.317
-SexHomme                              0.1668948  0.1069777   1.560
-Age                                   0.0005437  0.0011991   0.453
-LastEducationa3                      -0.0022541  0.1392949  -0.016
-LastEducationautre                    0.4721593  0.2079939   2.270
-LastEducationmedecin-pharma-etudesup  0.9155654  0.5163146   1.773
-Roleautre                             0.6350452  0.3483370   1.823
-Roleinfirmier                         0.5468832  0.3662245   1.493
-Rolelabo                              0.4434890  0.3997373   1.109
-Rolemedecin                           0.2180378  0.6532610   0.334
-Rolepharmacien                       -0.1466620  0.4774286  -0.307
-FacLevelcsr                           0.2729649  0.1349307   2.023
-FacLevelhgr                           0.1815309  0.1400414   1.296
-FacOwnershipprivee                   -0.1613392  0.2525020  -0.639
-FacOwnershippublique                  0.2143616  0.1271547   1.686
-FacRurbanurbain                       0.5886532  0.1515488   3.884
-FacMotivationTRUE                    -0.0897158  0.1315852  -0.682
-Power                                 0.4671776  0.1388392   3.365
+(Intercept)                           0.7255479  0.4340317   1.672
+SexHomme                              0.2029401  0.1058408   1.917
+Age                                   0.0004921  0.0011864   0.415
+LastEducationa3                       0.0377528  0.1378141   0.274
+LastEducationautre                    0.5457327  0.2057872   2.652
+LastEducationmedecin-pharma-etudesup  0.9733910  0.5108273   1.906
+Roleautre                             0.4185787  0.3446340   1.215
+Roleinfirmier                         0.3620809  0.3623301   0.999
+Rolelabo                              0.1934971  0.3954878   0.489
+Rolemedecin                          -0.0089244  0.6463146  -0.014
+Rolepharmacien                       -0.3735583  0.4723514  -0.791
+FacLevelcsr                           0.2192390  0.1335166   1.642
+FacLevelhgr                           0.1630673  0.1385572   1.177
+FacOwnershipprivee                   -0.1180849  0.2498337  -0.473
+FacOwnershippublique                  0.2391102  0.1258175   1.900
+FacRurbanurbain                       0.5880408  0.1499859   3.921
+FacMotivationTRUE                    -0.0806647  0.1301916  -0.620
+Power                                 0.4637617  0.1373633   3.376
 
 Correlation of Fixed Effects:
-            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
-SexHomme    -0.233                                                                                                            
-Age         -0.117 -0.019                                                                                                     
-LastEductn3 -0.071 -0.002 -0.081                                                                                              
-LastEdctntr -0.390  0.034  0.016  0.147                                                                                       
-LstEdctnm-- -0.055  0.049  0.022  0.020  0.172                                                                                
-Roleautre   -0.658  0.058 -0.038  0.002  0.092 -0.018                                                                         
-Roleinfirmr -0.817  0.140 -0.002 -0.014  0.475  0.090  0.808                                                                  
-Rolelabo    -0.692  0.018 -0.012  0.018  0.375  0.044  0.730  0.840                                                           
-Rolemedecin -0.393 -0.010  0.002 -0.005  0.131 -0.728  0.448  0.464  0.429                                                    
-Rolepharmcn -0.568  0.072 -0.001  0.030  0.166 -0.235  0.595  0.633  0.566  0.530                                             
-FacLevelcsr -0.114  0.040  0.042  0.047 -0.177  0.022 -0.047 -0.034 -0.029 -0.051  0.018                                      
-FacLevelhgr -0.219  0.067  0.052  0.047  0.055  0.014  0.089  0.115  0.087 -0.023  0.055  0.281                               
-FcOwnrshppr -0.073  0.002  0.059 -0.017 -0.048  0.043 -0.083 -0.045 -0.080 -0.017  0.000  0.179  0.097                        
-FcOwnrshppb -0.183 -0.017  0.025 -0.014 -0.136 -0.065 -0.077 -0.086 -0.063  0.025  0.033  0.215  0.071  0.354                 
-FacRurbnrbn -0.195  0.072 -0.023  0.135  0.056 -0.167  0.017  0.034 -0.016  0.089  0.103  0.112  0.055 -0.103       0.173     
-FcMtvtnTRUE -0.028 -0.035 -0.103 -0.024 -0.068 -0.050 -0.050 -0.033 -0.061  0.013  0.048 -0.091 -0.212 -0.039       0.110     
-Power        0.022 -0.253 -0.050  0.180  0.018 -0.066  0.008 -0.107  0.011 -0.071  0.009 -0.054  0.153 -0.093       0.009     
-            FcRrbn FMTRUE
-SexHomme                 
-Age                      
-LastEductn3              
-LastEdctntr              
-LstEdctnm--              
-Roleautre                
-Roleinfirmr              
-Rolelabo                 
-Rolemedecin              
-Rolepharmcn              
-FacLevelcsr              
-FacLevelhgr              
-FcOwnrshppr              
-FcOwnrshppb              
-FacRurbnrbn              
-FcMtvtnTRUE  0.128       
-Power        0.106  0.014
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr
+SexHomme    -0.233                                                                                                
+Age         -0.117 -0.019                                                                                         
+LastEductn3 -0.071 -0.002 -0.081                                                                                  
+LastEdctntr -0.389  0.034  0.016  0.147                                                                           
+LstEdctnm-- -0.055  0.049  0.022  0.020  0.172                                                                    
+Roleautre   -0.656  0.058 -0.038  0.002  0.092 -0.018                                                             
+Roleinfirmr -0.815  0.140 -0.002 -0.014  0.475  0.090  0.808                                                      
+Rolelabo    -0.690  0.018 -0.012  0.018  0.375  0.044  0.730  0.840                                               
+Rolemedecin -0.392 -0.010  0.002 -0.005  0.131 -0.728  0.448  0.464  0.429                                        
+Rolepharmcn -0.566  0.072 -0.001  0.030  0.166 -0.235  0.595  0.633  0.566  0.530                                 
+FacLevelcsr -0.114  0.040  0.042  0.047 -0.177  0.022 -0.047 -0.034 -0.029 -0.051  0.018                          
+FacLevelhgr -0.218  0.067  0.052  0.047  0.055  0.014  0.089  0.115  0.087 -0.023  0.055  0.281                   
+FcOwnrshppr -0.073  0.002  0.059 -0.017 -0.048  0.043 -0.083 -0.045 -0.080 -0.017  0.000  0.179  0.097            
+FcOwnrshppb -0.182 -0.017  0.025 -0.014 -0.136 -0.065 -0.077 -0.086 -0.063  0.025  0.033  0.216  0.071  0.354     
+FacRurbnrbn -0.194  0.072 -0.023  0.135  0.056 -0.167  0.017  0.034 -0.016  0.089  0.103  0.113  0.055 -0.103     
+FcMtvtnTRUE -0.028 -0.035 -0.103 -0.024 -0.068 -0.050 -0.050 -0.033 -0.061  0.013  0.048 -0.091 -0.212 -0.040     
+Power        0.022 -0.253 -0.050  0.180  0.018 -0.066  0.008 -0.107  0.011 -0.071  0.009 -0.054  0.153 -0.093     
+            FcOwnrshppb FcRrbn FMTRUE
+SexHomme                             
+Age                                  
+LastEductn3                          
+LastEdctntr                          
+LstEdctnm--                          
+Roleautre                            
+Roleinfirmr                          
+Rolelabo                             
+Rolemedecin                          
+Rolepharmcn                          
+FacLevelcsr                          
+FacLevelhgr                          
+FcOwnrshppr                          
+FcOwnrshppb                          
+FacRurbnrbn  0.173                   
+FcMtvtnTRUE  0.110       0.128       
+Power        0.009       0.106  0.014
 [1] "Running model for  Informel in ecz"
 
 Call:
@@ -345,27 +345,27 @@ lm(formula = make_formula(logging, covs_ecz), data = data_amount[data_amount$Fac
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--4.4016 -0.4235  0.0939  0.5369  2.2901 
+-4.5634 -0.6179  0.0510  0.7891  2.2537 
 
 Coefficients: (1 not defined because of singularities)
                                        Estimate Std. Error t value Pr(>|t|)
-(Intercept)                           2.3100260  3.1057537   0.744    0.467
-SexHomme                             -0.4140413  1.2560502  -0.330    0.745
-Age                                   0.0001725  0.0002913   0.592    0.561
-LastEducationautre                    1.2132310  1.2215663   0.993    0.334
-LastEducationmedecin-pharma-etudesup  1.8727623  1.3971672   1.340    0.197
-Roleautre                            -1.1292959  1.0905646  -1.036    0.314
-Roleinfirmier_superviseur             0.6210307  1.2551436   0.495    0.627
+(Intercept)                           3.423e+00  3.180e+00   1.076    0.296
+SexHomme                             -7.485e-01  1.286e+00  -0.582    0.568
+Age                                  -4.595e-06  2.983e-04  -0.015    0.988
+LastEducationautre                    8.439e-01  1.251e+00   0.675    0.508
+LastEducationmedecin-pharma-etudesup  1.534e+00  1.431e+00   1.072    0.298
+Roleautre                            -1.062e+00  1.117e+00  -0.951    0.354
+Roleinfirmier_superviseur             1.535e-01  1.285e+00   0.119    0.906
 Rolemedecin_chef_zone                        NA         NA      NA       NA
-FacRurbanurbain                       0.8778015  1.9400655   0.452    0.656
-FacMotivationTRUE                    -1.0111542  2.9201868  -0.346    0.733
-Provinceequateur                      0.5478685  1.4282305   0.384    0.706
-Provincesud_kivu                     -0.0207540  1.0858480  -0.019    0.985
+FacRurbanurbain                       6.590e-01  1.987e+00   0.332    0.744
+FacMotivationTRUE                    -1.320e+00  2.990e+00  -0.441    0.664
+Provinceequateur                      4.391e-01  1.463e+00   0.300    0.767
+Provincesud_kivu                     -1.046e-01  1.112e+00  -0.094    0.926
 
-Residual standard error: 1.735 on 18 degrees of freedom
+Residual standard error: 1.776 on 18 degrees of freedom
   (92 observations deleted due to missingness)
-Multiple R-squared:  0.4596,	Adjusted R-squared:  0.1594 
-F-statistic: 1.531 on 10 and 18 DF,  p-value: 0.2073
+Multiple R-squared:  0.421,	Adjusted R-squared:  0.09937 
+F-statistic: 1.309 on 10 and 18 DF,  p-value: 0.297
 
 [1] "Running model for  PerDiem in facilities"
 Linear mixed model fit by REML ['lmerMod']
@@ -407,42 +407,42 @@ FacMotivationTRUE                    -8.670e-02  8.850e-02  -0.980
 Power                                 6.410e-01  8.781e-02   7.300
 
 Correlation of Fixed Effects:
-            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
-SexHomme    -0.202                                                                                                            
-Age          0.000 -0.042                                                                                                     
-LastEductn3 -0.105  0.028 -0.079                                                                                              
-LastEdctntr -0.441  0.020  0.016  0.122                                                                                       
-LstEdctnm-- -0.137  0.036  0.000  0.035  0.206                                                                                
-Roleautre   -0.693  0.058  0.002  0.014  0.049  0.063                                                                         
-Roleinfirmr -0.855  0.090  0.000 -0.021  0.508  0.179  0.795                                                                  
-Rolelabo    -0.745 -0.006  0.007  0.021  0.357  0.122  0.754  0.852                                                           
-Rolemedecin -0.347 -0.012  0.004 -0.026  0.125 -0.750  0.380  0.397  0.374                                                    
-Rolepharmcn -0.662  0.053 -0.002 -0.013  0.190  0.013  0.698  0.730  0.674  0.390                                             
-FacLevelcsr -0.067 -0.035 -0.062  0.062 -0.193 -0.003 -0.045 -0.065 -0.048 -0.075  0.009                                      
-FacLevelhgr -0.237 -0.005 -0.014  0.143 -0.001 -0.021  0.196  0.158  0.153 -0.005  0.165  0.252                               
-FcOwnrshppr -0.102  0.031 -0.015  0.072 -0.011  0.042 -0.047 -0.008 -0.031 -0.054 -0.001  0.221  0.131                        
-FcOwnrshppb -0.145 -0.053 -0.025  0.000 -0.128 -0.094 -0.095 -0.103 -0.079  0.017 -0.033  0.234  0.077  0.340                 
-FacRurbnrbn -0.143  0.112 -0.020  0.126  0.100 -0.124 -0.064 -0.010 -0.069  0.088 -0.002  0.094 -0.029 -0.123       0.205     
-FcMtvtnTRUE -0.048  0.003 -0.076  0.007  0.022  0.020 -0.057 -0.004 -0.033 -0.009  0.008 -0.079 -0.076 -0.043       0.011     
-Power        0.020 -0.281  0.011  0.246 -0.017 -0.052  0.002 -0.135  0.013 -0.075  0.004  0.011  0.158 -0.036       0.034     
-            FcRrbn FMTRUE
-SexHomme                 
-Age                      
-LastEductn3              
-LastEdctntr              
-LstEdctnm--              
-Roleautre                
-Roleinfirmr              
-Rolelabo                 
-Rolemedecin              
-Rolepharmcn              
-FacLevelcsr              
-FacLevelhgr              
-FcOwnrshppr              
-FcOwnrshppb              
-FacRurbnrbn              
-FcMtvtnTRUE  0.128       
-Power        0.026  0.007
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr
+SexHomme    -0.202                                                                                                
+Age          0.000 -0.042                                                                                         
+LastEductn3 -0.105  0.028 -0.079                                                                                  
+LastEdctntr -0.441  0.020  0.016  0.122                                                                           
+LstEdctnm-- -0.137  0.036  0.000  0.035  0.206                                                                    
+Roleautre   -0.693  0.058  0.002  0.014  0.049  0.063                                                             
+Roleinfirmr -0.855  0.090  0.000 -0.021  0.508  0.179  0.795                                                      
+Rolelabo    -0.745 -0.006  0.007  0.021  0.357  0.122  0.754  0.852                                               
+Rolemedecin -0.347 -0.012  0.004 -0.026  0.125 -0.750  0.380  0.397  0.374                                        
+Rolepharmcn -0.662  0.053 -0.002 -0.013  0.190  0.013  0.698  0.730  0.674  0.390                                 
+FacLevelcsr -0.067 -0.035 -0.062  0.062 -0.193 -0.003 -0.045 -0.065 -0.048 -0.075  0.009                          
+FacLevelhgr -0.237 -0.005 -0.014  0.143 -0.001 -0.021  0.196  0.158  0.153 -0.005  0.165  0.252                   
+FcOwnrshppr -0.102  0.031 -0.015  0.072 -0.011  0.042 -0.047 -0.008 -0.031 -0.054 -0.001  0.221  0.131            
+FcOwnrshppb -0.145 -0.053 -0.025  0.000 -0.128 -0.094 -0.095 -0.103 -0.079  0.017 -0.033  0.234  0.077  0.340     
+FacRurbnrbn -0.143  0.112 -0.020  0.126  0.100 -0.124 -0.064 -0.010 -0.069  0.088 -0.002  0.094 -0.029 -0.123     
+FcMtvtnTRUE -0.048  0.003 -0.076  0.007  0.022  0.020 -0.057 -0.004 -0.033 -0.009  0.008 -0.079 -0.076 -0.043     
+Power        0.020 -0.281  0.011  0.246 -0.017 -0.052  0.002 -0.135  0.013 -0.075  0.004  0.011  0.158 -0.036     
+            FcOwnrshppb FcRrbn FMTRUE
+SexHomme                             
+Age                                  
+LastEductn3                          
+LastEdctntr                          
+LstEdctnm--                          
+Roleautre                            
+Roleinfirmr                          
+Rolelabo                             
+Rolemedecin                          
+Rolepharmcn                          
+FacLevelcsr                          
+FacLevelhgr                          
+FcOwnrshppr                          
+FcOwnrshppb                          
+FacRurbnrbn  0.205                   
+FcMtvtnTRUE  0.011       0.128       
+Power        0.034       0.026  0.007
 [1] "Running model for  PerDiem in ecz"
 
 Call:
@@ -516,42 +516,42 @@ FacMotivationTRUE                     0.145361   0.092142   1.578
 Power                                 0.736023   0.106899   6.885
 
 Correlation of Fixed Effects:
-            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
-SexHomme    -0.138                                                                                                            
-Age         -0.081 -0.099                                                                                                     
-LastEductn3 -0.063  0.012 -0.106                                                                                              
-LastEdctntr -0.342  0.031  0.003  0.129                                                                                       
-LstEdctnm-- -0.072  0.013  0.010  0.051  0.192                                                                                
-Roleautre   -0.462  0.049 -0.033  0.002  0.178 -0.020                                                                         
-Roleinfirmr -0.575  0.102 -0.005 -0.027  0.569  0.107  0.770                                                                  
-Rolelabo    -0.487 -0.044 -0.015  0.019  0.415  0.082  0.701  0.814                                                           
-Rolemedecin -0.226  0.031  0.000 -0.031  0.133 -0.771  0.410  0.417  0.352                                                    
-Rolepharmcn -0.395  0.023  0.013  0.003  0.195 -0.155  0.606  0.634  0.573  0.453                                             
-FacLevelcsr -0.102 -0.032  0.037  0.060 -0.067  0.052 -0.004  0.056  0.045 -0.041  0.073                                      
-FacLevelhgr -0.151 -0.012  0.022  0.043  0.171 -0.036  0.116  0.161  0.138  0.014  0.135  0.253                               
-FcOwnrshppr -0.079 -0.014  0.065  0.055 -0.028  0.045 -0.023 -0.017 -0.071 -0.054  0.031  0.179  0.039                        
-FcOwnrshppb -0.159 -0.036  0.032  0.025 -0.090  0.014 -0.008 -0.051 -0.007 -0.049  0.049  0.092 -0.084  0.327                 
-FacRurbnrbn -0.107  0.095 -0.049  0.130  0.043 -0.063  0.025  0.009  0.026  0.034 -0.024 -0.092  0.007 -0.078       0.071     
-FcMtvtnTRUE -0.074  0.020 -0.102 -0.007 -0.038 -0.008  0.023  0.003 -0.003  0.019  0.024 -0.122 -0.190 -0.022       0.183     
-Power       -0.023 -0.305  0.012  0.193  0.083  0.004  0.025 -0.090  0.068 -0.120  0.033  0.015  0.260 -0.013       0.024     
-            FcRrbn FMTRUE
-SexHomme                 
-Age                      
-LastEductn3              
-LastEdctntr              
-LstEdctnm--              
-Roleautre                
-Roleinfirmr              
-Rolelabo                 
-Rolemedecin              
-Rolepharmcn              
-FacLevelcsr              
-FacLevelhgr              
-FcOwnrshppr              
-FcOwnrshppb              
-FacRurbnrbn              
-FcMtvtnTRUE  0.152       
-Power        0.087 -0.005
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr
+SexHomme    -0.138                                                                                                
+Age         -0.081 -0.099                                                                                         
+LastEductn3 -0.063  0.012 -0.106                                                                                  
+LastEdctntr -0.342  0.031  0.003  0.129                                                                           
+LstEdctnm-- -0.072  0.013  0.010  0.051  0.192                                                                    
+Roleautre   -0.462  0.049 -0.033  0.002  0.178 -0.020                                                             
+Roleinfirmr -0.575  0.102 -0.005 -0.027  0.569  0.107  0.770                                                      
+Rolelabo    -0.487 -0.044 -0.015  0.019  0.415  0.082  0.701  0.814                                               
+Rolemedecin -0.226  0.031  0.000 -0.031  0.133 -0.771  0.410  0.417  0.352                                        
+Rolepharmcn -0.395  0.023  0.013  0.003  0.195 -0.155  0.606  0.634  0.573  0.453                                 
+FacLevelcsr -0.102 -0.032  0.037  0.060 -0.067  0.052 -0.004  0.056  0.045 -0.041  0.073                          
+FacLevelhgr -0.151 -0.012  0.022  0.043  0.171 -0.036  0.116  0.161  0.138  0.014  0.135  0.253                   
+FcOwnrshppr -0.079 -0.014  0.065  0.055 -0.028  0.045 -0.023 -0.017 -0.071 -0.054  0.031  0.179  0.039            
+FcOwnrshppb -0.159 -0.036  0.032  0.025 -0.090  0.014 -0.008 -0.051 -0.007 -0.049  0.049  0.092 -0.084  0.327     
+FacRurbnrbn -0.107  0.095 -0.049  0.130  0.043 -0.063  0.025  0.009  0.026  0.034 -0.024 -0.092  0.007 -0.078     
+FcMtvtnTRUE -0.074  0.020 -0.102 -0.007 -0.038 -0.008  0.023  0.003 -0.003  0.019  0.024 -0.122 -0.190 -0.022     
+Power       -0.023 -0.305  0.012  0.193  0.083  0.004  0.025 -0.090  0.068 -0.120  0.033  0.015  0.260 -0.013     
+            FcOwnrshppb FcRrbn FMTRUE
+SexHomme                             
+Age                                  
+LastEductn3                          
+LastEdctntr                          
+LstEdctnm--                          
+Roleautre                            
+Roleinfirmr                          
+Rolelabo                             
+Rolemedecin                          
+Rolepharmcn                          
+FacLevelcsr                          
+FacLevelhgr                          
+FcOwnrshppr                          
+FcOwnrshppb                          
+FacRurbnrbn  0.071                   
+FcMtvtnTRUE  0.183       0.152       
+Power        0.024       0.087 -0.005
 [1] "Running model for  PrimesPartenaires in ecz"
 
 Call:
@@ -625,42 +625,42 @@ FacMotivationTRUE                     2.693e-01  6.029e-02   4.466
 Power                                 2.188e-01  6.382e-02   3.429
 
 Correlation of Fixed Effects:
-            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr FcOwnrshppb
-SexHomme    -0.123                                                                                                            
-Age         -0.004 -0.040                                                                                                     
-LastEductn3 -0.070  0.010 -0.071                                                                                              
-LastEdctntr -0.260  0.024  0.002  0.175                                                                                       
-LstEdctnm-- -0.090  0.015 -0.004  0.067  0.209                                                                                
-Roleautre   -0.344  0.045  0.000  0.003  0.096  0.068                                                                         
-Roleinfirmr -0.446  0.094 -0.006  0.000  0.551  0.185  0.750                                                                  
-Rolelabo    -0.364 -0.027  0.008  0.028  0.395  0.139  0.662  0.787                                                           
-Rolemedecin -0.164 -0.011  0.004 -0.023  0.137 -0.733  0.359  0.390  0.329                                                    
-Rolepharmcn -0.320  0.066 -0.003  0.016  0.228 -0.047  0.605  0.661  0.567  0.409                                             
-FacLevelcsr -0.075  0.006 -0.048  0.044 -0.114  0.022 -0.009 -0.004 -0.002 -0.052  0.018                                      
-FacLevelhgr -0.131  0.031  0.002  0.086  0.108  0.015  0.151  0.151  0.143 -0.024  0.110  0.244                               
-FcOwnrshppr -0.073  0.002 -0.013  0.040  0.022 -0.015 -0.017  0.027  0.002  0.032  0.027  0.096  0.093                        
-FcOwnrshppb -0.109 -0.003 -0.021  0.002 -0.105 -0.004 -0.077 -0.078 -0.038 -0.040 -0.019  0.186 -0.008  0.329                 
-FacRurbnrbn -0.110  0.117 -0.022  0.122  0.036 -0.061  0.000  0.024 -0.012  0.025  0.065  0.165 -0.007 -0.075       0.164     
-FcMtvtnTRUE -0.026  0.004 -0.062 -0.012 -0.050 -0.004 -0.043 -0.025 -0.064 -0.008  0.017 -0.056 -0.128 -0.009       0.046     
-Power       -0.007 -0.248  0.011  0.214  0.041 -0.002  0.011 -0.111  0.032 -0.119  0.011  0.001  0.195 -0.034       0.005     
-            FcRrbn FMTRUE
-SexHomme                 
-Age                      
-LastEductn3              
-LastEdctntr              
-LstEdctnm--              
-Roleautre                
-Roleinfirmr              
-Rolelabo                 
-Rolemedecin              
-Rolepharmcn              
-FacLevelcsr              
-FacLevelhgr              
-FcOwnrshppr              
-FcOwnrshppb              
-FacRurbnrbn              
-FcMtvtnTRUE  0.133       
-Power        0.060  0.014
+            (Intr) SexHmm Age    LstEd3 LstEdc LstE-- Roletr Rlnfrm Rolelb Rlmdcn Rlphrm FcLvlc FcLvlh FcOwnrshppr
+SexHomme    -0.123                                                                                                
+Age         -0.004 -0.040                                                                                         
+LastEductn3 -0.070  0.010 -0.071                                                                                  
+LastEdctntr -0.260  0.024  0.002  0.175                                                                           
+LstEdctnm-- -0.090  0.015 -0.004  0.067  0.209                                                                    
+Roleautre   -0.344  0.045  0.000  0.003  0.096  0.068                                                             
+Roleinfirmr -0.446  0.094 -0.006  0.000  0.551  0.185  0.750                                                      
+Rolelabo    -0.364 -0.027  0.008  0.028  0.395  0.139  0.662  0.787                                               
+Rolemedecin -0.164 -0.011  0.004 -0.023  0.137 -0.733  0.359  0.390  0.329                                        
+Rolepharmcn -0.320  0.066 -0.003  0.016  0.228 -0.047  0.605  0.661  0.567  0.409                                 
+FacLevelcsr -0.075  0.006 -0.048  0.044 -0.114  0.022 -0.009 -0.004 -0.002 -0.052  0.018                          
+FacLevelhgr -0.131  0.031  0.002  0.086  0.108  0.015  0.151  0.151  0.143 -0.024  0.110  0.244                   
+FcOwnrshppr -0.073  0.002 -0.013  0.040  0.022 -0.015 -0.017  0.027  0.002  0.032  0.027  0.096  0.093            
+FcOwnrshppb -0.109 -0.003 -0.021  0.002 -0.105 -0.004 -0.077 -0.078 -0.038 -0.040 -0.019  0.186 -0.008  0.329     
+FacRurbnrbn -0.110  0.117 -0.022  0.122  0.036 -0.061  0.000  0.024 -0.012  0.025  0.065  0.165 -0.007 -0.075     
+FcMtvtnTRUE -0.026  0.004 -0.062 -0.012 -0.050 -0.004 -0.043 -0.025 -0.064 -0.008  0.017 -0.056 -0.128 -0.009     
+Power       -0.007 -0.248  0.011  0.214  0.041 -0.002  0.011 -0.111  0.032 -0.119  0.011  0.001  0.195 -0.034     
+            FcOwnrshppb FcRrbn FMTRUE
+SexHomme                             
+Age                                  
+LastEductn3                          
+LastEdctntr                          
+LstEdctnm--                          
+Roleautre                            
+Roleinfirmr                          
+Rolelabo                             
+Rolemedecin                          
+Rolepharmcn                          
+FacLevelcsr                          
+FacLevelhgr                          
+FcOwnrshppr                          
+FcOwnrshppb                          
+FacRurbnrbn  0.164                   
+FcMtvtnTRUE  0.046       0.133       
+Power        0.005       0.060  0.014
 [1] "Running model for  PrimeLocale in ecz"
 
 Call:
