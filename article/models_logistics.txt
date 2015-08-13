@@ -1,0 +1,732 @@
+[1] "Running model for  ActPrivee in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.2374  -0.4638  -0.3063  -0.2049   3.0326  
+
+Coefficients:
+                                      Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                          -4.104571   0.851933  -4.818 1.45e-06 ***
+SexHomme                              0.735003   0.206628   3.557 0.000375 ***
+Age                                  -0.001660   0.003238  -0.513 0.608261    
+Roleautre                             0.241529   0.766851   0.315 0.752791    
+Roleinfirmier                         0.859843   0.751481   1.144 0.252541    
+Rolelabo                              0.025689   0.813140   0.032 0.974797    
+Rolemedecin                           0.228322   0.882405   0.259 0.795828    
+Rolepharmacien                       -0.331472   0.921166  -0.360 0.718967    
+LastEducationa3                      -0.621056   0.281015  -2.210 0.027102 *  
+LastEducationautre                   -0.746624   0.524202  -1.424 0.154358    
+LastEducationmedecin-pharma-etudesup  0.975691   0.698738   1.396 0.162606    
+FacOwnershipprivee                    0.379566   0.328730   1.155 0.248237    
+FacOwnershippublique                  0.112062   0.232700   0.482 0.630109    
+FacRurbanurbain                       0.737164   0.222172   3.318 0.000907 ***
+FacMotivationTRUE                     0.473126   0.245762   1.925 0.054212 .  
+Power                                -0.299638   0.230731  -1.299 0.194066    
+Provinceequateur                      0.631469   0.308613   2.046 0.040742 *  
+Provincekatanga                       1.500179   0.276729   5.421 5.92e-08 ***
+Provincesud_kivu                     -0.015799   0.347864  -0.045 0.963776    
+FacLevelcsr                          -0.256816   0.233296  -1.101 0.270978    
+FacLevelhgr                          -0.611676   0.262215  -2.333 0.019662 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1040.81  on 1581  degrees of freedom
+Residual deviance:  873.06  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 915.06
+
+Number of Fisher Scoring iterations: 7
+
+[1] "Running model for  ActPrivee in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4710  -0.1878   0.0000   0.0000   2.5396  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)  
+(Intercept)                          -2.043e+02  2.305e+05  -0.001   0.9993  
+SexHomme                              7.868e+01  7.916e+04   0.001   0.9992  
+Age                                   1.570e-01  7.214e-02   2.176   0.0296 *
+Roleautre                            -1.063e+03  1.020e+04  -0.104   0.9170  
+Roleinfirmier_superviseur             5.735e+01  7.654e+04   0.001   0.9994  
+Rolemedecin_chef_zone                 7.896e+01  8.707e+04   0.001   0.9993  
+LastEducationautre                    5.811e+01  7.654e+04   0.001   0.9994  
+LastEducationmedecin-pharma-etudesup -1.966e+01  4.151e+04   0.000   0.9996  
+FacRurbanurbain                       2.675e+00  1.323e+00   2.022   0.0432 *
+FacMotivationTRUE                     5.709e+01  7.654e+04   0.001   0.9994  
+Provinceequateur                     -1.372e+00  1.504e+00  -0.912   0.3617  
+Provincekatanga                      -3.736e-01  1.512e+00  -0.247   0.8048  
+Provincesud_kivu                     -6.373e+02  3.278e+03  -0.194   0.8458  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 52.498  on 112  degrees of freedom
+Residual deviance: 27.384  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 53.384
+
+Number of Fisher Scoring iterations: 23
+
+[1] "Running model for  ActNonSante in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0133  -1.0827  -0.6316   1.0915   2.0181  
+
+Coefficients:
+                                      Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                          -1.062491   0.393813  -2.698 0.006977 ** 
+SexHomme                              0.437288   0.116366   3.758 0.000171 ***
+Age                                   0.002231   0.001688   1.321 0.186411    
+Roleautre                             0.732852   0.325829   2.249 0.024500 *  
+Roleinfirmier                         1.188264   0.349700   3.398 0.000679 ***
+Rolelabo                              0.609384   0.383313   1.590 0.111884    
+Rolemedecin                           1.101303   0.655042   1.681 0.092710 .  
+Rolepharmacien                        0.951895   0.401301   2.372 0.017691 *  
+LastEducationa3                      -0.003974   0.148372  -0.027 0.978631    
+LastEducationautre                    0.756376   0.226999   3.332 0.000862 ***
+LastEducationmedecin-pharma-etudesup -0.715433   0.566850  -1.262 0.206906    
+FacOwnershipprivee                   -0.031487   0.251600  -0.125 0.900408    
+FacOwnershippublique                 -0.014004   0.133625  -0.105 0.916535    
+FacRurbanurbain                      -0.622540   0.140857  -4.420 9.89e-06 ***
+FacMotivationTRUE                    -0.051718   0.141398  -0.366 0.714543    
+Power                                -0.232103   0.148880  -1.559 0.118999    
+Provinceequateur                     -0.245359   0.159816  -1.535 0.124720    
+Provincekatanga                       0.421492   0.160227   2.631 0.008524 ** 
+Provincesud_kivu                     -1.086231   0.157282  -6.906 4.98e-12 ***
+FacLevelcsr                           0.060176   0.139000   0.433 0.665072    
+FacLevelhgr                          -0.156184   0.147300  -1.060 0.289002    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2191.7  on 1581  degrees of freedom
+Residual deviance: 2032.8  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 2074.8
+
+Number of Fisher Scoring iterations: 6
+
+[1] "Running model for  ActNonSante in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.9091  -0.9262  -0.6376   1.0767   2.1440  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)  
+(Intercept)                           1.5415281  1.5252609   1.011   0.3122  
+SexHomme                              0.3027478  0.6137880   0.493   0.6218  
+Age                                   0.0002225  0.0003074   0.724   0.4691  
+Roleautre                            -0.2240152  0.6159375  -0.364   0.7161  
+Roleinfirmier_superviseur             0.0242282  0.8423757   0.029   0.9771  
+Rolemedecin_chef_zone                -1.1728290  1.2367744  -0.948   0.3430  
+LastEducationautre                    0.0490724  0.7924914   0.062   0.9506  
+LastEducationmedecin-pharma-etudesup  0.6281889  1.2388064   0.507   0.6121  
+FacRurbanurbain                      -0.6844149  0.5326543  -1.285   0.1988  
+FacMotivationTRUE                    -1.9155008  1.0120572  -1.893   0.0584 .
+Provinceequateur                      0.2572045  0.5662720   0.454   0.6497  
+Provincekatanga                       1.7404302  0.7199369   2.417   0.0156 *
+Provincesud_kivu                     -0.9009780  0.6022387  -1.496   0.1346  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 156.22  on 112  degrees of freedom
+Residual deviance: 136.90  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 162.9
+
+Number of Fisher Scoring iterations: 4
+
+[1] "Running model for  HeureSup in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.3560  -0.3125  -0.1411  -0.0764   3.7469  
+
+Coefficients:
+                                      Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                          -5.845678   1.104699  -5.292 1.21e-07 ***
+SexHomme                              0.108618   0.262875   0.413   0.6795    
+Age                                  -0.004762   0.007600  -0.627   0.5309    
+Roleautre                            -0.669175   0.874375  -0.765   0.4441    
+Roleinfirmier                         0.270492   0.795778   0.340   0.7339    
+Rolelabo                              0.585543   0.828447   0.707   0.4797    
+Rolemedecin                           0.506498   1.059594   0.478   0.6326    
+Rolepharmacien                        0.003289   0.897851   0.004   0.9971    
+LastEducationa3                       0.062561   0.359254   0.174   0.8618    
+LastEducationautre                   -0.582475   0.597484  -0.975   0.3296    
+LastEducationmedecin-pharma-etudesup  0.858207   0.841833   1.019   0.3080    
+FacOwnershipprivee                   -0.189656   0.574757  -0.330   0.7414    
+FacOwnershippublique                 -0.063732   0.282792  -0.225   0.8217    
+FacRurbanurbain                       1.318678   0.334701   3.940 8.15e-05 ***
+FacMotivationTRUE                     0.361908   0.299216   1.210   0.2265    
+Power                                -0.010743   0.320413  -0.034   0.9733    
+Provinceequateur                      0.976521   0.712201   1.371   0.1703    
+Provincekatanga                       1.452661   0.649328   2.237   0.0253 *  
+Provincesud_kivu                      3.574344   0.626614   5.704 1.17e-08 ***
+FacLevelcsr                          -1.834756   0.743973  -2.466   0.0137 *  
+FacLevelhgr                           1.196418   0.266182   4.495 6.97e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 734.97  on 1581  degrees of freedom
+Residual deviance: 519.42  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 561.42
+
+Number of Fisher Scoring iterations: 8
+
+[1] "Running model for  HeureSup in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-0.90179  -0.00001   0.00000   0.00000   1.48333  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)
+(Intercept)                          -2.265e+01  5.430e+04   0.000    1.000
+SexHomme                             -6.157e-01  3.080e+04   0.000    1.000
+Age                                  -1.912e-03  1.586e-02  -0.121    0.904
+Roleautre                             2.064e-01  3.117e+04   0.000    1.000
+Roleinfirmier_superviseur             5.913e-01  4.282e+04   0.000    1.000
+Rolemedecin_chef_zone                 2.312e+01  5.860e+04   0.000    1.000
+LastEducationautre                    5.848e-01  3.983e+04   0.000    1.000
+LastEducationmedecin-pharma-etudesup -3.059e-01  6.095e+04   0.000    1.000
+FacRurbanurbain                      -1.952e+01  1.481e+04  -0.001    0.999
+FacMotivationTRUE                    -2.069e+01  4.460e+04   0.000    1.000
+Provinceequateur                     -1.230e+00  2.693e+04   0.000    1.000
+Provincekatanga                      -9.297e-01  2.881e+04   0.000    1.000
+Provincesud_kivu                      2.053e+01  1.749e+04   0.001    0.999
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 11.4459  on 112  degrees of freedom
+Residual deviance:  3.8234  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 29.823
+
+Number of Fisher Scoring iterations: 23
+
+[1] "Running model for  Informel in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0965  -0.8972  -0.6210   1.0196   2.1816  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                           0.6504936  0.4138256   1.572  0.11597    
+SexHomme                             -0.0424357  0.1223267  -0.347  0.72866    
+Age                                  -0.0003534  0.0003702  -0.955  0.33975    
+Roleautre                             0.0703584  0.3440859   0.204  0.83798    
+Roleinfirmier                         0.8989449  0.3721365   2.416  0.01571 *  
+Rolelabo                              0.5507005  0.4042784   1.362  0.17314    
+Rolemedecin                          -0.1206821  0.6372392  -0.189  0.84979    
+Rolepharmacien                       -0.1737444  0.4453795  -0.390  0.69646    
+LastEducationa3                      -0.4769735  0.1578723  -3.021  0.00252 ** 
+LastEducationautre                   -0.2455119  0.2394884  -1.025  0.30529    
+LastEducationmedecin-pharma-etudesup  0.4601351  0.5311884   0.866  0.38636    
+FacOwnershipprivee                    0.3060045  0.2740286   1.117  0.26413    
+FacOwnershippublique                 -0.1145800  0.1397485  -0.820  0.41227    
+FacRurbanurbain                      -0.5863564  0.1482088  -3.956 7.61e-05 ***
+FacMotivationTRUE                     0.2323600  0.1447819   1.605  0.10852    
+Power                                -0.3877323  0.1558100  -2.488  0.01283 *  
+Provinceequateur                     -1.7579886  0.1738757 -10.111  < 2e-16 ***
+Provincekatanga                      -1.7801818  0.1705555 -10.438  < 2e-16 ***
+Provincesud_kivu                     -1.2223379  0.1595770  -7.660 1.86e-14 ***
+FacLevelcsr                          -0.1664199  0.1479848  -1.125  0.26077    
+FacLevelhgr                          -0.0262623  0.1537408  -0.171  0.86436    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2176.9  on 1581  degrees of freedom
+Residual deviance: 1883.2  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 1925.2
+
+Number of Fisher Scoring iterations: 4
+
+[1] "Running model for  Informel in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.7182  -0.6784  -0.4931   0.7426   2.5321  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)   
+(Intercept)                           1.254e+00  1.622e+00   0.773  0.43972   
+SexHomme                             -2.770e-01  7.876e-01  -0.352  0.72506   
+Age                                   1.612e-04  3.169e-04   0.509  0.61109   
+Roleautre                            -5.046e-02  7.701e-01  -0.066  0.94776   
+Roleinfirmier_superviseur             2.337e-01  9.956e-01   0.235  0.81445   
+Rolemedecin_chef_zone                 1.592e+01  1.655e+03   0.010  0.99232   
+LastEducationautre                   -2.255e-01  9.470e-01  -0.238  0.81174   
+LastEducationmedecin-pharma-etudesup -1.535e+01  1.655e+03  -0.009  0.99260   
+FacRurbanurbain                      -1.525e+00  6.940e-01  -2.198  0.02796 * 
+FacMotivationTRUE                    -4.115e-01  9.787e-01  -0.420  0.67417   
+Provinceequateur                     -2.160e+00  7.265e-01  -2.973  0.00295 **
+Provincekatanga                      -2.998e+00  1.163e+00  -2.578  0.00993 **
+Provincesud_kivu                     -2.343e+00  7.156e-01  -3.274  0.00106 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 130.790  on 112  degrees of freedom
+Residual deviance:  99.473  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 125.47
+
+Number of Fisher Scoring iterations: 16
+
+[1] "Running model for  PerDiem in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.6097  -0.9232   0.4658   0.8159   2.1676  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                           0.1744893  0.4272207   0.408 0.682959    
+SexHomme                              0.6319643  0.1281475   4.932 8.16e-07 ***
+Age                                   0.0002904  0.0009791   0.297 0.766798    
+Roleautre                             0.4771406  0.3435455   1.389 0.164872    
+Roleinfirmier                         1.1741594  0.3752259   3.129 0.001753 ** 
+Rolelabo                              1.0353386  0.4084263   2.535 0.011246 *  
+Rolemedecin                           0.0837562  0.6617132   0.127 0.899277    
+Rolepharmacien                        0.7600365  0.4221873   1.800 0.071823 .  
+LastEducationa3                       0.0886260  0.1650146   0.537 0.591213    
+LastEducationautre                    0.4395837  0.2550312   1.724 0.084772 .  
+LastEducationmedecin-pharma-etudesup  0.1607461  0.5578289   0.288 0.773221    
+FacOwnershipprivee                   -0.0189772  0.2749100  -0.069 0.944965    
+FacOwnershippublique                  0.2625506  0.1440020   1.823 0.068267 .  
+FacRurbanurbain                      -0.5276991  0.1478100  -3.570 0.000357 ***
+FacMotivationTRUE                    -0.0700070  0.1548566  -0.452 0.651214    
+Power                                 1.2582151  0.1888140   6.664 2.67e-11 ***
+Provinceequateur                     -1.4609020  0.1888473  -7.736 1.03e-14 ***
+Provincekatanga                      -1.7273723  0.1812762  -9.529  < 2e-16 ***
+Provincesud_kivu                     -1.2961197  0.1795000  -7.221 5.17e-13 ***
+FacLevelcsr                          -0.1398008  0.1563374  -0.894 0.371202    
+FacLevelhgr                          -1.0124118  0.1572126  -6.440 1.20e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2105.8  on 1581  degrees of freedom
+Residual deviance: 1681.3  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 1723.3
+
+Number of Fisher Scoring iterations: 5
+
+[1] "Running model for  PerDiem in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.79813   0.00000   0.00001   0.25252   2.17755  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)  
+(Intercept)                           4.897e+00  4.316e+00   1.135   0.2565  
+SexHomme                             -6.685e-01  1.408e+00  -0.475   0.6350  
+Age                                  -1.683e-02  7.058e-02  -0.238   0.8116  
+Roleautre                             2.270e+00  1.654e+00   1.373   0.1699  
+Roleinfirmier_superviseur             2.238e+00  2.041e+00   1.096   0.2729  
+Rolemedecin_chef_zone                 8.024e+00  8.191e+04   0.000   0.9999  
+LastEducationautre                    4.682e-01  2.047e+00   0.229   0.8191  
+LastEducationmedecin-pharma-etudesup  1.884e+01  1.094e+04   0.002   0.9986  
+FacRurbanurbain                      -3.685e+00  1.749e+00  -2.107   0.0351 *
+FacMotivationTRUE                     1.231e+02  3.194e+03   0.039   0.9693  
+Provinceequateur                     -1.242e+02  3.194e+03  -0.039   0.9690  
+Provincekatanga                      -1.042e+02  6.513e+03  -0.016   0.9872  
+Provincesud_kivu                     -1.258e+02  3.194e+03  -0.039   0.9686  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 52.498  on 112  degrees of freedom
+Residual deviance: 25.557  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 51.557
+
+Number of Fisher Scoring iterations: 20
+
+[1] "Running model for  PrimesPartenaires in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.1690  -0.8183  -0.5812   0.9823   2.5093  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                          -1.7579463  0.4287153  -4.100 4.12e-05 ***
+SexHomme                              0.1457147  0.1268734   1.149  0.25076    
+Age                                  -0.0005099  0.0007601  -0.671  0.50234    
+Roleautre                             0.0180033  0.3533076   0.051  0.95936    
+Roleinfirmier                         0.1871564  0.3810169   0.491  0.62328    
+Rolelabo                              0.2847034  0.4149815   0.686  0.49267    
+Rolemedecin                          -0.7074278  0.6780400  -1.043  0.29679    
+Rolepharmacien                       -0.3058130  0.4434351  -0.690  0.49042    
+LastEducationa3                      -0.1135291  0.1633776  -0.695  0.48713    
+LastEducationautre                   -0.3032624  0.2488136  -1.219  0.22291    
+LastEducationmedecin-pharma-etudesup  0.4404532  0.5745301   0.767  0.44330    
+FacOwnershipprivee                    0.8056108  0.3047875   2.643  0.00821 ** 
+FacOwnershippublique                  0.6406679  0.1499091   4.274 1.92e-05 ***
+FacRurbanurbain                      -0.4996548  0.1536360  -3.252  0.00115 ** 
+FacMotivationTRUE                     1.1648982  0.1534496   7.591 3.16e-14 ***
+Power                                 0.2588258  0.1609960   1.608  0.10791    
+Provinceequateur                      1.6313393  0.1735406   9.400  < 2e-16 ***
+Provincekatanga                      -0.2842374  0.1859230  -1.529  0.12632    
+Provincesud_kivu                      1.2775563  0.1643098   7.775 7.53e-15 ***
+FacLevelcsr                          -0.2378636  0.1551910  -1.533  0.12535    
+FacLevelhgr                           0.1132123  0.1604170   0.706  0.48035    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2115.9  on 1581  degrees of freedom
+Residual deviance: 1761.6  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 1803.6
+
+Number of Fisher Scoring iterations: 5
+
+[1] "Running model for  PrimesPartenaires in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.6996  -0.6542   0.1085   0.5816   1.8221  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                            -0.07657    1.95458  -0.039 0.968753    
+SexHomme                               -2.06159    0.81529  -2.529 0.011450 *  
+Age                                    -0.01606    0.02862  -0.561 0.574654    
+Roleautre                               0.16793    0.84764   0.198 0.842957    
+Roleinfirmier_superviseur               1.88110    1.19242   1.578 0.114670    
+Rolemedecin_chef_zone                 -15.95875 1555.31043  -0.010 0.991813    
+LastEducationautre                     -0.20735    1.06960  -0.194 0.846287    
+LastEducationmedecin-pharma-etudesup   17.54899 1555.31051   0.011 0.990997    
+FacRurbanurbain                         1.45114    0.67674   2.144 0.032009 *  
+FacMotivationTRUE                       0.48188    1.10714   0.435 0.663384    
+Provinceequateur                        4.43834    1.18887   3.733 0.000189 ***
+Provincekatanga                        -0.69247    0.79202  -0.874 0.381954    
+Provincesud_kivu                        2.06098    0.72719   2.834 0.004594 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 152.726  on 112  degrees of freedom
+Residual deviance:  90.533  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 116.53
+
+Number of Fisher Scoring iterations: 16
+
+[1] "Running model for  PrimeRisque in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0522  -1.0143  -0.6736   1.0892   2.1050  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                          -8.886e-01  3.856e-01  -2.305  0.02119 *  
+SexHomme                             -7.879e-02  1.184e-01  -0.666  0.50567    
+Age                                  -9.887e-05  3.080e-04  -0.321  0.74819    
+Roleautre                            -4.724e-01  3.216e-01  -1.469  0.14180    
+Roleinfirmier                         1.236e-01  3.425e-01   0.361  0.71818    
+Rolelabo                             -7.671e-02  3.799e-01  -0.202  0.83998    
+Rolemedecin                           4.557e-01  6.104e-01   0.746  0.45537    
+Rolepharmacien                        3.360e-02  3.935e-01   0.085  0.93194    
+LastEducationa3                       1.346e+00  1.573e-01   8.553  < 2e-16 ***
+LastEducationautre                    3.895e-01  2.290e-01   1.701  0.08895 .  
+LastEducationmedecin-pharma-etudesup  2.907e-01  5.154e-01   0.564  0.57274    
+FacOwnershipprivee                   -9.252e-01  2.816e-01  -3.285  0.00102 ** 
+FacOwnershippublique                  1.218e-01  1.350e-01   0.902  0.36706    
+FacRurbanurbain                       4.961e-01  1.436e-01   3.455  0.00055 ***
+FacMotivationTRUE                    -1.201e-01  1.440e-01  -0.834  0.40443    
+Power                                 8.194e-01  1.520e-01   5.390 7.03e-08 ***
+Provinceequateur                     -2.479e-01  1.651e-01  -1.501  0.13330    
+Provincekatanga                      -3.669e-01  1.637e-01  -2.241  0.02504 *  
+Provincesud_kivu                      4.998e-01  1.579e-01   3.166  0.00155 ** 
+FacLevelcsr                          -2.637e-01  1.431e-01  -1.843  0.06533 .  
+FacLevelhgr                           8.558e-01  1.507e-01   5.679 1.36e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2187.5  on 1581  degrees of freedom
+Residual deviance: 1972.7  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 2014.7
+
+Number of Fisher Scoring iterations: 4
+
+[1] "Running model for  PrimeRisque in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.75336   0.00000   0.00374   0.13510   1.85105  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)   
+(Intercept)                             -2.9337     3.6726  -0.799  0.42440   
+SexHomme                                -1.4760     1.1188  -1.319  0.18708   
+Age                                      0.3490     0.1134   3.078  0.00208 **
+Roleautre                               -0.9764     1.1717  -0.833  0.40470   
+Roleinfirmier_superviseur               -1.5902     1.7071  -0.932  0.35156   
+Rolemedecin_chef_zone                    0.5525 10690.9439   0.000  0.99996   
+LastEducationautre                      -2.6405     1.7017  -1.552  0.12073   
+LastEducationmedecin-pharma-etudesup    18.5428  9637.3728   0.002  0.99846   
+FacRurbanurbain                         -4.6344     1.7622  -2.630  0.00854 **
+FacMotivationTRUE                       -2.4739     1.8034  -1.372  0.17013   
+Provinceequateur                         0.4486     1.2681   0.354  0.72353   
+Provincekatanga                         18.0924  4192.0115   0.004  0.99656   
+Provincesud_kivu                        -3.2332     1.5517  -2.084  0.03719 * 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 88.495  on 112  degrees of freedom
+Residual deviance: 36.703  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 62.703
+
+Number of Fisher Scoring iterations: 20
+
+[1] "Running model for  PrimeLocale in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.1622   0.1412   0.2024   0.3679   1.4321  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                           3.988e+00  7.637e-01   5.222 1.77e-07 ***
+SexHomme                             -1.603e-01  2.210e-01  -0.725   0.4684    
+Age                                  -7.716e-05  6.863e-04  -0.112   0.9105    
+Roleautre                             1.629e-01  6.169e-01   0.264   0.7917    
+Roleinfirmier                         5.587e-01  6.054e-01   0.923   0.3561    
+Rolelabo                             -1.546e-01  6.487e-01  -0.238   0.8116    
+Rolemedecin                          -6.515e-01  9.940e-01  -0.655   0.5122    
+Rolepharmacien                       -6.280e-01  6.752e-01  -0.930   0.3523    
+LastEducationa3                      -2.103e-01  2.772e-01  -0.759   0.4481    
+LastEducationautre                    6.243e-01  4.523e-01   1.380   0.1675    
+LastEducationmedecin-pharma-etudesup  1.040e+00  8.549e-01   1.217   0.2238    
+FacOwnershipprivee                   -5.808e-01  3.368e-01  -1.725   0.0846 .  
+FacOwnershippublique                  5.967e-02  2.600e-01   0.229   0.8185    
+FacRurbanurbain                      -1.517e+00  2.630e-01  -5.770 7.93e-09 ***
+FacMotivationTRUE                     3.226e-01  3.228e-01   0.999   0.3177    
+Power                                 7.547e-01  3.306e-01   2.283   0.0224 *  
+Provinceequateur                     -8.638e-01  4.114e-01  -2.100   0.0357 *  
+Provincekatanga                      -1.733e+00  3.428e-01  -5.057 4.26e-07 ***
+Provincesud_kivu                     -5.687e-01  4.514e-01  -1.260   0.2077    
+FacLevelcsr                          -1.083e+00  2.423e-01  -4.471 7.80e-06 ***
+FacLevelhgr                           3.785e-01  3.149e-01   1.202   0.2294    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 917.9  on 1581  degrees of freedom
+Residual deviance: 686.1  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 728.1
+
+Number of Fisher Scoring iterations: 6
+
+[1] "Running model for  PrimeLocale in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-2.38282  -0.20201   0.00009   0.40860   1.60061  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)
+(Intercept)                            16.93862 3493.21013   0.005    0.996
+SexHomme                                0.94485    1.01766   0.928    0.353
+Age                                     0.01688    0.03415   0.494    0.621
+Roleautre                               0.02780    0.93803   0.030    0.976
+Roleinfirmier_superviseur               0.35546    1.40270   0.253    0.800
+Rolemedecin_chef_zone                   2.97374    1.93856   1.534    0.125
+LastEducationautre                      0.32409    1.22770   0.264    0.792
+LastEducationmedecin-pharma-etudesup   -1.61756    1.87942  -0.861    0.389
+FacRurbanurbain                         1.06281    0.86966   1.222    0.222
+FacMotivationTRUE                       0.40984 3922.79766   0.000    1.000
+Provinceequateur                      -19.19720 1784.88919  -0.011    0.991
+Provincekatanga                       -16.68011 1784.88952  -0.009    0.993
+Provincesud_kivu                      -20.14671 1784.88918  -0.011    0.991
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 128.709  on 112  degrees of freedom
+Residual deviance:  69.868  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 95.868
+
+Number of Fisher Scoring iterations: 18
+
+[1] "Running model for  Salaire in facilities"
+
+Call:
+glm(formula = make_formula(rev, covs_hgrcs), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel != "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.6696  -0.6294  -0.4083  -0.2076   2.7596  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                          -2.562e+00  5.290e-01  -4.842 1.28e-06 ***
+SexHomme                              4.407e-01  1.585e-01   2.781  0.00542 ** 
+Age                                  -2.576e-05  4.233e-04  -0.061  0.95148    
+Roleautre                             1.007e-01  4.395e-01   0.229  0.81882    
+Roleinfirmier                         5.484e-02  4.620e-01   0.119  0.90552    
+Rolelabo                              1.688e-01  5.080e-01   0.332  0.73973    
+Rolemedecin                           4.291e-02  7.431e-01   0.058  0.95396    
+Rolepharmacien                        1.507e-01  5.525e-01   0.273  0.78500    
+LastEducationa3                       1.057e+00  1.880e-01   5.622 1.89e-08 ***
+LastEducationautre                    1.627e-01  3.345e-01   0.486  0.62673    
+LastEducationmedecin-pharma-etudesup -3.280e-01  6.340e-01  -0.517  0.60494    
+FacOwnershipprivee                   -4.399e-02  2.812e-01  -0.156  0.87571    
+FacOwnershippublique                 -3.754e-01  1.792e-01  -2.095  0.03619 *  
+FacRurbanurbain                       1.472e+00  1.704e-01   8.641  < 2e-16 ***
+FacMotivationTRUE                    -1.424e-01  2.105e-01  -0.677  0.49860    
+Power                                 3.517e-01  1.986e-01   1.771  0.07650 .  
+Provinceequateur                      3.087e-01  2.081e-01   1.483  0.13799    
+Provincekatanga                       5.329e-01  1.920e-01   2.775  0.00552 ** 
+Provincesud_kivu                     -1.450e+00  2.963e-01  -4.893 9.92e-07 ***
+FacLevelcsr                          -5.649e-02  1.851e-01  -0.305  0.76026    
+FacLevelhgr                           5.059e-01  1.896e-01   2.668  0.00762 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1528.0  on 1581  degrees of freedom
+Residual deviance: 1265.1  on 1561  degrees of freedom
+  (31 observations deleted due to missingness)
+AIC: 1307.1
+
+Number of Fisher Scoring iterations: 5
+
+[1] "Running model for  Salaire in ecz"
+
+Call:
+glm(formula = make_formula(rev, covs_ecz), family = binomial(link = "logit"), 
+    data = modelData[modelData$FacLevel == "ecz", ])
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4792  -0.7842  -0.5417   0.7698   2.3457  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)
+(Intercept)                          -2.9180673  1.9851349  -1.470    0.142
+SexHomme                              1.5764027  1.1060931   1.425    0.154
+Age                                   0.0003698  0.0002998   1.233    0.217
+Roleautre                             0.3341038  0.8612794   0.388    0.698
+Roleinfirmier_superviseur             1.1587254  1.0367148   1.118    0.264
+Rolemedecin_chef_zone                -0.4670231  1.3253604  -0.352    0.725
+LastEducationautre                   -0.5104373  0.9427075  -0.541    0.588
+LastEducationmedecin-pharma-etudesup  0.9626057  1.2891800   0.747    0.455
+FacRurbanurbain                      -0.0500478  0.5739964  -0.087    0.931
+FacMotivationTRUE                     0.1004253  1.0990776   0.091    0.927
+Provinceequateur                      0.1746673  0.6420294   0.272    0.786
+Provincekatanga                      -0.1586635  0.7796789  -0.203    0.839
+Provincesud_kivu                     -0.9534989  0.7432432  -1.283    0.200
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 128.71  on 112  degrees of freedom
+Residual deviance: 109.89  on 100  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 135.89
+
+Number of Fisher Scoring iterations: 5
+

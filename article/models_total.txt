@@ -1,0 +1,74 @@
+[1] "Running model for facilities"
+
+Call:
+lm(formula = make_formula("revenue", covs_hgrcs), data = data_total_revenu[data_total_revenu$FacLevel != 
+    "ecz", ])
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.7002 -0.5474  0.0288  0.5656  2.8202 
+
+Coefficients:
+                                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                           4.053e+00  1.520e-01  26.660  < 2e-16 ***
+SexHomme                              2.290e-01  4.623e-02   4.955 8.03e-07 ***
+Age                                   6.701e-05  1.263e-04   0.531  0.59573    
+Roleautre                            -3.245e-01  1.264e-01  -2.568  0.01032 *  
+Roleinfirmier                        -2.086e-01  1.353e-01  -1.542  0.12338    
+Rolelabo                             -3.438e-01  1.493e-01  -2.302  0.02147 *  
+Rolemedecin                           6.395e-01  2.372e-01   2.697  0.00708 ** 
+Rolepharmacien                       -2.338e-01  1.575e-01  -1.485  0.13776    
+LastEducationa3                       5.046e-03  5.937e-02   0.085  0.93228    
+LastEducationautre                    3.666e-02  8.942e-02   0.410  0.68186    
+LastEducationmedecin-pharma-etudesup  3.696e-01  2.009e-01   1.840  0.06597 .  
+FacOwnershipprivee                    2.782e-01  1.017e-01   2.735  0.00632 ** 
+FacOwnershippublique                 -4.635e-02  5.334e-02  -0.869  0.38507    
+FacRurbanurbain                       4.147e-01  5.567e-02   7.449 1.55e-13 ***
+FacMotivationTRUE                     1.553e-01  5.621e-02   2.762  0.00582 ** 
+Power                                 3.621e-01  5.943e-02   6.092 1.40e-09 ***
+Provinceequateur                     -8.409e-02  6.510e-02  -1.292  0.19667    
+Provincekatanga                       6.150e-01  6.383e-02   9.636  < 2e-16 ***
+Provincesud_kivu                      3.917e-01  6.180e-02   6.338 3.04e-10 ***
+FacLevelcsr                           2.856e-01  5.559e-02   5.137 3.14e-07 ***
+FacLevelhgr                           5.429e-01  5.853e-02   9.275  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.8405 on 1561 degrees of freedom
+  (31 observations deleted due to missingness)
+Multiple R-squared:  0.3722,	Adjusted R-squared:  0.3641 
+F-statistic: 46.27 on 20 and 1561 DF,  p-value: < 2.2e-16
+
+[1] "Running model for ecz"
+
+Call:
+lm(formula = make_formula("revenue", covs_ecz), data = data_total_revenu[data_total_revenu$FacLevel == 
+    "ecz", ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.37924 -0.39849  0.04232  0.36339  2.34199 
+
+Coefficients:
+                                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                           5.1681535  0.4946500  10.448  < 2e-16 ***
+SexHomme                              0.0948883  0.2086812   0.455  0.65031    
+Age                                   0.0000580  0.0001013   0.573  0.56818    
+Roleautre                            -0.5369846  0.2141426  -2.508  0.01377 *  
+Roleinfirmier_superviseur             0.1365923  0.2894899   0.472  0.63807    
+Rolemedecin_chef_zone                 0.2745788  0.4184836   0.656  0.51325    
+LastEducationautre                   -0.2701909  0.2725513  -0.991  0.32391    
+LastEducationmedecin-pharma-etudesup  1.2341104  0.4135126   2.984  0.00357 ** 
+FacRurbanurbain                       0.2372442  0.1765593   1.344  0.18208    
+FacMotivationTRUE                    -0.2965120  0.3220928  -0.921  0.35949    
+Provinceequateur                      0.3985834  0.2076420   1.920  0.05776 .  
+Provincekatanga                       0.5823082  0.2409016   2.417  0.01745 *  
+Provincesud_kivu                      0.4229560  0.2053130   2.060  0.04199 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.7588 on 100 degrees of freedom
+  (8 observations deleted due to missingness)
+Multiple R-squared:  0.5823,	Adjusted R-squared:  0.5322 
+F-statistic: 11.62 on 12 and 100 DF,  p-value: 2.758e-14
+
