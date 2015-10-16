@@ -279,8 +279,10 @@ dist_role$Income_en <- factor(dist_role$Income_en ,
 
 dist_role <- dist_role[order(dist_role$Income_en) ,]
 
+
 pdf('article/median_income_distribution.pdf' , width = 14)
 dataPlot <- subset(dist_role , structure == 'Health Zone Medical Team')
+write.csv(dataPlot , 'article/rev1_figure2_raw.csv')
 qplot(data = dataPlot , y = V1 , x = Role_en , fill = Income_en , 
       geom = 'bar' , position = 'stack' ,
       stat = 'identity') +
@@ -289,6 +291,7 @@ qplot(data = dataPlot , y = V1 , x = Role_en , fill = Income_en ,
   xlab('') + ylab('Median Income for facility based HWs')
 
 dataPlot <- subset(dist_role , structure != 'Health Zone Medical Team')
+write.csv(dataPlot , 'article/rev1_figure3_raw.csv')
 qplot(data = dataPlot , y = V1 , x = Role_en , fill = Income_en , 
       geom = 'bar' , position = 'stack' ,
       stat = 'identity') +
