@@ -7,6 +7,8 @@ source('code/useful_functions.r')
 
 
 ####### Recoding Education #######
+
+total_revenu$Age[total_revenu$Age > 85] <- NA
 total_revenu$LastEducation <- total_revenu$LastEduc
 total_revenu$LastEducation [total_revenu$LastEducation  %in%
                               c('medecin_generaliste' , 'medecin_specialiste' , 
@@ -521,13 +523,16 @@ data_total_revenu <- dcast(total_revenu , formula = instanceID + Structure + Fac
 
 covs_indiv <- "Sex + Age"
 covs_hgrcs <-  "FacOwnership + FacRurban + FacMotivation + Power + Province + FacLevel"
-covs_ecz <- "FacRurban + FacMotivation + Province"
+covs_ecz <- "Age + FacRurban + FacMotivation + Province"
 
 #data_total_revenu$Role <- factor(data_total_revenu$Role)
 #data_total_revenu <- within(data_total_revenu, Role <- relevel(Role, ref = 'medecin'))
 
 
 covs_hgrcs <- paste(covs_indiv , covs_hgrcs , sep = '+')
+#covs_ecz <- paste(covs_indiv , covs_ecz , sep = '+')
+
+
 
 colnames(data_total_revenu)[ncol(data_total_revenu)] <- 'revenue'
 
