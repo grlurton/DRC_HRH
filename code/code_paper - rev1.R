@@ -515,15 +515,15 @@ data_total_revenu <- dcast(total_revenu , formula = instanceID + Structure + Fac
                              FacAppui + FacRurban + EczAppui + Province + Sex + Age + Matrimonial + 
                              RoleInit + 
                              NumberFinancialDependants + LastEducation + FacilityType + Role + Power +
-                             FacMotivation + MonthlyDollar~ . , value.var = 'value' , 
-                           function(x) sum(x , na.rm = TRUE) #log(sum(x , na.rm = TRUE)
-)
+                             FacMotivation ~ . , value.var = 'value' , 
+                           function(x) log(sum(x , na.rm = TRUE)) #log(sum(x , na.rm = TRUE)
+                           )
 
 
 
 covs_indiv <- "Sex + Age"
 covs_hgrcs <-  "FacOwnership + FacRurban + FacMotivation + Power + Province + FacLevel"
-covs_ecz <- "Age + FacRurban + FacMotivation + Province"
+covs_ecz <- "Sex + Age + FacRurban + FacMotivation + Province"
 
 #data_total_revenu$Role <- factor(data_total_revenu$Role)
 #data_total_revenu <- within(data_total_revenu, Role <- relevel(Role, ref = 'medecin'))
@@ -552,9 +552,15 @@ print(summary(model_fit_fac))
 print('Running model for ecz')
 for (role in unique(data_total_revenu$Role[data_total_revenu$FacLevel == 'ecz'])){
   print(role)
-  data_mod <- subset(data_total_revenu , Role == role)
-  model_fit_ecz <- lm(make_formula('revenue' , covs_ecz) , 
-                    data = data_mod[data_mod$FacLevel == 'ecz' , ])
+  data_mod <- subset(data_total_revenu , Role == role)  
+  if (role == "medecin_chef_zone" ){
+    model_fit_ecz <- lm(revenue ~ Age + FacRurban + FacMotivation + Province , 
+                        data = data_mod[data_mod$FacLevel == 'ecz' , ])
+  }
+  else{
+    model_fit_ecz <- lm(make_formula('revenue' , covs_ecz) ,
+                        data = data_mod[data_mod$FacLevel == 'ecz' , ])
+  }
   print(summary(model_fit_ecz))
 }
 sink()

@@ -6,31 +6,31 @@ lm(formula = make_formula("revenue", covs_hgrcs), data = data_mod[data_mod$FacLe
     "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--108.84  -26.54  -12.06    4.01 1907.55 
+     Min       1Q   Median       3Q      Max 
+-2.89219 -0.50521  0.01266  0.48987  2.78520 
 
 Coefficients:
-                     Estimate Std. Error t value Pr(>|t|)    
-(Intercept)           8.56158    6.07251   1.410 0.158642    
-SexHomme              2.35372    2.60581   0.903 0.366437    
-Age                   0.05381    0.11442   0.470 0.638161    
-FacOwnershipprivee   25.76580    6.00975   4.287 1.85e-05 ***
-FacOwnershippublique  0.62482    2.98156   0.210 0.834018    
-FacRurbanurbain      16.86326    3.18224   5.299 1.22e-07 ***
-FacMotivationTRUE     0.70872    3.20705   0.221 0.825113    
-Power                10.80029    2.78914   3.872 0.000109 ***
-Provinceequateur      1.08071    3.44681   0.314 0.753886    
-Provincekatanga      39.11090    3.62899  10.777  < 2e-16 ***
-Provincesud_kivu     11.76749    3.38566   3.476 0.000514 ***
-FacLevelcsr           5.23116    3.19135   1.639 0.101249    
-FacLevelhgr          13.70583    3.28485   4.172 3.07e-05 ***
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           3.431149   0.124132  27.641  < 2e-16 ***
+SexHomme              0.150676   0.053824   2.799  0.00521 ** 
+Age                   0.010988   0.002355   4.666 3.47e-06 ***
+FacOwnershipprivee    0.319508   0.126106   2.534  0.01143 *  
+FacOwnershippublique -0.063741   0.061205  -1.041  0.29791    
+FacRurbanurbain       0.414219   0.064360   6.436 1.86e-10 ***
+FacMotivationTRUE     0.115795   0.068115   1.700  0.08943 .  
+Power                 0.445332   0.059201   7.522 1.15e-13 ***
+Provinceequateur     -0.030772   0.071755  -0.429  0.66812    
+Provincekatanga       0.585765   0.073626   7.956 4.59e-15 ***
+Provincesud_kivu      0.411955   0.071737   5.743 1.22e-08 ***
+FacLevelcsr           0.261529   0.064286   4.068 5.09e-05 ***
+FacLevelhgr           0.513514   0.068025   7.549 9.51e-14 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 77.8 on 4454 degrees of freedom
-  (98 observations deleted due to missingness)
-Multiple R-squared:  0.07747,	Adjusted R-squared:  0.07498 
-F-statistic: 31.17 on 12 and 4454 DF,  p-value: < 2.2e-16
+Residual standard error: 0.7944 on 1049 degrees of freedom
+  (22 observations deleted due to missingness)
+Multiple R-squared:  0.2806,	Adjusted R-squared:  0.2724 
+F-statistic:  34.1 on 12 and 1049 DF,  p-value: < 2.2e-16
 
 [1] "medecin"
 
@@ -40,30 +40,30 @@ lm(formula = make_formula("revenue", covs_hgrcs), data = data_mod[data_mod$FacLe
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--398.50 -166.83  -84.55  150.25 1599.39 
+-2.5821 -0.3297  0.1569  0.6129  1.5208 
 
 Coefficients:
-                     Estimate Std. Error t value Pr(>|t|)   
-(Intercept)           -34.588    106.462  -0.325  0.74546   
-SexHomme               -5.831     46.884  -0.124  0.90110   
-Age                     4.380      2.180   2.010  0.04524 * 
-FacOwnershipprivee    172.713     59.110   2.922  0.00371 **
-FacOwnershippublique   -8.325     32.671  -0.255  0.79901   
-FacRurbanurbain        20.794     34.182   0.608  0.54337   
-FacMotivationTRUE     -16.566     40.811  -0.406  0.68505   
-Power                 -63.501     33.359  -1.904  0.05780 . 
-Provinceequateur       25.725     51.643   0.498  0.61871   
-Provincekatanga        76.753     49.444   1.552  0.12151   
-Provincesud_kivu       72.263     51.388   1.406  0.16056   
-FacLevelcsr            85.658     47.382   1.808  0.07151 . 
-FacLevelhgr            67.084     40.523   1.655  0.09875 . 
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           5.20088    0.76514   6.797 1.91e-09 ***
+SexHomme              0.42554    0.31742   1.341  0.18394    
+Age                   0.01306    0.01602   0.815  0.41745    
+FacOwnershipprivee   -0.07257    0.36888  -0.197  0.84455    
+FacOwnershippublique -0.32985    0.23559  -1.400  0.16545    
+FacRurbanurbain      -0.10269    0.23198  -0.443  0.65923    
+FacMotivationTRUE     0.09149    0.29403   0.311  0.75650    
+Power                -0.37946    0.23947  -1.585  0.11710    
+Provinceequateur      0.63749    0.35291   1.806  0.07471 .  
+Provincekatanga       0.88203    0.33424   2.639  0.01004 *  
+Provincesud_kivu      1.10851    0.35738   3.102  0.00268 ** 
+FacLevelcsr           0.04242    0.31997   0.133  0.89488    
+FacLevelhgr           0.09946    0.28979   0.343  0.73236    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 256.1 on 344 degrees of freedom
-  (7 observations deleted due to missingness)
-Multiple R-squared:  0.08273,	Adjusted R-squared:  0.05073 
-F-statistic: 2.585 on 12 and 344 DF,  p-value: 0.002667
+Residual standard error: 0.9049 on 78 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.225,	Adjusted R-squared:  0.1058 
+F-statistic: 1.887 on 12 and 78 DF,  p-value: 0.0488
 
 [1] "administrateur"
 
@@ -72,30 +72,30 @@ lm(formula = make_formula("revenue", covs_hgrcs), data = data_mod[data_mod$FacLe
     "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--266.65  -58.46  -30.24    5.05  962.62 
+     Min       1Q   Median       3Q      Max 
+-1.97929 -0.41667  0.02351  0.30076  2.27461 
 
 Coefficients: (1 not defined because of singularities)
-                     Estimate Std. Error t value Pr(>|t|)   
-(Intercept)            -8.737     55.586  -0.157  0.87528   
-SexHomme               33.270     23.692   1.404  0.16191   
-Age                    -1.235      1.039  -1.189  0.23608   
-FacOwnershipprivee    205.485     64.713   3.175  0.00175 **
-FacOwnershippublique    2.905     22.130   0.131  0.89571   
-FacRurbanurbain        55.363     25.375   2.182  0.03037 * 
-FacMotivationTRUE     -29.355     24.040  -1.221  0.22360   
-Power                      NA         NA      NA       NA   
-Provinceequateur       11.289     31.392   0.360  0.71954   
-Provincekatanga        52.742     31.662   1.666  0.09743 . 
-Provincesud_kivu       79.941     28.969   2.760  0.00636 **
-FacLevelcsr            61.386     31.574   1.944  0.05337 . 
-FacLevelhgr            77.464     28.245   2.743  0.00669 **
+                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           3.2996386  0.6352639   5.194 4.15e-06 ***
+SexHomme              0.5985739  0.2663948   2.247  0.02928 *  
+Age                  -0.0009823  0.0121145  -0.081  0.93571    
+FacOwnershipprivee    1.2920184  0.6514790   1.983  0.05308 .  
+FacOwnershippublique  0.1190185  0.2654759   0.448  0.65594    
+FacRurbanurbain       0.5705933  0.2833799   2.014  0.04968 *  
+FacMotivationTRUE     0.0030003  0.2820389   0.011  0.99156    
+Power                        NA         NA      NA       NA    
+Provinceequateur     -0.6736642  0.3495732  -1.927  0.05990 .  
+Provincekatanga       0.4946461  0.3725344   1.328  0.19053    
+Provincesud_kivu      0.9085166  0.3462614   2.624  0.01162 *  
+FacLevelcsr           0.9378347  0.3505423   2.675  0.01018 *  
+FacLevelhgr           1.0812147  0.3244033   3.333  0.00166 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 134.4 on 187 degrees of freedom
-Multiple R-squared:  0.1491,	Adjusted R-squared:  0.09907 
-F-statistic: 2.979 on 11 and 187 DF,  p-value: 0.001138
+Residual standard error: 0.8705 on 48 degrees of freedom
+Multiple R-squared:  0.4474,	Adjusted R-squared:  0.3208 
+F-statistic: 3.533 on 11 and 48 DF,  p-value: 0.00112
 
 [1] "labo"
 
@@ -104,31 +104,31 @@ lm(formula = make_formula("revenue", covs_hgrcs), data = data_mod[data_mod$FacLe
     "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--191.73  -39.24  -13.56   15.62 1093.38 
+     Min       1Q   Median       3Q      Max 
+-1.91096 -0.50175  0.07847  0.55115  1.74752 
 
 Coefficients: (1 not defined because of singularities)
-                     Estimate Std. Error t value Pr(>|t|)    
-(Intercept)           -29.590     26.485  -1.117 0.264619    
-SexHomme              -33.725     14.299  -2.359 0.018878 *  
-Age                     1.177      0.445   2.644 0.008547 ** 
-FacOwnershipprivee     48.714     18.279   2.665 0.008043 ** 
-FacOwnershippublique    7.060     12.817   0.551 0.582093    
-FacRurbanurbain        19.651     13.291   1.479 0.140139    
-FacMotivationTRUE      -2.199     12.243  -0.180 0.857550    
-Power                      NA         NA      NA       NA    
-Provinceequateur        2.780     19.334   0.144 0.885746    
-Provincekatanga        49.782     14.897   3.342 0.000920 ***
-Provincesud_kivu       19.209     14.807   1.297 0.195348    
-FacLevelcsr            21.679     15.490   1.400 0.162496    
-FacLevelhgr            49.929     13.520   3.693 0.000256 ***
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           2.906021   0.444069   6.544 3.45e-09 ***
+SexHomme              0.382758   0.213222   1.795 0.075955 .  
+Age                   0.013420   0.007631   1.759 0.082009 .  
+FacOwnershipprivee    0.456010   0.288132   1.583 0.116973    
+FacOwnershippublique -0.030626   0.211477  -0.145 0.885174    
+FacRurbanurbain       0.385310   0.209298   1.841 0.068886 .  
+FacMotivationTRUE     0.355368   0.200466   1.773 0.079623 .  
+Power                       NA         NA      NA       NA    
+Provinceequateur     -0.202527   0.305004  -0.664 0.508359    
+Provincekatanga       0.833392   0.233039   3.576 0.000561 ***
+Provincesud_kivu      0.240276   0.250078   0.961 0.339197    
+FacLevelcsr           0.252650   0.239101   1.057 0.293461    
+FacLevelhgr           0.852332   0.223350   3.816 0.000247 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 99.49 on 362 degrees of freedom
-  (10 observations deleted due to missingness)
-Multiple R-squared:  0.1509,	Adjusted R-squared:  0.125 
-F-statistic: 5.846 on 11 and 362 DF,  p-value: 9.601e-09
+Residual standard error: 0.8309 on 91 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.409,	Adjusted R-squared:  0.3376 
+F-statistic: 5.726 on 11 and 91 DF,  p-value: 6e-07
 
 [1] "pharmacien"
 
@@ -137,30 +137,30 @@ lm(formula = make_formula("revenue", covs_hgrcs), data = data_mod[data_mod$FacLe
     "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--115.39  -33.89  -16.90    9.75  641.97 
+     Min       1Q   Median       3Q      Max 
+-1.57485 -0.50544  0.02552  0.44989  1.82141 
 
 Coefficients: (1 not defined because of singularities)
-                       Estimate Std. Error t value Pr(>|t|)   
-(Intercept)            2.263284  38.542568   0.059  0.95323   
-SexHomme             -20.259716  15.578145  -1.301  0.19490   
-Age                   -0.001022   0.726301  -0.001  0.99888   
-FacOwnershipprivee   -12.274113  37.703045  -0.326  0.74510   
-FacOwnershippublique  16.974505  13.025958   1.303  0.19401   
-FacRurbanurbain       37.867943  15.488804   2.445  0.01534 * 
-FacMotivationTRUE     -2.712671  18.417114  -0.147  0.88305   
-Power                        NA         NA      NA       NA   
-Provinceequateur      13.272426  22.915612   0.579  0.56311   
-Provincekatanga       59.092317  19.713712   2.998  0.00306 **
-Provincesud_kivu      39.942741  21.826725   1.830  0.06872 . 
-FacLevelcsr           -1.791284  17.794047  -0.101  0.91991   
-FacLevelhgr            4.224457  17.485879   0.242  0.80934   
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           2.89194    0.65236   4.433 4.71e-05 ***
+SexHomme             -0.24249    0.25173  -0.963 0.339788    
+Age                   0.01556    0.01198   1.299 0.199626    
+FacOwnershipprivee    0.68791    0.66298   1.038 0.304170    
+FacOwnershippublique  0.32474    0.23606   1.376 0.174703    
+FacRurbanurbain       0.44896    0.27067   1.659 0.103088    
+FacMotivationTRUE     0.12425    0.31959   0.389 0.698988    
+Power                      NA         NA      NA       NA    
+Provinceequateur      0.69987    0.41906   1.670 0.100801    
+Provincekatanga       1.22316    0.34659   3.529 0.000871 ***
+Provincesud_kivu      0.93712    0.39254   2.387 0.020569 *  
+FacLevelcsr           0.23275    0.31274   0.744 0.460023    
+FacLevelhgr          -0.03726    0.27502  -0.135 0.892745    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 82.9 on 203 degrees of freedom
-Multiple R-squared:  0.1156,	Adjusted R-squared:  0.06763 
-F-statistic: 2.411 on 11 and 203 DF,  p-value: 0.00777
+Residual standard error: 0.8025 on 53 degrees of freedom
+Multiple R-squared:  0.3349,	Adjusted R-squared:  0.1968 
+F-statistic: 2.426 on 11 and 53 DF,  p-value: 0.01577
 
 [1] "autre"
 
@@ -169,31 +169,31 @@ lm(formula = make_formula("revenue", covs_hgrcs), data = data_mod[data_mod$FacLe
     "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--118.00  -26.81  -12.19    6.05  585.32 
+     Min       1Q   Median       3Q      Max 
+-2.33893 -0.65750  0.05145  0.64866  2.13150 
 
 Coefficients: (1 not defined because of singularities)
-                     Estimate Std. Error t value Pr(>|t|)    
-(Intercept)           60.5119    15.3152   3.951 8.57e-05 ***
-SexHomme               6.1088     6.0927   1.003 0.316383    
-Age                   -0.6528     0.2338  -2.793 0.005371 ** 
-FacOwnershipprivee   -12.5446    13.9180  -0.901 0.367728    
-FacOwnershippublique -14.8375     8.9105  -1.665 0.096328 .  
-FacRurbanurbain       34.4678     8.8749   3.884 0.000113 ***
-FacMotivationTRUE     -7.3944     6.2449  -1.184 0.236788    
-Power                      NA         NA      NA       NA    
-Provinceequateur     -19.3886    12.0692  -1.606 0.108627    
-Provincekatanga       56.6491     9.7643   5.802 9.96e-09 ***
-Provincesud_kivu       2.2064     8.8962   0.248 0.804191    
-FacLevelcsr            8.8345     6.9603   1.269 0.204766    
-FacLevelhgr            6.3747     9.4275   0.676 0.499146    
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           4.226523   0.358109  11.802  < 2e-16 ***
+SexHomme              0.206790   0.139454   1.483 0.139770    
+Age                  -0.007315   0.005426  -1.348 0.179196    
+FacOwnershipprivee    0.069843   0.322735   0.216 0.828900    
+FacOwnershippublique -0.163562   0.195536  -0.836 0.403936    
+FacRurbanurbain       0.543819   0.199797   2.722 0.007095 ** 
+FacMotivationTRUE     0.048189   0.154004   0.313 0.754696    
+Power                       NA         NA      NA       NA    
+Provinceequateur     -0.976262   0.278816  -3.501 0.000577 ***
+Provincekatanga       0.480185   0.207614   2.313 0.021801 *  
+Provincesud_kivu      0.124827   0.209106   0.597 0.551247    
+FacLevelcsr           0.534922   0.167283   3.198 0.001623 ** 
+FacLevelhgr           0.803312   0.226660   3.544 0.000496 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 72.52 on 698 degrees of freedom
-  (18 observations deleted due to missingness)
-Multiple R-squared:  0.1629,	Adjusted R-squared:  0.1498 
-F-statistic: 12.35 on 11 and 698 DF,  p-value: < 2.2e-16
+Residual standard error: 0.9143 on 190 degrees of freedom
+  (5 observations deleted due to missingness)
+Multiple R-squared:  0.269,	Adjusted R-squared:  0.2267 
+F-statistic: 6.357 on 11 and 190 DF,  p-value: 6.293e-09
 
 [1] "Running model for ecz"
 [1] "administrateur_gestionnaire"
@@ -204,24 +204,25 @@ lm(formula = make_formula("revenue", covs_ecz), data = data_mod[data_mod$FacLeve
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--121.53  -50.62  -22.62    9.97 1367.82 
+-2.3446 -0.3160 -0.1336  0.3983  1.6334 
 
 Coefficients:
-                  Estimate Std. Error t value Pr(>|t|)  
-(Intercept)       -11.9867    75.9928  -0.158   0.8749  
-Age                 0.2982     1.4129   0.211   0.8332  
-FacRurbanurbain    53.6341    29.0321   1.847   0.0670 .
-FacMotivationTRUE  13.3754    51.3763   0.260   0.7950  
-Provinceequateur   64.0423    36.3738   1.761   0.0807 .
-Provincekatanga   -13.3802    41.4184  -0.323   0.7472  
-Provincesud_kivu   64.7245    34.4606   1.878   0.0626 .
+                  Estimate Std. Error t value Pr(>|t|)   
+(Intercept)        2.84499    0.97138   2.929  0.00777 **
+SexHomme          -0.37654    0.47355  -0.795  0.43503   
+Age                0.03800    0.01996   1.904  0.07010 . 
+FacRurbanurbain    0.29194    0.39465   0.740  0.46728   
+FacMotivationTRUE  0.72477    0.60557   1.197  0.24411   
+Provinceequateur   0.34066    0.48100   0.708  0.48623   
+Provincekatanga   -0.40622    0.67141  -0.605  0.55135   
+Provincesud_kivu   0.95272    0.45531   2.092  0.04815 * 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 144.8 on 127 degrees of freedom
-  (10 observations deleted due to missingness)
-Multiple R-squared:  0.05882,	Adjusted R-squared:  0.01436 
-F-statistic: 1.323 on 6 and 127 DF,  p-value: 0.2517
+Residual standard error: 0.8992 on 22 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.3244,	Adjusted R-squared:  0.1094 
+F-statistic: 1.509 on 7 and 22 DF,  p-value: 0.2158
 
 [1] "infirmier_superviseur"
 
@@ -230,52 +231,53 @@ lm(formula = make_formula("revenue", covs_ecz), data = data_mod[data_mod$FacLeve
     "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--110.27  -50.95  -20.76    9.54 1437.81 
+     Min       1Q   Median       3Q      Max 
+-0.98858 -0.30052 -0.01736  0.28501  2.02799 
 
 Coefficients:
-                  Estimate Std. Error t value Pr(>|t|)  
-(Intercept)        90.5456    50.5201   1.792   0.0745 .
-Age                 0.9098     1.0586   0.859   0.3911  
-FacRurbanurbain   -40.4917    23.1012  -1.753   0.0811 .
-FacMotivationTRUE -57.9601    33.6982  -1.720   0.0869 .
-Provinceequateur  -40.6511    26.2913  -1.546   0.1236  
-Provincekatanga    18.0286    26.5766   0.678   0.4983  
-Provincesud_kivu  -35.5281    28.6676  -1.239   0.2166  
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        4.83366    0.78243   6.178 8.49e-07 ***
+SexHomme           0.50740    0.37410   1.356  0.18512    
+Age                0.01855    0.01301   1.426  0.16425    
+FacRurbanurbain   -0.14098    0.26409  -0.534  0.59738    
+FacMotivationTRUE -0.86683    0.37115  -2.336  0.02639 *  
+Provinceequateur  -0.06613    0.30559  -0.216  0.83013    
+Provincekatanga    0.98750    0.32917   3.000  0.00539 ** 
+Provincesud_kivu  -0.12757    0.31672  -0.403  0.68997    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 127.7 on 210 degrees of freedom
-  (20 observations deleted due to missingness)
-Multiple R-squared:  0.03766,	Adjusted R-squared:  0.01017 
-F-statistic:  1.37 on 6 and 210 DF,  p-value: 0.2282
+Residual standard error: 0.608 on 30 degrees of freedom
+  (4 observations deleted due to missingness)
+Multiple R-squared:  0.3468,	Adjusted R-squared:  0.1943 
+F-statistic: 2.275 on 7 and 30 DF,  p-value: 0.0553
 
 [1] "medecin_chef_zone"
 
 Call:
-lm(formula = make_formula("revenue", covs_ecz), data = data_mod[data_mod$FacLevel == 
-    "ecz", ])
+lm(formula = revenue ~ Age + FacRurban + FacMotivation + Province, 
+    data = data_mod[data_mod$FacLevel == "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--334.33 -143.34  -93.75   59.96 1226.91 
+     Min       1Q   Median       3Q      Max 
+-0.49913 -0.20347  0.04001  0.20973  0.35896 
 
 Coefficients: (1 not defined because of singularities)
-                  Estimate Std. Error t value Pr(>|t|)  
-(Intercept)       -238.278    188.164  -1.266   0.2079  
-Age                  8.341      3.914   2.131   0.0351 *
-FacRurbanurbain     74.253     53.859   1.379   0.1706  
-FacMotivationTRUE       NA         NA      NA       NA  
-Provinceequateur   -10.809     70.608  -0.153   0.8786  
-Provincekatanga     -2.953     75.133  -0.039   0.9687  
-Provincesud_kivu   111.803     77.706   1.439   0.1528  
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        4.92457    0.56167   8.768 8.09e-07 ***
+Age                0.03857    0.01173   3.287  0.00589 ** 
+FacRurbanurbain    0.56025    0.16542   3.387  0.00486 ** 
+FacMotivationTRUE       NA         NA      NA       NA    
+Provinceequateur  -0.01695    0.20890  -0.081  0.93656    
+Provincekatanga    0.10196    0.22947   0.444  0.66411    
+Provincesud_kivu   0.64329    0.23451   2.743  0.01676 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 250.8 on 119 degrees of freedom
-  (12 observations deleted due to missingness)
-Multiple R-squared:  0.05364,	Adjusted R-squared:  0.01388 
-F-statistic: 1.349 on 5 and 119 DF,  p-value: 0.2486
+Residual standard error: 0.3023 on 13 degrees of freedom
+  (3 observations deleted due to missingness)
+Multiple R-squared:  0.6558,	Adjusted R-squared:  0.5234 
+F-statistic: 4.954 on 5 and 13 DF,  p-value: 0.009307
 
 [1] "autre"
 
@@ -284,23 +286,24 @@ lm(formula = make_formula("revenue", covs_ecz), data = data_mod[data_mod$FacLeve
     "ecz", ])
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--161.33  -57.49  -23.49    8.89 1783.41 
+     Min       1Q   Median       3Q      Max 
+-1.69872 -0.38896 -0.04954  0.29687  1.70715 
 
 Coefficients:
-                  Estimate Std. Error t value Pr(>|t|)  
-(Intercept)        -21.150    154.516  -0.137   0.8914  
-Age                  2.168      1.992   1.088   0.2791  
-FacRurbanurbain    -54.304     60.715  -0.894   0.3733  
-FacMotivationTRUE  -58.612    121.797  -0.481   0.6315  
-Provinceequateur   127.272     57.387   2.218   0.0289 *
-Provincekatanga     52.180     70.804   0.737   0.4629  
-Provincesud_kivu    45.268     55.268   0.819   0.4148  
+                  Estimate Std. Error t value Pr(>|t|)   
+(Intercept)        4.61621    1.38961   3.322  0.00431 **
+SexHomme          -0.86260    0.51821  -1.665  0.11546   
+Age                0.03532    0.01937   1.824  0.08695 . 
+FacRurbanurbain   -0.86102    0.57258  -1.504  0.15213   
+FacMotivationTRUE -1.56132    1.12565  -1.387  0.18445   
+Provinceequateur   2.14511    0.56344   3.807  0.00155 **
+Provincekatanga    2.25458    0.74446   3.028  0.00799 **
+Provincesud_kivu   0.65165    0.49209   1.324  0.20403   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 199.1 on 96 degrees of freedom
-  (7 observations deleted due to missingness)
-Multiple R-squared:  0.05962,	Adjusted R-squared:  0.0008475 
-F-statistic: 1.014 on 6 and 96 DF,  p-value: 0.4206
+Residual standard error: 0.8833 on 16 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.556,	Adjusted R-squared:  0.3617 
+F-statistic: 2.862 on 7 and 16 DF,  p-value: 0.03864
 
