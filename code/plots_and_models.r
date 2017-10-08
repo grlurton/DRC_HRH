@@ -1,4 +1,4 @@
-setwd('C:/Users/grlurton/Documents/DRCHRH')
+setwd('DRC_HRH/')
 
 stage <- 'modelisation'
 
@@ -6,6 +6,9 @@ source('code/useful_functions.r')
 
 
 total_revenu <- subset(total_revenu , Role != '' & variable != "Autres revenus")
+total_revenu$variable[total_revenu$variable == "Activit\xe9 non sant\xe9"] = "Activité non santé"
+total_revenu$variable[total_revenu$variable == "Activit\xe9  Priv\xe9e"] = "Activité  Privée"
+total_revenu$variable[total_revenu$variable == "Heures suppl\xe9mentaires"] = "Heures supplémentaires"
 
 total_revenu$FacSimple <- 'facility'
 total_revenu$FacSimple[total_revenu$FacilityType == 'ecz'] <- 'ecz'
@@ -32,18 +35,16 @@ RevSum$variable[RevSum$variable %in% c("Vente de Medicament" , "Cadeau")] <- 'In
 RevSum$variable <- factor(RevSum$variable , levels = rev(orderedIncome) , ordered = TRUE)
 
 pdf('output/graphs/distrib_revenus.pdf' , width = 14)
-qplot(data = RevSum[RevSum$FacilityType %in% c('cs' , 'csr' , 'hgr') ,] , x = instanceID , y = V1 , geom = 'bar' , 
-      stat = 'identity' , width = 1 , fill = variable)+
+ggplot(data = RevSum[RevSum$FacilityType %in% c('cs' , 'csr' , 'hgr') ,] , aes(x = instanceID , y = V1, fill=variable) ) +
+  geom_bar(stat = 'identity') +
   theme(axis.text.x = element_blank()) + 
   facet_wrap(~Role , scales = 'free_x') + ylab('Income') + xlab('') + scale_fill_brewer(palette="Set1") 
 
-qplot(data = RevSum[RevSum$FacilityType %in% c('cs' , 'csr' , 'hgr') ,] , x = instanceID , y = V1 , geom = 'bar' , 
-      stat = 'identity' , width = 1 , fill = variable)+
+ggplot(data = RevSum[RevSum$FacilityType %in% c('cs' , 'csr' , 'hgr') ,] , aes(x = instanceID , y = V1, fill=variable) ) +
+  geom_bar(stat = 'identity') +
   theme(axis.text.x = element_blank()) + 
   facet_wrap(~Role , scales = 'free') + ylab('Income') + xlab('') + scale_fill_brewer(palette="Set1") 
 dev.off()
-
-table(RevSum$variable)
 
 ### Some data management
 
